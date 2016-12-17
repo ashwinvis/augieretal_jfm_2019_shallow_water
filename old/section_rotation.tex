@@ -1,0 +1,63 @@
+
+
+
+In order to study the effects of system rotation, we have carried
+out four supplementary simulations for $c = 20$, $n = 1920$ and
+constant and non-zero Coriolis parameter $f$.  The values of $f$ have
+been chosen such that to yield relatively small Rossby numbers
+\begin{equation}
+Ro_f = \frac{\eps^{1/3} {k_f}^{2/3}}{f} \lesssim 0.1,
+\end{equation}
+and to span a range of Burger number,
+\begin{equation}
+Bu = \left(\frac{k_f}{k_d}\right)^2 = \left(\frac{Ro_f}{F_f}\right)^2,
+\end{equation}
+going from 0.5 to 4.  For these moderate values of global rotation, a
+statistically stationary regime is also reached.  Table~\ref{tab_rot}
+displays the parameters for these simulations.
+\begin{table}
+\begin{center}
+\begin{tabular}{cc@{\hskip 8mm}c@{\hskip 8mm}ccc@{\hskip 8mm}cccc@{\hskip 8mm}cc}
+$n$ & $c$ & $\nu_8$ & $f$ & $Ro$ & $Bu$ & $\eps$ & $\displaystyle\frac{\kmax}{\kdiss}$ & $\displaystyle\frac{\kdiss}{k_f}$ & $F_f$ & $\min h$ & $\displaystyle\frac{\max |\uu|}{c}$ \\[3mm]
+1920 &   20 & 9.6e-13 &  0   &  $\infty$ & $\infty$ & 0.99 & 2.46 &  58 &  0.055 & 0.59 & 0.56 \\
+1920 &   20 & 9.6e-13 &  7.5 &   0.11 &      4 & 0.96 & 2.47 &  58 &  0.054 & 0.67 & 0.52 \\
+1920 &   20 & 9.6e-13 & 10.7 &  0.076 &      2 & 0.93 & 2.47 &  58 &  0.054 & 0.70 & 0.62 \\
+1920 &   20 & 9.6e-13 & 15.1 &  0.052 &      1 & 0.85 & 2.48 &  57 &  0.052 & 0.70 & 0.65 \\
+1920 &   20 & 9.6e-13 & 21.3 &  0.037 &    0.5 & 0.84 & 2.48 &  57 &  0.052 & 0.66 & 0.81 \\
+\end{tabular}
+\caption{Overview of parameters for the simulations used to study the effect of rotation. 
+}
+\label{tab_rot}
+\end{center}
+\end{table}
+
+
+
+\begin{figure}
+\centerline{
+\includegraphics[width=\halfwidth]{../Figs/fig_Emean_f}
+\includegraphics[width=\halfwidth]{../Figs/fig_spectra_f_Nx=1920}
+}
+\caption{Effect of the rotation: (\textit{a}) mean energy versus
+$k_d/k_f$ and (\textit{b}) energy spectra for $c = 20$ and $n =
+1920$.}
+\label{fig_effectBu}
+\end{figure}
+
+Figure~\ref{fig_effectBu}(\textit{a}) shows the mean energy as a
+function of the Burger number.  We see that for $Bu = 2$ and 4, the
+mean energy is very close to the value obtained for the non-rotating
+case.
+%
+However, when $k_f<k_d$, i.e. for $Bu<1$, the mean energy increases.
+%
+Figure~\ref{fig_effectBu}(\textit{b}) presents the spectra for the
+same simulations.  The spectra for $Bu = 2$ and 4 are very close to
+the spectra for $f= 0$, which confirms that a weak rotation does not
+deeply modify the non-rotating results.
+%
+We have also verified that for the moderate rotation rates
+corresponding to $Bu>1$, the other results presented in
+section~\ref{section_wave_cascade_f=0} on the non-rotating wave
+cascade are only weakly modified.  In particular, the results for $Bu
+= \infty$ and $Bu = 4$ are very similar.

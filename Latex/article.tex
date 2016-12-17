@@ -1,0 +1,618 @@
+% This is file JFM2esam.tex
+% first release v1.0, 20th October 1996
+%       release v1.01, 29th October 1996
+%       release v1.1, 25th June 1997
+%       release v2.0, 27th July 2004
+%   (based on JFMsampl.tex v1.3 for LaTeX2.09)
+% Copyright (C) 1996, 1997 Cambridge University Press
+
+\NeedsTeXFormat{LaTeX2e}
+
+\documentclass{jfm}
+%\documentclass[referee]{jfm} %for double spaced output for submission
+
+
+\usepackage{graphicx}
+\usepackage{natbib}
+
+\usepackage{color}
+\usepackage{soul}
+
+\pdfoptionpdfminorversion 4
+
+% \pdfcompresslevel0
+
+% See if the author has AMS Euler fonts installed: If they have, attempt2
+% to use the 'upmath' package to provide upright math.
+\ifCUPmtlplainloaded \else
+  \checkfont{eurm10}
+  \iffontfound
+    \IfFileExists{upmath.sty}
+      {\typeout{^^JFound AMS Euler Roman fonts on the system,
+                   using the 'upmath' package.^^J}%
+       \usepackage{upmath}}
+      {\typeout{^^JFound AMS Euler Roman fonts on the system, but you
+                   dont seem to have the}%
+       \typeout{'upmath' package installed. JFM.cls can take advantage
+                 of these fonts,^^Jif you use 'upmath' package.^^J}%
+       \providecommand\upi{\pi}%
+      }
+  \else
+    \providecommand\upi{\pi}%
+  \fi
+\fi
+
+% See if the author has AMS symbol fonts installed: If they have, attempt
+% to use the 'amssymb' package to provide the AMS symbol characters.
+
+\ifCUPmtlplainloaded \else
+  \checkfont{msam10}
+  \iffontfound
+    \IfFileExists{amssymb.sty}
+      {\typeout{^^JFound AMS Symbol fonts on the system, using the
+                'amssymb' package.^^J}%
+       \usepackage{amssymb}%
+       \let\le=\leqslant  \let\leq=\leqslant
+       \let\ge=\geqslant  \let\geq=\geqslant
+      }{}
+  \fi
+\fi
+
+% See if the author has the AMS 'amsbsy' package installed: If they have,
+% use it to provide better bold math support (with \boldsymbol).
+
+\ifCUPmtlplainloaded \else
+  \IfFileExists{amsbsy.sty}
+    {\typeout{^^JFound the 'amsbsy' package on the system, using it.^^J}%
+     \usepackage{amsbsy}}
+    {\providecommand\boldsymbol[1]{\mbox{\boldmath $##1$}}}
+\fi
+
+%%% Example macros (some are not used in this sample file) %%%
+
+% For units of measure
+\newcommand\dynpercm{\nobreak\mbox{$\;$dyn\,cm$^{-1}$}}
+\newcommand\cmpermin{\nobreak\mbox{$\;$cm\,min$^{-1}$}}
+
+% Various bold symbols
+\providecommand\bnabla{\boldsymbol{\nabla}}
+\providecommand\bcdot{\boldsymbol{\cdot}}
+\newcommand\biS{\boldsymbol{S}}
+\newcommand\etb{\boldsymbol{\eta}}
+
+% For multiletter symbols
+\newcommand\Real{\mbox{Re}} % cf plain TeX's \Re and Reynolds number
+\newcommand\Imag{\mbox{Im}} % cf plain TeX's \Im
+\newcommand\Rey{\mbox{\textit{Re}}}  % Reynolds number
+\newcommand\Pran{\mbox{\textit{Pr}}} % Prandtl number, cf TeX's \Pr product
+\newcommand\Pen{\mbox{\textit{Pe}}}  % Peclet number
+\newcommand\Ai{\mbox{Ai}}            % Airy function
+\newcommand\Bi{\mbox{Bi}}            % Airy function
+
+% For sans serif characters:
+% The following macros are setup in JFM.cls for sans-serif fonts in text
+% and math.  If you use these macros in your article, the required fonts
+% will be substitued when you article is typeset by the typesetter.
+%
+% \textsfi, \mathsfi   : sans-serif slanted
+% \textsfb, \mathsfb   : sans-serif bold
+% \textsfbi, \mathsfbi : sans-serif bold slanted (doesnt exist in CM fonts)
+%
+% For san-serif roman use \textsf and \mathsf as normal.
+%
+\newcommand\ssC{\mathsf{C}}    % for sans serif C
+\newcommand\sfsP{\mathsfi{P}}  % for sans serif sloping P
+\newcommand\slsQ{\mathsfbi{Q}} % for sans serif bold-sloping Q
+
+% Hat position
+\newcommand\hatp{\skew3\hat{p}}      % p with hat
+\newcommand\hatR{\skew3\hat{R}}      % R with hat
+\newcommand\hatRR{\skew3\hat{\hatR}} % R with 2 hats
+\newcommand\doubletildesigma{\skew2\tilde{\skew2\tilde{\Sigma}}}
+%       italic Sigma with double tilde
+
+% array strut to make delimiters come out right size both ends
+\newsavebox{\astrutbox}
+\sbox{\astrutbox}{\rule[-5pt]{0pt}{20pt}}
+\newcommand{\astrut}{\usebox{\astrutbox}}
+
+\newcommand\GaPQ{\ensuremath{G_a(P,Q)}}
+\newcommand\GsPQ{\ensuremath{G_s(P,Q)}}
+\newcommand\p{\ensuremath{\partial}}
+\newcommand\tti{\ensuremath{\rightarrow\infty}}
+\newcommand\kgd{\ensuremath{k\gamma d}}
+\newcommand\shalf{\ensuremath{{\scriptstyle\frac{1}{2}}}}
+\newcommand\sh{\ensuremath{^{\shalf}}}
+\newcommand\smh{\ensuremath{^{-\shalf}}}
+\newcommand\squart{\ensuremath{{\textstyle\frac{1}{4}}}}
+\newcommand\thalf{\ensuremath{{\textstyle\frac{1}{2}}}}
+\newcommand\Gat{\ensuremath{\widetilde{G_a}}}
+\newcommand\ttz{\ensuremath{\rightarrow 0}}
+\newcommand\ndq{\ensuremath{\frac{\mbox{$\partial$}}{\mbox{$\partial$} n_q}}}
+\newcommand\sumjm{\ensuremath{\sum_{j=1}^{M}}}
+\newcommand\pvi{\ensuremath{\int_0^{\infty}%
+  \mskip \ifCUPmtlplainloaded -30mu\else -33mu\fi -\quad}}
+
+\newcommand\etal{\mbox{\textit{et al.}}}
+\newcommand\etc{etc.\ }
+\newcommand\eg{e.g.\ }
+
+
+\newcommand{\uu}{\textbf{u}}
+\newcommand{\xx}{\textbf{x}}
+\newcommand{\kk}{\textbf{k}}
+\newcommand{\JJ}{\textbf{J}}
+\newcommand{\rr}{\textbf{r}}
+\newcommand{\ff}{\textbf{f}}
+\newcommand{\FF}{\textbf{F}}
+\newcommand{\baa}{\textbf{a}}
+\newcommand{\bb}{\textbf{b}}
+\newcommand{\NN}{\textbf{N}}
+
+
+\newcommand{\eps}{\varepsilon}
+
+
+\newcommand{\ErtelPV}{\mathcal{Q}}
+
+\newcommand{\fdiss}{f_{\mbox{\scriptsize diss}}}
+
+\newcommand{\D}{\mbox{D}}
+
+\newcommand{\eez}{\boldsymbol{e_z}}
+\newcommand{\scalarprod}[2]{\big( #1 \, , \ #2 \big)_{\kk}}
+
+\newcommand{\mean}[1]{\langle #1 \rangle}
+
+\newcommand{\meane}[1]{\langle #1 \rangle}
+% \newcommand{\meane}[1]{{\langle #1 \rangle_{\hspace{-0.4mm}e}}}
+
+\newcommand{\meanx}[1]{{\langle #1 \rangle_{\hspace{-0.4mm}\mbox{\scriptsize$\xx$}}}}
+
+\newcommand{\meant}[1]{{\langle #1 \rangle_{\hspace{-0.4mm}\theta}}}
+
+\newcommand{\means}[1]{{\langle #1 \rangle_{\hspace{-0.4mm}s}}}
+
+\newcommand{\shocks}{ {\mbox{\tiny shocks}} }
+
+\newcommand{\kmax}{k_{\mbox{\scriptsize max}}}
+\newcommand{\kdiss}{k_{\mbox{\scriptsize diss}}}
+
+
+\newcommand{\mA}{\mathcal{A}}
+
+
+\newlength{\halfwidth}
+\setlength{\halfwidth}{66mm}
+
+\newcommand{\PA}[1]{{\color{green}#1}}
+
+\newcommand{\Add}[1]{{\color{blue}#1}}
+% \newcommand{\Add}[1]{#1}
+\newcommand{\Remove}[1]{{\color{red}\st{#1}}}
+% \newcommand{\Remove}[1]{}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+
+\title[Wave energy cascade in shallow-water flows]%
+{Wave energy cascade in forced-dissipative one-layer shallow-water flows}
+
+\author[P. Augier and E. Lindborg]%
+{Pierre Augier$^{1,2}$%
+  \thanks{Email address for correspondence: p.augier@damtp.cam.ac.uk},\ns
+and Erik Lindborg$^1$}
+
+\affiliation{$^1$Linn\'e Flow Centre, KTH Mechanics,
+SE-100 44 Stockholm, Sweden\\[\affilskip]
+$^2$Department of Applied Mathematics and Theoretical Physics,
+University of Cambridge, Cambridge CB3 0WA, United Kingdom}
+
+\pubyear{2013}
+\volume{???}
+\pagerange{???--???}
+% Do not enter received and revised dates. These will be entered by
+% the editorial office.
+\date{?; revised ?; accepted ?. - To be entered by editorial office}
+%\setcounter{page}{1}
+\begin{document}
+
+\maketitle
+
+
+% \baselineskip 8mm
+\begin{abstract}
+The dynamics of one-layer shallow-water flows forced in medium-scale
+wave modes and dissipation acting at small scales is investigated by
+means of theoretical analysis and numerical simulations with
+resolutions up to $7680^2$.
+%
+We first focus on the non-rotating case for which a statistically
+stationary regime is obtained for all resolutions and Froude numbers
+$F_f = \eps/(k_f c)$, where $\eps$ is the energy dissipation rate,
+$k_f$ the forcing wave number and $c$ the wave speed.
+%
+All the injected energy goes into a downscale energy
+cascade. Consequently, the spectral energy flux is constant and
+positive between the forcing wave number and the wave numbers where
+dissipation is active.  The spectral energy flux is exactly
+equipartioned between kinetic and potential energy.  An exact third
+order structure function law of Kolmogorov type is derived and
+numerically verified.  However, the downscale cascade is less
+efficient than in three-dimensional Navier-Stokes turbulence, since
+the mean energy of the statistically stationary flow scales as
+$\sqrt{\eps c /k_f}$ and varies with the dissipative scale.
+%
+Moreover, the spectra scale as $k^{-2}$ and the structure functions of
+order larger than two scale approximately as $r$.
+%
+%
+This intermittent scaling is explained by a simple model based on the
+assumption that the statistics is totally determined by shocks.
+%
+It is verified that the dynamics is not drastically modified by system
+rotation as long as the forcing wave number is larger than the
+deformation wave number $k_d = f/c$, where $f$ is the Coriolis
+parameter.
+\end{abstract}
+
+% \begin{keywords}
+% \end{keywords}
+
+\section{Introduction}
+
+
+
+
+
+The shallow-water models have been widely used to study basic
+mechanisms occurring in geophysical flows \cite[see for
+example][]{VallisLIVRE2006}.
+%
+These models are based on the hydrostatic approximation which is
+extremely well satisfied for a very wide range of scales in the oceans
+and in the atmosphere \Add{and on which are based the so-called
+primitive equations}.  They also rely on a stronger hypothesis
+regarding the density stratification.  The fluid is assumed to be
+structured in a limited number of thin homogeneous layers, which leads
+to equations involving only two-dimensional operators. \Add{However,
+as long as there is no overturning, the shallow-water model in the
+limit of a large number of layers and the primitive equations describe
+the same dynamics. In the opposite limit, two models are particularly
+important from the theoretical point of view.} The two-layer
+shallow-water model captures the baroclinic instability which is of
+primary importance for the dynamics of the oceans and of the
+atmosphere \cite[]{VallisLIVRE2006, Wirth2013}.
+%
+The equations of the one-layer shallow-water model are very similar to
+the two-dimensional compressible Navier-Stokes equations.  The
+one-layer model does not capture the baroclinic instability but it is
+one of the simplest hydrodynamic models with coexisting eigenmodes of
+the linearized operator with zero linear frequency and with finite
+non-zero linear frequency, $\omega = \pm \omega_l = \pm\sqrt{f^2 + c^2
+k^2}$, where $f$ is the Coriolis parameter, $c$ the wave speed and $k
+= |\kk|$ the wave number.
+%
+
+For geophysical applications, it is convenient to consider the limits
+for which the linear frequency $\omega_{l}$ is much larger than the
+characteristic nonlinear frequency $\omega_{nl} = U k$, where $U$ is a
+characteristic velocity.  In the limit $f/\omega_{nl} \sim
+ck/\omega_{nl} \rightarrow \infty$, one can obtain a quasi-geostrophic
+one-layer shallow-water model, i.e. derive self-consistent evolution
+equations for the 0-linear-frequency variable, the Charney potential
+vorticity.  In this limit, the dynamics of the 0-linear-frequency
+variable is totally decorrelated from the fast waves.
+%
+For finite rotation and wave speed, there are slow balanced motions,
+which are associated with relatively weak non-zero linear frequency
+modes.
+%
+When $\omega_{nl}(k) \ll \omega_{l}(k) $, there is only a weak
+interaction between waves and the balanced modes.
+%
+Due to its relative simplicity, the one-layer shallow-water model has
+been used to study issues like the projection on the balanced manifold
+\cite[]{Lorenz1980, MohebalhojehDritschel2000} and the production of
+waves by balanced flows \cite[]{FargeSadourny1989,
+LahayeZeitlin2012,Vanneste2013}. \Add{In this study, we consider the
+same model in order to address a related but different issue.}
+
+Balanced flows have a dynamics which is very similar to
+two-dimensional turbulence.
+%
+In the quasi-geostrophic limit, the space-averaged energy and the
+space-averaged potential enstrophy are conserved, positive definite
+and proportional in Fourier space. This leads\Add{, as in
+two-dimensional turbulence,} to an upscale energy cascade and a
+downscale enstrophy cascade.
+%
+Thus, the small-scale dissipation vanishes in the limit of zero
+viscosity.
+%
+In contrast to this, statistical mechanics indicates that wave energy
+should be transferred towards small scales \cite[]{Warn1986}.
+Numerical simulations have shown that long waves lose their energy by
+transferring it to shorter waves \cite[]{Sadourny1975,
+FargeSadourny1989, YuanHamilton1994}.  The mechanism of a wave cascade
+has been proposed to explain the attraction towards the balanced flows
+\cite[]{Sadourny1975}.  \cite{YuanHamilton1994} showed that
+statistically stationary shallow-water flows can be obtained forcing
+quasi-geostrophic modes at large scales and with dissipation only at
+small scales.
+%
+\Add{They propose that the $k^{-5/3}$ spectra that are observed at the
+atmospheric meso-scales} \cite[]{NastromGage1985, FrehlichSharman2010}
+\Add{and reproduced by some atmospheric models based on the primitive
+equations} \cite[]{KoshykHamilton2001, Skamarock2004,
+Hamilton_etal2008} \Add{could be reproduced by the one-layer
+shallow-water model by a downscale energy cascade of waves.}
+
+
+
+However, few studies have investigated the dynamics of the downscale
+energy cascade of waves in shallow-water models.
+%
+Most numerical studies have investigated decaying flows and have not
+focused on the cascade \cite[]{FargeSadourny1989,
+LarichevMcWilliams1991, SpallMcWilliams1992,
+PolvaniMcWilliamsSpallFord1994, LahayeZeitlin2012}.
+%
+Moreover, there are strong discrepancies between different numerical
+results and between these results and available theoretical results.
+%
+\cite{FargeSadourny1989} reported spectra scaling like $k^{-4}$
+whereas those shown by \cite{LahayeZeitlin2012} scale like $k^{-6}$.
+
+Some predictions are based on the weak wave turbulence formalism
+\cite[]{ZakharovLvovFalkovich1992, Nazarenko2011}.  In the case of
+inertial-gravity waves, \cite{FalkovichMedvedev1992} showed that the
+exact solutions of the kinetic equation corresponding to a constant
+downscale energy flux is associated with a spectrum scaling like $E(k)
+\sim P^{2/3} k^{-8/3}$.
+%
+However, as pointed out by \cite{FalkovichMeyer1996} when the
+dispersion is small enough, waves moving in the same direction have
+the same velocity and interact strongly, which can lead to the
+formation of shocks. \Add{In this case, the weak wave turbulence
+formalism is unable to give valuable results.}  Such sharp and long
+structures have been observed in many simulations
+\cite[]{FargeSadourny1989, PolvaniMcWilliamsSpallFord1994,
+LahayeZeitlin2012} but \Add{their effects} are not well understood.
+%
+\cite{Kuznetsov2004} predicted that a flow dominated by shocks should
+be associated with spectra scaling like $E(k) \sim k^{-2}$.
+%
+\cite{FalkovichMeyer1996} simulated acoustic turbulence dominated by shocks 
+and reported spectra in agreement with this theoretical prediction.
+%
+The shocks also lead to very strong intermittency, as demonstrated by
+\cite{BouchaudMezardParisi1995} and \cite{WeinanKhaninMazelSinai1997}
+in the case of Burgers turbulence.
+%
+
+The dynamics of waves in complex shallow-water flows is not well
+understood.  \Add{Our long-term goal is to understand this dynamics
+which involves interactions between balance and unbalance parts of the
+flow. However, even the wave cascade without balance flow is not well
+understood.} A statistically stationary wave cascade has never been
+simulated at high resolution.
+%
+Is it possible to obtain a statistically stationary state in the very
+fast wave regime, and how does the mean energy in this hypothetical
+regime depends on the forcing and the wave speed?  
+% What is the slope of 
+\Add{How does} the energy spectra \Add{scale as a function of the
+input parameters}?
+%
+All these questions are open and straightforward simulations may
+provide the answers.
+
+
+
+
+\cite{YuanHamilton1994} and \cite{FalkovichMeyer1996} carried out
+forced dissipated simulation of the one-layer shallow water model and
+acoustic turbulence, respectively.
+% 
+However, the resolution in both studies was quite coarse \Add{($386^2$
+and $101^2$ grid points, respectively)} so that the inertial range was very
+narrow.  Moreover, \cite{FalkovichMeyer1996} used a very particular
+type of strongly anisotropic forcing \Add{with waves in only one
+direction} while \cite{YuanHamilton1994} forced in geostrophic modes
+which severely complicates the interpretation.
+
+
+
+In this paper, we investigate the dynamics of one-layer shallow-water
+flows forced in the wave modes by means of high resolution numerical
+simulations \Add{with up the  $7680^2$ grid points}.
+%
+The model is described in section~\ref{section_basic_theory}.
+%
+We then derive some new theoretical results for this model and for
+turbulence dominated by shocks
+(section~\ref{section_advanced_theory}).
+%
+The numerical methods and the forcing are described in
+section~\ref{section_methods}.
+%
+The main numerical results corresponding to the simple case without
+global rotation are presented in
+section~\ref{section_wave_cascade_f=0}.
+%
+We investigate the sensibility of the non-rotating results to a
+moderate rotation (section~\ref{section_rotation}).
+
+
+\section{The one-layer shallow-water model}
+\label{section_basic_theory}
+% \input{section_basic_theory}
+
+\section{Theoretical analysis}
+\label{section_advanced_theory}
+% \input{section_advanced_theory}
+
+\section{Numerical methods}
+\label{section_methods}
+% \input{section_methods}
+
+\section{Wave cascade without global rotation}
+\label{section_wave_cascade_f=0}
+% \input{section_wave_cascade_f=0}
+
+\section{Effects of global rotation}
+\label{section_rotation}
+% \input{section_rotation}
+
+
+
+
+
+\section{Conclusions}
+
+We have numerically investigated one-layer shallow-water flows forced
+with medium-scale waves and dissipated at small scales.
+%
+First, we have focused on the non-rotating case and varied the
+resolution and the wave speed over a wide range.
+%
+The spectral energy budget for the full non-quadratic energy has been
+derived and has allowed us to show that the KE and the APE fluxes are
+constant and equal over a wide range of wave numbers.
+%
+The KE and APE spatio-temporal spectra present equal and very strong
+peaks at the linear wave frequency.
+%
+These two results show that there is a downscale energy cascade of
+non-dispersive waves, explaining the generation of statistically
+stationary flows.
+%
+We have derived an exact Kolmogorov law for the one-layer
+shallow-water flow based on the assumption that there is a constant
+energy flux due to a purely divergent flow and verified that the
+numerical results are in agreement with this theoretical law.
+
+
+
+The time- and spaced-averaged energy scales like $E = C_n \sqrt{\eps
+L_f c}$ and increases with the resolution at least up to $n = 5760$.
+The spectra scale like the Zakharov-Sagdeev spectrum $k^{-3/2}
+\sqrt{\eps c}$ at relatively small wave numbers $k \lesssim 2 k_f$ and
+like $k^{-2} c^{1/3} \eps^{5/9} k_f^{4/9}$ over the inertial range.
+We stress that we lack any convincing theoretical explanations for
+these scaling laws and we hope our results will motivate theoretical
+investigations on these challenging issues.
+
+Nevertheless, the $k^{-2}$ scaling can be explained by the presence of
+discontinuities \cite[]{Kuznetsov2004}.  The snapshots indeed show
+very sharp hydraulic jumps, which are the equivalent of shocks in
+compressible flows.
+%
+Following \cite{BouchaudMezardParisi1995} and
+\cite{WeinanKhaninMazelSinai1997}, we have built a simple model based
+on the assumption that the structure functions are determined only by
+shocks.
+%
+Using only this hypothesis, we explain the extreme intermittent
+characteristics of the flows, i.e.\ the $r^1$-scaling of the structure
+functions of order larger than 2 and the $r^{-1}$-scaling of the
+flatness.
+%
+Adding a simple hypothesis on the structure of the velocity field
+across the shocks, namely $\delta u_L = \delta u \sin\theta$ and
+$\delta u_T = \delta u \cos\theta$, where $\theta$ is the angle
+between the shock line and the separation vector, we have predicted
+the values of ratios of structure functions $R_p(r) \equiv
+\mean{|\delta u_L|^p}/\mean{|\delta u_T|^p}$ and of the flatness
+factors $F_T/F_L = 1.5$.
+%
+% Very interestingly, the flatness factors computed from atmospheric
+% data \cite[]{Lindborg1999} are also very large with a slope close to
+% $-1$ and a ratio $F_T/F_L$ equal to $1.5 \pm 0.1$.
+%
+Finally, we have shown that as long as $k_f>k_d$, the dispersion added
+by the rotation does not prevent the production of the regime studied
+in the non-rotating case and only weakly modify the results on the
+wave cascade.
+
+
+% In order to draw conclusions on the interpretation of turbulent
+% measurements in geophysical flows, we first have to stress that the
+% one-layer shallow-water model can only give insights on some
+% mechanisms important for geophysical fluids but is not suitable for
+% simulate the oceans and atmosphere.
+% %
+% Most of the simulations of theses systems are performed solving the
+% so-called primitive equations, which are (or in the atmospheric case
+% are very similar to) the Navier-Stokes equations under the Boussinesq
+% and the hydrostatic approximations.
+% %
+% We focus on the non-rotating case since it is a reasonable
+% approximation for the medium scales for which an energy cascade seems
+% to strongly influence the dynamics of geophysical flows, namely the
+% mesoscales in the atmosphere and the sub-mesoscales in the oceans.
+% %
+% The dominant balance for the primitive equations in the strongly
+% stratified and high Reynolds number limits corresponds to flows
+% structured in thin layers \cite[]{BillantChomaz2001}.
+% %
+% This layering, which has been widely observed in nature, is of course
+% inconsistent with the one-layer shallow-water model.
+% %
+% Another aspect of the dominant balance in the strongly stratified and
+% high Reynolds number case is that the energetic waves are not fast
+% compared to the balanced flows ($\omega_l \sim \omega_{nl}$), which is
+% very different from the case of the studied one-layer shallow-water
+% flows.
+% %
+% Moreover, the strongly stratified and high Reynolds number dominant
+% balance would corresponds in terms of the shallow-water Froude number
+% to $Fr \sim 1$.  This limit can not be correctly simulated even with a
+% multi-layer shallow-water model since when $Fr \sim 1$ the thickness
+% of the layers tends to reach the value 0 for which the shallow-water
+% models cease to be well defined.
+% %
+% Therefore, the shallow-water models are not suitable for simulating
+% the geophysical medium scales where the cascade is important.
+
+
+Our results on the dynamics of the wave energy cascade in the
+one-layer shallow-water model can yet give interesting informations on
+the interpretation of turbulent measurements in geophysical fluids.
+%
+Since we have shown in this case that many statistical results are
+dominated by the effects of the discontinuities due to shocks, we can
+conjecture that the discontinuities or front in the atmosphere can
+significantly influence the cascade processes and the statistical
+results.
+%
+It would be interesting in the future to quantity the effects of the
+processes of frontogenesis in terms of downscale energy cascade in
+geophysical flows.
+
+
+
+\section*{Acknowledgements}
+
+The authors thank Gregory Falkovich and Sergey Nazarenko for valuable
+comments and suggestions regarding the interpretation of the
+simulations.
+
+
+\appendix
+
+
+
+
+\section{Kinetic energy dissipation and forcing rates}
+\label{app_comp}
+% \input{appendix_dissip_forcing}
+
+
+
+\bibliographystyle{jfm}
+\bibliography{biblio}
+
+\end{document}
+

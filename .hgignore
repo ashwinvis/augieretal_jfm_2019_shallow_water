@@ -1,0 +1,19 @@
+syntax: glob
+
+*.pyd*
+*.pyc
+*~
+*tmp
+
+\#*\#
+
+Latex/article.pdf
+
+*.log
+*.aux
+*.out
+*.dvi
+*.bbl
+*.blg
+
+auto/*

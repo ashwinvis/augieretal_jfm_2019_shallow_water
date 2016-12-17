@@ -1,0 +1,97 @@
+
+
+In this appendix, we give the expressions of the kinetic energy
+dissipation and forcing rates, which are unusual for the one-layer
+shallow-water model since the kinetic energy has not a quadratic
+expression.
+
+
+We consider viscous operators such as $\p_t \uu |_{\mbox{\tiny diss}}
+=- \nu_n i^{-n} \bnabla^n \uu $ and $\p_t \eta |_{\mbox{\tiny diss}}
+=- \nu_n i^{-n} \bnabla^n \eta $, with n even.  The values $n=-4$, 0,
+2 and 8 correspond to hypo-viscosity, linear damping, newtonian
+viscosity and hyper-viscosity, respectively.  In this study, we have
+only used the value $n=8$.
+%
+Note that the dissipation operator is applied on $\eta$ and not on
+$h$.  Using $\p_t \JJ |_{\mbox{\tiny diss}} = h \p_t \uu
+|_{\mbox{\tiny diss}} + \uu \p_t h |_{\mbox{\tiny diss}} = - \nu_n
+i^{-n} (h \bnabla^n \uu + \uu \bnabla^n \eta )$, the KE dissipation
+rate can be computed as
+\begin{eqnarray}
+\p_t \meanx{E_K} |_{\mbox{\tiny diss}} 
+&=& 
+\mean{
+\p_t \uu |_{\mbox{\tiny diss}} \cdot \JJ
++ \uu \cdot \p_t \JJ |_{\mbox{\tiny diss}}
+} /2, \\
+&=& 
+- \nu_n i^{-n}
+\mean{
+\JJ \cdot \bnabla^n \uu + |\uu|^2 \bnabla^n \eta /2
+} \\
+% &=& 
+% - \sum_\kk \hat f_{dn} \left[ \scalarprod{\JJ}{\uu}
+% + \scalarprod{|\uu|^2/2}{\eta}
+% \right]\\
+&=& 
+- \sum_\kk 2 f_{dn}  E_K(\kk)
+- \sum_\kk  f_{dn} \scalarprod{|\uu|^2/2}{\eta},
+\end{eqnarray}
+where $ f_{dn} (\kk) = \nu_n |\kk|^n$ is the dissipative frequency.
+The first term of the rhs is the usual term but there is also an
+additional term that is not negatively defined.
+
+
+
+
+The spectral injection rate of quadratic kinetic energy averaged over
+one time step is
+\begin{equation}
+P_{K}(\kk, t) 
+= \frac{1}{\delta t} \int_t^{t+\delta t} dt'
+\scalarprod{\uu(t')}{\ff}
+= 
+\scalarprod{\uu}{\ff}
++ 
+|\ff|^2 \delta t /2,
+\end{equation}
+where we have used the fact that the forcing $\ff$ is constant over
+the time step.
+%
+In order to calculate the total KE injection rate, we have to take
+into account the non-quadratic term in the expression of the kinetic
+energy.
+%
+The forcing terms are $\p_t \uu |_f = \ff$, $\p_t h |_f = f_h$ and $
+\p_t \JJ |_f = \ff_\JJ = h \ff + \uu f_h$ so that the instantaneous
+injection rate can be written as
+\begin{equation}
+ P_{K\mbox{\tiny inst}}(\kk, t) 
+= \p_t  E_K(\kk, t)|_f 
+= \scalarprod{\JJ}{\ff}/2 + \scalarprod{\uu}{\ff_\JJ}/2.
+\end{equation}
+Averaging over one time step, we obtain
+\begin{eqnarray}
+ P_{K}(\kk, t) 
+&=& \frac{1}{\delta t} \int_t^q{t+\delta t} 
+dt'  P_{K\mbox{\tiny inst}}(\kk, t') 
+\\
+&=& \frac{1}{\delta t} \int_t^{t+\delta t} dt'
+\left[
+\scalarprod{\JJ(t')}{\ff}/2
++ \scalarprod{\uu(t')}{h(t') \ff + \uu(t') f_h}/2 
+\right].
+\end{eqnarray}
+Using the estimates $\uu(t') = \uu(t)+ \ff (t'-t)$, $h(t') = h(t)+ f_h
+(t'-t)$ and $\JJ(t') = \JJ(t)+ \ff f_h (t'-t)^2$, the KE injection
+rate averaged over one time step can be computed at the leading order
+as
+\begin{eqnarray}
+ P_{K}(\kk, t) \simeq 
+& & \scalarprod{\JJ}{\ff}/2 + \scalarprod{\uu}{\ff_\JJ}/2 \nonumber\\
+&+& \left[  
+\scalarprod{\ff}{\ff_\JJ}/2  
++ \scalarprod{\uu}{f_h\ff} 
+\right] \delta t /2.
+\end{eqnarray}

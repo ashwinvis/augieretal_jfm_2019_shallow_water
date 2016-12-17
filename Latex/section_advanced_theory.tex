@@ -1,0 +1,256 @@
+
+
+
+\subsection{Analysis of the wave energy cascade}
+
+\subsubsection{Formulation of the spectral energy budget for
+non-quadratic energy}
+
+In order to analyze the flux of energy, we derive the spectral energy
+budget, i.e.\ the governing equations for spectral KE and APE
+functions.
+%
+This is not as straightforward as in incompressible turbulence since
+the expression of the kinetic energy $E_K = \JJ\cdot\uu/2$ is not
+quadratic.
+%
+In order to define the spectral KE function, we use the relation
+\begin{equation}
+\meanx{ E_K } = \sum_\kk \scalarprod{\uu}{\JJ}/2,
+\end{equation}
+where
+\begin{equation}
+\scalarprod{\baa}{\bb} \equiv \Re\{ \hat \baa(\kk)^* \cdot \hat \bb(\kk) \},
+\end{equation}
+where $\Re$ denotes the real part, $\kk$ is the wave number and the
+hat denotes the Fourier transform.
+%
+The spectral KE function can therefore be defined as
+\begin{equation}
+E_K(\kk) \equiv \scalarprod{\uu}{\JJ}/2, 
+\end{equation}
+such as $\meanx{ E_K } = \sum_\kk E_K(\kk)$.
+%
+Similarly, the PE can be written as the sum over all wave numbers of
+the spectral PE function $E_P(\kk) = c^2 |\hat h|^2/2 = c^2
+\scalarprod{h}{h}/2$, where, by definition,
+\begin{equation}
+\scalarprod{a}{b} \equiv \Re\{ \hat a(\kk)^* \hat b(\kk) \}.
+\end{equation}
+
+
+The equation for the spectral KE and PE functions can be written as
+\begin{eqnarray}
+\p_t E_K(\kk) &=& T_K(\kk) + C_K(\kk),\\
+\p_t E_P(\kk) &=& T_P(\kk) - C_P(\kk),
+\end{eqnarray}
+where
+\begin{equation}
+C_K(\kk) 
+= -\scalarprod{\uu}{\bnabla E_P}/2 - c^2 \scalarprod{\JJ}{\bnabla h}/2,
+\end{equation}
+\begin{equation}
+C_P(\kk) = c^2 \scalarprod{h}{hd} /2,
+\end{equation}
+\begin{equation}
+T_P(\kk) = -c^2 \scalarprod{h}{\uu \cdot \bnabla h + hd/2}
+\end{equation}
+and
+\begin{equation}
+T_K(\kk) 
+= -\scalarprod{\uu}{\uu \cdot \bnabla \JJ}/2
+-\scalarprod{\JJ}{\uu \cdot \bnabla \uu}/2
+-\scalarprod{\uu}{d\JJ}/2.
+\end{equation}
+The mean conversion from potential energy to kinetic energy can be
+computed from the two conversion spectral functions as $C = \sum_\kk
+C_K(\kk) = \sum_\kk C_P(\kk)$.
+
+
+
+
+
+
+\subsubsection{Exact Kolmogorov law for irrotational flows}
+
+
+
+As in incompressible homogeneous isotropic turbulence, an exact
+Kolmogorov law for irrotational flows can be derived.
+%
+It is convenient to start from the following form of the governing
+equations
+\begin{eqnarray}
+\p_t \uu &=& -\bnabla \cdot (|\uu|^2/2) - c^2 \bnabla h  
+- \zeta_a \eez \wedge \uu, \\
+\p_t \JJ &=& -\p_j (u_j \JJ) - \bnabla E_p,\\
+\p_t h   &=& -\bnabla \cdot \JJ.
+\end{eqnarray}
+Assuming that the flow is irrotational and that there is no global
+rotation ($\zeta_a=0$), it can be shown that
+\begin{equation}
+\p_t ( J_i' u_i ) = - \p_i( J_i'|\uu|^2/2) - \p_i'(u_j J_j' u_i')
+-\p_i (J_i' c^2 h)  - \p_i' (u_i E_p')
+\end{equation}
+and
+\begin{equation}
+\p_t ( h' h ) = - \p_i( h'J_i ) - \p_i'( hJ_i' ),
+\end{equation}
+which gives
+\begin{eqnarray}
+\p_t ( \JJ'\cdot\uu + \JJ\cdot\uu' + 2c^2 h'h )
+&=& - \p_i( J_i'|\uu|^2/2) - \p_i'( J_i|\uu'|^2/2) %\nonumber \\&& 
+- \p_i'(u_j J_j' u_i') - \p_i(u_j' J_j u_i) \nonumber\\
+&& -c^2\p_i (J_i'h) - c^2\p_i' (J_ih') %\nonumber\\&& 
+- \p_i' (u_i E_p') - \p_i (u_i' E_p) \nonumber\\
+&& -2c^2\p_i' (J_i'h) - 2c^2\p_i (J_ih').
+\end{eqnarray}
+We then assume homogeneity and take the ensemble average denoted by
+$\meane{}$.  The separation vector is noted $\rr = \xx' - \xx$.  For
+every function $g(\xx, \xx')$, we have $\p_i' \meane{g} =
+-\p_i\meane{g} = \bnabla_{\rr} \meane{g}|_i$. We obtain
+\begin{eqnarray}
+\p_t \meane{ \JJ'\cdot\uu + \JJ\cdot\uu' + 2c^2 h'h }
+&=& + \bnabla_{\rr}\cdot\meane{ \JJ'|\uu|^2/2 - \JJ|\uu'|^2/2 } \nonumber\\
+&& - \bnabla_{\rr}\cdot\meane{ u_j J_j' \uu' - u_j' J_j \uu } \nonumber\\
+&& - \bnabla_{\rr}\cdot\meane{ \uu E_p'- \uu' E_p } \nonumber\\
+&& -c^2\bnabla_{\rr}\cdot\meane{ \JJ'h - \JJ h' }
+\end{eqnarray}
+%
+We then introduce the structure functions and the operator $\delta$
+returning the increment of a variable between two points separated by $\rr$, 
+for example $\delta h (\xx, \rr) = h(\xx+\rr)- h(\xx)$.
+%
+Using again homogeneity, we get
+\begin{equation}
+\meane{ (\delta h)^2 \delta\uu } = 
+-\meane{ h'^2 \uu } + \meane{ h^2 \uu' }
++2\meane{ hh' \uu } - 2\meane{ hh' \uu' }
+\end{equation}
+and 
+\begin{equation}
+\meane{ |\delta \uu|^2 \delta\JJ } = 
+\meane{  |\uu|^2 \JJ' } - \meane{ |\uu'|^2\JJ }
++\meane{ u_ju_j' \JJ' } - \meane{  u_ju_j' \JJ },
+\end{equation}
+which gives
+\begin{equation}
+2\p_t \meane{ \JJ'\cdot\uu + \JJ\cdot\uu' + 2c^2 h'h }
+= \bnabla_{\rr} \cdot ( \meane{ |\delta \uu|^2 \delta\JJ } 
++ c^2\meane{ (\delta h)^2 \delta\uu } ).
+\end{equation}
+Using isotropy and integrating yield an exact Kolmogorov law for
+one-layer shallow water irrotational turbulence
+\begin{equation}
+\meane{ |\delta \uu|^2 \delta J_L } 
++ c^2\meane{ (\delta h)^2 \delta u_L } = -4 \varepsilon r, \label{eq_Kolmo}
+\end{equation}
+where $\eps$ is the energy dissipation rate and $J_L \equiv
+\JJ\cdot\rr / |\rr|$ and $u_L \equiv \uu\cdot\rr / |\rr|$ are
+longitudinal increments.
+
+
+
+
+
+
+
+\subsection{Simple model for structure functions determined by a
+random set of shocks}
+\label{subsection_shock_model}
+
+
+\cite{BouchaudMezardParisi1995} and \cite{Kuznetsov2004} showed that
+the presence of discontinuities can strongly influence the statistics
+and in particular lead to very strong intermittency.
+%
+We now present an extremely simple model based on the assumption that
+shocks totally dominate the flow.  The structure functions are
+calculated by averaging increments over the total surface of the
+domain $\mA$.  Considering that the increments are produced only by
+discontinuity lines, we get
+\begin{eqnarray}
+\meane{|\delta h|^p} 
+&=& \frac{1}{\mA} \int_{\mA}  d^2\xx |\delta h(\xx)|^p \nonumber\\
+&\simeq& \frac{r}{\mA} \int_\shocks ds |\sin\theta| |\Delta h (s)|^p,
+\end{eqnarray}
+where $\theta$ is the angle between the shock line and the separation
+vector $\rr$ %
+and $\Delta h (s)$ is the step in $h$ at a shock.
+%
+Assuming isotropy, the integral can be split and we get
+\begin{equation}
+\meane{|\delta h|^p} 
+\simeq 
+r \frac{L_s}{\mA} \meant{|\sin\theta|} \means{|\Delta h (s)|^p}
+=
+r \frac{L_s}{\mA} \frac{2}{\pi} \means{|\Delta h (s)|^p},
+\end{equation}
+where $\meant{}$ denotes the mean over $\theta$, %
+$L_s$ is the total length of the shocks in the domain %
+and $\means{}$ denotes the mean over all shocks.
+
+For velocity increments, we can also use a characteristic of the
+velocity singularities.  The step in velocity is only in the component
+perpendicular to the shocks, which implies that the longitudinal and
+transverse increments are related by $\delta u_L = \delta u
+\sin\theta$, $\delta u_T = \delta u \cos\theta$.
+%
+Applying the same averaging method, we obtain
+\begin{equation}
+\meane{|\delta u_L|^p} 
+\simeq 
+r \frac{L_s}{\mA} 
+\meant{|\sin\theta|^{1+p}}
+\means{|\Delta u (s)|^p}
+\end{equation}
+and
+\begin{equation}
+\meane{|\delta u_T|^p} 
+\simeq 
+r \frac{L_s}{\mA} 
+\meant{|\sin\theta||\cos\theta|^{p}}
+\means{|\Delta u (s)|^p},
+\end{equation}
+where $\Delta u (s)$ is the velocity step at a shock.
+%
+These assumptions completely determine the ratio between the
+longitudinal and transverse structure functions, which can be
+analytically computed as
+\begin{eqnarray}
+R_p(r) \equiv \frac{\meane{|\delta u_L|^p}}{\meane{|\delta u_T|^p}} = 
+\frac{\meant{|\sin\theta|^{1+p}}}{\meant{|\sin\theta||\cos\theta|^p}},
+\end{eqnarray}
+giving the numerical values $R_2 = 2$, $R_3 = 6\pi/8$ and $R_4 = 8/3$.
+
+
+Interestingly, for an isotropic and purely divergent flow ($\zeta =
+0$), the longitudinal and transverse second order structure functions
+are exactly related by $\meane{(\delta u_L)^2} = \p_r( r\meane{(\delta
+u_T)^2} )$ \cite[]{Lindborg2007jas}.
+%
+If we further assume than both second order structure functions follow
+the same scaling law $\meane{ (\delta u_L)^2} \propto \meane{ (\delta
+u_T)^2} \propto r^\alpha$, then we have $\meane{ (\delta u_L)^2} =
+(1+\alpha) \meane{ (\delta u_T)^2} $, which gives $ R_2 = 2
+\Leftrightarrow \alpha = 1$.
+
+
+The shock model also provides predictions of the flatness factors of
+the velocity increments
+\begin{eqnarray}
+F_L &=&  \frac{\meane{|\delta u_L|^4}}{\meane{|\delta u_L|^2}^2} 
+= r^{-1} \frac{\means{|\Delta u|^4}}{\means{|\Delta u|^2}^2} 
+\frac{\meant{|\sin\theta|^5}}{\meant{|\sin\theta|^3}^2},\\
+F_T &=&  \frac{\meane{|\delta u_T|^4}}{\meane{|\delta u_T|^2}^2} 
+= r^{-1} \frac{\means{|\Delta u|^4}}{\means{|\Delta u|^2}^2} 
+\frac{\meant{|\sin\theta||\cos\theta|^4}}{\meant{|\sin\theta||\cos\theta|^2}^2},
+\end{eqnarray}
+and on the ratio of the two flatness factors, which is simply equal to
+$F_T/F_L = 1.5$ according to the model.
+
+
+
+
+
+
