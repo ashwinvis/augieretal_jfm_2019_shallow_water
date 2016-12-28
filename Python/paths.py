@@ -29,7 +29,6 @@ def make_paths_dict(glob_pattern='SW1L*'):
 
     '''
     paths = glob(glob_pattern)
-    print(glob_pattern, paths)
     paths_dict = OrderedDict()
     for p in paths:
         params_xml_path = os.path.join(p, 'params_simul.xml')
@@ -64,3 +63,6 @@ def specific_paths_dict():
 
 
 paths_sim = specific_paths_dict()
+path_pyfig = os.path.join(os.path.dirname(__file__), '../Pyfig/')
+if not os.path.exists(path_pyfig):
+    os.mkdir(path_pyfig)
