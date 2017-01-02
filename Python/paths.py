@@ -1,4 +1,5 @@
 import os
+import sys
 import subprocess
 from glob import glob
 import re
@@ -13,6 +14,8 @@ def get_pathbase():
         pathbase = '/scratch/avmo/data/'
     elif any(map(hostname.startswith, ['legilnx', 'nrj1sv', 'meige'])):
         pathbase = '$HOME/useful/project/13KTH/DataSW1L_Ashwin/'
+    elif hostname.startswith('kthxps'):
+        pathbase = '/scratch/avmo/13KTH/'
     else:
         raise ValueError('Unknown hostname')
 
@@ -66,3 +69,14 @@ paths_sim = specific_paths_dict()
 path_pyfig = os.path.join(os.path.dirname(__file__), '../Pyfig/')
 if not os.path.exists(path_pyfig):
     os.mkdir(path_pyfig)
+
+
+def exit_if_figure_exists(scriptname, extension='.png'):
+    scriptname = os.path.basename(scriptname)
+    figname = os.path.splitext(scriptname)[0].strip('make_') + extension
+    figname = os.path.join(path_pyfig, figname)
+    if os.path.exists(figname):
+        print('Figure {} already made. {} exiting...'.format(figname, scriptname))
+        sys.exit(0)
+    else:
+        print('Making Figure {}.. '.format(figname))

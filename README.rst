@@ -13,6 +13,10 @@ Clean the latex files.
 
 Clean latex files and figures produced with Python.
 
+- make pyfig
+
+Produce figure with Python.
+
 - make help
 
 Display the README.rst file.

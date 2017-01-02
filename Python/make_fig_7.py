@@ -1,9 +1,10 @@
+#!/usr/bin/env python
 import pylab as pl
 import fluidsim as fls
 import h5py
 
 from base import _k_f, _eps, set_figsize
-from paths import paths_sim, path_pyfig
+from paths import paths_sim, path_pyfig, exit_if_figure_exists
 
 
 path_fig = path_pyfig + 'fig_7.png'
@@ -66,6 +67,7 @@ def fig7_spectra(path, fig, ax, t_start):
 
 
 if __name__ == '__main__':
+    exit_if_figure_exists(__file__)
     set_figsize(10, 6)
     fig, ax = pl.subplots()
     fig7_spectra(paths_sim['noise_c100nh7680Buinf'], fig, ax, t_start=25)

@@ -10,7 +10,7 @@ latex_files := $(dir)/section_basic_theory.tex \
   $(dir)/section_wave_cascade_f=0.tex $(dir)/section_rotation.tex \
   $(dir)/appendix_dissip_forcing.tex
 
-figures := 
+figures := $(wildcard Pyfig/fig*.*)
 
 .PHONY: all clean cleanall help
 
@@ -36,3 +36,6 @@ $(path).log: $(path).tex $(figures) $(latex_files)
 
 $(path).bbl: $(path).aux $(dir)/biblio.bib
 	cd $(dir) && bibtex $(name).aux
+
+pyfig:
+	$(foreach make_fig,$(wildcard Python/make_fig*.py),python $(make_fig);)
