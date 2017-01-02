@@ -7,7 +7,6 @@ from base import _k_f, _eps, set_figsize
 from paths import paths_sim, path_pyfig, exit_if_figure_exists
 
 
-path_fig = path_pyfig + 'fig_7.png'
 
 
 def _mean_spectra(sim, tmin=0, tmax=1000):
@@ -67,7 +66,7 @@ def fig7_spectra(path, fig, ax, t_start):
 
 
 if __name__ == '__main__':
-    exit_if_figure_exists(__file__)
+    path_fig = exit_if_figure_exists(__file__)
     set_figsize(10, 6)
     fig, ax = pl.subplots()
     fig7_spectra(paths_sim['noise_c100nh7680Buinf'], fig, ax, t_start=25)

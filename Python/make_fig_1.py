@@ -7,7 +7,6 @@ from base import _k_f, _eps, _font, set_figsize
 from paths import paths_sim, path_pyfig, exit_if_figure_exists
 
 
-path_fig = path_pyfig + 'fig_1.png'
 
 
 def fig1_energy(paths, fig=None, ax=None, t_start=10., legend=None):
@@ -51,7 +50,7 @@ def get_legend_and_paths(c_list, nh_list):
 
 
 if __name__ == '__main__':
-    exit_if_figure_exists(__file__)
+    path_fig = exit_if_figure_exists(__file__)
     set_figsize(16, 16)
     fig = pl.figure()
     ax = []

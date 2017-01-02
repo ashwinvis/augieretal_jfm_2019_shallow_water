@@ -74,9 +74,10 @@ if not os.path.exists(path_pyfig):
 def exit_if_figure_exists(scriptname, extension='.png'):
     scriptname = os.path.basename(scriptname)
     figname = os.path.splitext(scriptname)[0].strip('make_') + extension
-    figname = os.path.join(path_pyfig, figname)
-    if os.path.exists(figname):
+    figpath = os.path.join(path_pyfig, figname)
+    if os.path.exists(figpath):
         print('Figure {} already made. {} exiting...'.format(figname, scriptname))
         sys.exit(0)
     else:
         print('Making Figure {}.. '.format(figname))
+        return figpath

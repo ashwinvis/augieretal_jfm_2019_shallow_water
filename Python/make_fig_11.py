@@ -6,7 +6,6 @@ from base import _k_f, set_figsize, _rxs_str_func
 from paths import paths_sim, path_pyfig, exit_if_figure_exists
 
 
-path_fig = path_pyfig + 'fig_11.png'
 
 
 def fig11_ratio_struct(path, fig, ax1, order=[2, 3, 4, 5], tmin=0, tmax=1000, delta_t=0.5):
@@ -45,7 +44,7 @@ def fig11_ratio_struct(path, fig, ax1, order=[2, 3, 4, 5], tmin=0, tmax=1000, de
 
 
 if __name__ == '__main__':
-    exit_if_figure_exists(__file__)
+    path_fig = exit_if_figure_exists(__file__)
     set_figsize(10, 6)
     fig, ax = pl.subplots()
     fig11_ratio_struct(

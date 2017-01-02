@@ -39,3 +39,4 @@ $(path).bbl: $(path).aux $(dir)/biblio.bib
 
 pyfig:
 	$(foreach make_fig,$(wildcard Python/make_fig*.py),python $(make_fig);)
+	pandoc $(latex_files) -o /dev/stdout -t rst | awk 'BEGIN{RS="\n\n";} /\.\. figure/{print $0; print "\n";}' > Pyfig/README.rst
