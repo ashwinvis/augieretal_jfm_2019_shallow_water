@@ -3,10 +3,8 @@ import pylab as pl
 import fluidsim as fls
 import h5py
 
-from base import _k_f, _eps, set_figsize
-from paths import paths_sim, path_pyfig, exit_if_figure_exists
-
-
+from base import _k_f, _eps, set_figsize, matplotlib_rc
+from paths import paths_sim, exit_if_figure_exists
 
 
 def _mean_spectra(sim, tmin=0, tmax=1000):
@@ -25,8 +23,8 @@ def _mean_spectra(sim, tmin=0, tmax=1000):
     imin_plot = pl.argmin(abs(times - tmin))
     imax_plot = pl.argmin(abs(times - tmax))
 
-    tmin_plot = times[imin_plot]
-    tmax_plot = times[imax_plot]
+    # tmin_plot = times[imin_plot]
+    # tmax_plot = times[imax_plot]
     machine_zero = 1e-15
     EK = dset_spectrumEK[imin_plot:imax_plot + 1].mean(0)
     EA = dset_spectrumEA[imin_plot:imax_plot + 1].mean(0)
@@ -66,6 +64,7 @@ def fig7_spectra(path, fig, ax, t_start):
 
 
 if __name__ == '__main__':
+    matplotlib_rc()
     path_fig = exit_if_figure_exists(__file__)
     set_figsize(10, 6)
     fig, ax = pl.subplots()

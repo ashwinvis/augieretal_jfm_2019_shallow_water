@@ -2,10 +2,8 @@
 import pylab as pl
 import fluidsim as fls
 
-from base import _k_f, set_figsize, _rxs_str_func
-from paths import paths_sim, path_pyfig, exit_if_figure_exists
-
-
+from base import _k_f, set_figsize, _rxs_str_func, matplotlib_rc
+from paths import paths_sim, exit_if_figure_exists
 
 
 def fig12_flatness(path, fig, ax, tmin=0, tmax=1000, delta_t=0.5):
@@ -38,7 +36,11 @@ def fig12_flatness(path, fig, ax, tmin=0, tmax=1000, delta_t=0.5):
 
     ax.set_xlim([2e-3, 10])
     ax.set_ylim([2, 500])
-    ax.plot(rxs[cond] / L_f, 1 / rxs[cond], 'k', label='$r^{-1}$')
+    ax.plot(rxs[cond] / L_f, 1 / rxs[cond], 'k')
+    x_text = rxs[cond].mean() / L_f
+    y_text = 1. / rxs[cond].mean() * 1.05
+    ax.text(x_text, y_text, '$r^{-1}$')
+
     ax_inset = fig.add_axes([0.5, 0.5, 0.3, 0.3])
     ax_inset.set_xlabel('$r_x/L_f$')
     ax_inset.set_ylabel('$F_T / F_L$')
@@ -50,8 +52,9 @@ def fig12_flatness(path, fig, ax, tmin=0, tmax=1000, delta_t=0.5):
 
 
 if __name__ == '__main__':
+    matplotlib_rc()
     path_fig = exit_if_figure_exists(__file__)
     set_figsize(10, 6)
     fig, ax = pl.subplots()
-    fig12_flatness(paths_sim['noise_c20nh7680Buinf'], fig, ax)
+    fig12_flatness(paths_sim['noise_c20nh7680Buinf'], fig, ax, tmin=20)
     pl.savefig(path_fig)

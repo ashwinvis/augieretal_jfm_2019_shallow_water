@@ -4,10 +4,8 @@ import fluidsim as fls
 import os
 import h5py
 
-from base import _k_f, _eps, set_figsize
-from paths import paths_sim, path_pyfig, exit_if_figure_exists
-
-
+from base import _k_f, _eps, set_figsize, matplotlib_rc
+from paths import paths_sim, exit_if_figure_exists
 
 
 def fig3_struct(path, fig, ax1, tmin=0, tmax=1000):
@@ -45,33 +43,50 @@ def fig3_struct(path, fig, ax1, tmin=0, tmax=1000):
     ax1.set_xscale('log')
     ax1.set_yscale('linear')
 
-    ax1.set_xlabel('$r/L_f$')
-    ax1.set_ylabel('$S(r) / (4\epsilon r)$')
-
-    ax1.axhline(1., color='k', ls=':')
-
     # ax1.plot(rxs / Lf,
     #          (S_uL2JL+S_uT2JL+S_c2h2uL)/S_Kolmo_theo,
     #          'y', linewidth=1, label='sum check')
-    ax1.plot(rxs / Lf, S_Kolmo / S_Kolmo_theo, 'k', linewidth=2, label='S')
+    def _label(x, y):
+        pre = ''
+        if y == 'uu':
+            y = r'\mathbf{u}'
+            y2 = r'|\delta {}|^2'.format(y)
+        else:
+            if y == 'h':
+                pre = 'c ^ 2'
+            y2 = r'(\delta {})^2'.format(y)
+
+        return '$ \langle {} \delta {} {} \\rangle $'.format(pre, x, y2)
+
+    ax1.set_xlabel('$r/L_f$')
+    label1 = _label('J_L', 'uu')
+    label2 = _label('u_L', 'h')
+    label3 = label1[:-10] + ' + ' + label2[10:]
+    ax1.set_ylabel(label3.rstrip(' $') + ' / (4\epsilon_q r)$')
+
+    ax1.plot(rxs / Lf, S_Kolmo / S_Kolmo_theo, 'k', linewidth=4,
+             label=label3)
     ax1.plot(rxs / Lf, (S_uL2JL + S_uT2JL) / S_Kolmo_theo, 'r', linewidth=2,
-             label='$Su^2_LJ+Su^2_TJ$')
-    ax1.plot(rxs / Lf, S_c2h2uL / S_Kolmo_theo,
-             'b', linewidth=2, label='$S(ch)^2u_L$')
+             label=label1)
+    ax1.plot(rxs / Lf, S_c2h2uL / S_Kolmo_theo, 'b', linewidth=2,
+             label=label2)
     ax1.plot(rxs / Lf, S_uL2JL / S_Kolmo_theo,
-             'r--', linewidth=1, label='$Su^2_LJ$')
+             'r--', linewidth=2, label=_label('J_L', 'u_L'))
     ax1.plot(rxs / Lf, S_uT2JL / S_Kolmo_theo,
-             'r-.', linewidth=1, label='$Su^2_TJ$')
+             'r-.', linewidth=2, label=_label('J_L', 'u_T'))
 
-    cond = rxs < 6 * deltax
-    ax1.plot(rxs[cond] / Lf, 1.e0 * rxs[cond] ** 3 / S_Kolmo_theo[cond],
-             'y', linewidth=2, label='$r^3/S; r<6dx$')
+    # cond = rxs < 6 * deltax
+    # ax1.plot(rxs[cond] / Lf, 1.e0 * rxs[cond] ** 3 / S_Kolmo_theo[cond],
+    #          'y', linewidth=2, label='$r^3/S; r<6dx$')
 
-    ax1.plot(rxs, pl.ones(rxs.shape), 'k:', linewidth=1)
-    ax1.legend()
+    ax1.axhline(1., color='k', ls=':')
+    # ax1.plot(rxs, pl.ones(rxs.shape), 'k:', linewidth=1)
+    ax.set_xlim([3e-3, 3e1])
+    ax1.legend(loc=1)
 
 
 if __name__ == '__main__':
+    matplotlib_rc()
     path_fig = exit_if_figure_exists(__file__)
     set_figsize(10, 6)
     fig, ax = pl.subplots()

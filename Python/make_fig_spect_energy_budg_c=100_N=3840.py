@@ -5,10 +5,8 @@ import os
 import h5py
 from fluidsim.base.output.spect_energy_budget import cumsum_inv
 
-from base import _index_where, _k_f, _eps, set_figsize
-from paths import paths_sim, path_pyfig, exit_if_figure_exists
-
-
+from base import _index_where, _k_f, _eps, set_figsize, matplotlib_rc
+from paths import paths_sim, exit_if_figure_exists
 
 
 def fig2_seb(path, fig=None, ax=None, t_start=10):
@@ -50,6 +48,7 @@ def fig2_seb(path, fig=None, ax=None, t_start=10):
 
 
 if __name__ == '__main__':
+    matplotlib_rc()
     path_fig = exit_if_figure_exists(__file__)
     set_figsize(10, 6)
     fig, ax = pl.subplots()

@@ -2,10 +2,8 @@
 import pylab as pl
 import fluidsim as fls
 
-from base import _k_f, set_figsize, _rxs_str_func
-from paths import paths_sim, path_pyfig, exit_if_figure_exists
-
-
+from base import _k_f, set_figsize, _rxs_str_func, matplotlib_rc
+from paths import paths_sim, exit_if_figure_exists
 
 
 def fig11_ratio_struct(path, fig, ax1, order=[2, 3, 4, 5], tmin=0, tmax=1000, delta_t=0.5):
@@ -40,13 +38,15 @@ def fig11_ratio_struct(path, fig, ax1, order=[2, 3, 4, 5], tmin=0, tmax=1000, de
                  linewidth=2, label='$R_{:.0f}$'.format(o))
         ax1.plot(rxs / L_f, ones * shock_model[int(o)], color2)
 
+    ax1.set_ylim([0., 10.])
     ax1.legend()
 
 
 if __name__ == '__main__':
+    matplotlib_rc()
     path_fig = exit_if_figure_exists(__file__)
     set_figsize(10, 6)
     fig, ax = pl.subplots()
     fig11_ratio_struct(
-        paths_sim['noise_c20nh7680Buinf'], fig, ax, pl.arange(2, 6), tmin=10)
+        paths_sim['noise_c20nh7680Buinf'], fig, ax, pl.arange(2, 7), tmin=10)
     pl.savefig(path_fig)

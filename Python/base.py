@@ -4,15 +4,22 @@ import h5py
 from fluiddyn.util.paramcontainer import ParamContainer
 
 
-def set_font(size=14):
+def get_font(size=16):
     _font = {'family': 'serif',
              'weight': 'normal',
              'size': size,
              }
+    return _font
+
+
+def matplotlib_rc(mathjax=True, fontsize=16, interactive=False):
+    pl.rc('text', usetex=mathjax)
+    _font = get_font(fontsize)
     pl.rc('font', **_font)
-
-
-_font = set_font()
+    if interactive:
+        pl.ion()
+    else:
+        pl.ioff()
 
 
 def set_figsize(*size):
