@@ -43,4 +43,5 @@ pyfig:
 listfig:
 	cd $(dir) && python ../Python/flatex.py $(name).tex /dev/stdout | \
 		pandoc -f latex -t rst | \
-	       	awk 'BEGIN{RS="\n\n"; print "List of Figures\n===============\n"} /\.\. figure/{print $1; print "\n";}' > ../Pyfig/README.rst
+	       	awk 'BEGIN{RS="\n\n"; print "List of Figures\n===============\n"} /\.\. figure/{print $1; print "\n";}' | \
+       		sed '/\.\.\ figure/ s/$$/.png/' > ../Pyfig/README.rst

@@ -1,7 +1,7 @@
 List of Figures
 ===============
 
-.. figure:: ../Pyfig/fig_Emean_time
+.. figure:: ../Pyfig/fig_Emean_time.png
    :alt: Space averaged energy
    :math:`\langle h|{\textbf{u}}|^2 + c^2 h^2 \rangle/2` versus time for
    different wave speeds :math:`c` and resolutions :math:`n`. The energy
@@ -18,7 +18,7 @@ List of Figures
    :width: 13.00000cm
 
 
-.. figure:: ../Pyfig/fig_spect_energy_budg_c=100_N=3840
+.. figure:: ../Pyfig/fig_spect_energy_budg_c=100_N=3840.png
    :alt: Spectral energy fluxes averaged over a long simulation for
    :math:`c
    = 100` and :math:`n = 3840`. The fluxes are nondimensionalized by
@@ -26,7 +26,7 @@ List of Figures
    :width: 8.00000cm
 
 
-.. figure:: ../Pyfig/fig_Kolmo_c=20_N=3840
+.. figure:: ../Pyfig/fig_Kolmo_c=20_N=3840.png
    :alt:  Third order structure functions involved in the exact
    Kolmogorov law ([eq\_Kolmo]) averaged over a long simulation for
    :math:`c = 20` and :math:`n = 3840`. The structure functions are
@@ -40,14 +40,14 @@ List of Figures
    :width: 8.00000cm
 
 
-.. figure:: ../Pyfig/fig_spectra_c=100_nh=7680
+.. figure:: ../Pyfig/fig_spectra_c=100_nh=7680.png
    :alt: Compensated spectra of total energy (thick black line) kinetic
    energy (thin dark line) and available potential energy (thin light
    line) for :math:`c = 40` and :math:`n = 7680`.
    :width: 8.00000cm
 
 
-.. figure:: ../Pyfig/fig_ratio_strfct
+.. figure:: ../Pyfig/fig_ratio_strfct.png
    :alt:  Ratio of the structure functions of the velocity increments
    :math:`R_p(r) \equiv {\langle |\delta u_L|^p \rangle} / {\langle |\delta u_T|^p \rangle}`
    for :math:`p = 2,` 3 and 4. The dotted straight lines indicate the
@@ -56,7 +56,7 @@ List of Figures
    resolution are :math:`c = 10` and :math:`n = 7680`.
 
 
-.. figure:: ../Pyfig/fig_flatness
+.. figure:: ../Pyfig/fig_flatness.png
    :alt:  Flatness of the longitudinal and transverse increments for
    :math:`c = 10` and :math:`n = 7680`. The straight continuous lines
    indicate the :math:`r^{-1}`-scaling and the straight dashed line the
