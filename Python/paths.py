@@ -1,17 +1,22 @@
 import os
 import sys
-import subprocess
-from glob import glob
 import re
+from glob import glob
+from socket import gethostname
 from collections import OrderedDict
+import pandas as pd
+
 from fluiddyn.util.paramcontainer import ParamContainer
+import fluidsim as fls
+
+from base import *
 
 
 def get_pathbase():
-    hostname = subprocess.check_output('hostname')
+    hostname = gethostname()
     hostname = hostname.lower()
     if hostname.startswith('pelvoux'):
-        pathbase = '/scratch/avmo/data/'
+        pathbase = '/media/avmo/lacie/13KTH'
     elif any(map(hostname.startswith, ['legilnx', 'nrj1sv', 'meige'])):
         pathbase = '$HOME/useful/project/13KTH/DataSW1L_Ashwin/'
     elif hostname.startswith('kthxps'):
@@ -26,6 +31,43 @@ def get_pathbase():
     return pathbase
 
 
+def keyparams_from_path(p):
+    c = re.search('(?<=c=)[0-9]*', p, re.X).group(0)
+    nh = re.search('(?<=_)[0-9]*(?=x)', p).group(0)
+    try:
+        Bu = re.search('(?<=Bu=)[0-9]*(\.[0-9])', p, re.X).group(0)
+    except AttributeError:
+        Bu = 'inf'
+
+    params_xml_path = os.path.join(p, 'params_simul.xml')
+    params = ParamContainer(path_file=params_xml_path)
+    init_field = params.init_fields.type
+    if init_field == 'noise':
+        return init_field, c, nh, Bu, None
+    else:
+        return init_field, c, nh, Bu, params.preprocess.init_field_const
+
+    
+pd_columns = [
+    r'$n$', r'$c$', r'$\nu_8$', r'$f$', r'$\epsilon$', r'$\frac{k_d}{k_f}$', 
+    r'$F_f$', r'$Ro_f$', r'$Bu$','$\min h$', r'$\frac{\max |\bf u|}{c}$', 
+    '$t_{stat}$', 'short name'
+]
+
+
+def pandas_from_path(p, key):
+    init_field, c, nh, Bu, init_field_const = keyparams_from_path(p)
+    params_xml_path = os.path.join(p, 'params_simul.xml')
+    params = ParamContainer(path_file=params_xml_path)
+    sim = fls.load_sim_for_plot(p, merge_missing_params=True)
+    return pd.Series(
+        [nh, c, params.nu_8, params.f, _eps(sim, 0), 'kdkf',
+         'Fr','Ro', Bu, 'minh', 'maxuc',
+         _t_stationary(sim), key
+        ],
+        index=pd_columns)
+
+
 def make_paths_dict(glob_pattern='SW1L*'):
     '''Returns an ordered dictionary of paths, containing keys as the
     independent simulation parameters
@@ -34,20 +76,10 @@ def make_paths_dict(glob_pattern='SW1L*'):
     paths = glob(glob_pattern)
     paths_dict = OrderedDict()
     for p in paths:
-        params_xml_path = os.path.join(p, 'params_simul.xml')
-        params = ParamContainer(path_file=params_xml_path)
-        c = re.search('(?<=c=)[0-9]*', p, re.X).group(0)
-        nh = re.search('(?<=_)[0-9]*(?=x)', p).group(0)
-        try:
-            Bu = re.search('(?<=Bu=)[0-9]*(\.[0-9])', p, re.X).group(0)
-        except AttributeError:
-            Bu = 'inf'
-
-        init_field = params.init_fields.type
-        if init_field == 'noise':
+        init_field, c, nh, Bu, efr = keyparams_from_path(p)
+        if efr is None:
             key = '{}_c{}nh{}Bu{}'.format(init_field, c, nh, Bu)
         else:
-            efr = params.preprocess.init_field_const
             key = '{}_c{}nh{}Bu{}efr{:.2e}'.format(init_field, c, nh, Bu, efr)
 
         paths_dict[key] = p
@@ -75,6 +107,10 @@ def exit_if_figure_exists(scriptname, extension='.png'):
     scriptname = os.path.basename(scriptname)
     figname = os.path.splitext(scriptname)[0].lstrip('make_') + extension
     figpath = os.path.join(path_pyfig, figname)
+
+    if len(sys.argv) > 1 and 'remake'.startswith(sys.argv[1]):
+        os.remove(figpath)
+
     if os.path.exists(figpath):
         print('Figure {} already made. {} exiting...'.format(figname, scriptname))
         sys.exit(0)

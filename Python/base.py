@@ -2,9 +2,13 @@ from __future__ import print_function, division
 import pylab as pl
 import h5py
 from fluiddyn.util.paramcontainer import ParamContainer
+from fluiddyn.output import rcparams
 
 
-def get_font(size=16):
+DPI = 300
+
+
+def get_font(size=7):
     _font = {'family': 'serif',
              'weight': 'normal',
              'size': size,
@@ -12,14 +16,24 @@ def get_font(size=16):
     return _font
 
 
-def matplotlib_rc(mathjax=True, fontsize=16, interactive=False):
-    pl.rc('text', usetex=mathjax)
-    _font = get_font(fontsize)
-    pl.rc('font', **_font)
+def matplotlib_rc(
+        fontsize=7, dpi=DPI, tex=True, interactive=False, pad=2):
+
+    # pl.rc('text', usetex=tex)
+    # _font = get_font(fontsize)
+    # pl.rc('font', **_font)
+
+    rcparams.set_rcparams(fontsize)
+    pl.rc('figure', dpi=dpi)
+    pl.rc('xtick', direction='in')
+    pl.rc('ytick', direction='in')
+
     if interactive:
         pl.ion()
     else:
         pl.ioff()
+
+    # pl.tight_layout(pad=pad)
 
 
 def set_figsize(*size):
@@ -59,6 +73,20 @@ def _eps(sim, t_start):
     return eps[ind:].mean()
 
 
+def _t_stationary(sim, eps_percent=15):
+    dico = sim.output.spatial_means.load()
+    time = dico['t']
+    epsilon = dico['epsK_tot'] + dico['epsA_tot']
+    eps_end = epsilon[-1]
+
+    for t, eps in zip(time[::-1], epsilon[::-1]):
+        percent = abs(eps - eps_end) / eps_end * 100
+        if percent > eps_percent:
+            break
+
+    return t
+
+
 So_var_dict = {}
 
 
@@ -79,18 +107,18 @@ def _rxs_str_func(sim, order, tmin, tmax, delta_t, key_var):
     oper = f['/info_simul/params/oper']
     nx = oper.attrs['nx']
     Lx = oper.attrs['Lx']
-    deltax = Lx/nx
+    deltax = Lx / nx
 
-    rxs = np.array(rxs, dtype=np.float64)*deltax
+    rxs = np.array(rxs, dtype=np.float64) * deltax
 
-    delta_t_save = np.mean(times[1:]-times[0:-1])
-    delta_i_plot = int(round(delta_t/delta_t_save))
+    delta_t_save = np.mean(times[1:] - times[0:-1])
+    delta_i_plot = int(round(delta_t / delta_t_save))
     if delta_i_plot == 0 and delta_t != 0.:
-        delta_i_plot=1
-    delta_t = delta_i_plot*delta_t_save
+        delta_i_plot = 1
+    delta_t = delta_i_plot * delta_t_save
 
-    imin_plot = np.argmin(abs(times-tmin))
-    imax_plot = np.argmin(abs(times-tmax))
+    imin_plot = np.argmin(abs(times - tmin))
+    imax_plot = np.argmin(abs(times - tmax))
 
     tmin_plot = times[imin_plot]
     tmax_plot = times[imax_plot]
@@ -102,10 +130,10 @@ def _rxs_str_func(sim, order, tmin, tmax, delta_t, key_var):
     to_print = '''plot structure functions
 tmin = {0:8.6g} ; tmax = {1:8.6g} ; delta_t = {2:8.6g}
 imin = {3:8d} ; imax = {4:8d} ; delta_i = {5:8d}'''.format(
-tmin_plot, tmax_plot, delta_t,
-imin_plot, imax_plot, delta_i_plot)
+        tmin_plot, tmax_plot, delta_t,
+        imin_plot, imax_plot, delta_i_plot)
     print(to_print)
-    
+
     for o in order:
         o = float(o)
         for key in key_var:
@@ -115,9 +143,8 @@ imin_plot, imax_plot, delta_i_plot)
 
             pdf_var, values_inc_var, nb_rx_to_plot = self.load_pdf_from_file(
                 tmin=tmin, tmax=tmax, key_var=key)
-            
+
             So_var_dict[key_order] = self.strfunc_from_pdf(
                 pdf_var, values_inc_var, o, absolute=True)
 
     return rxs, So_var_dict, deltax
-
