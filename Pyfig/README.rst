@@ -15,7 +15,7 @@ List of Figures
    lines, :math:`n = 960`; thick continuous lines, :math:`n = 1920`;
    thin dashed lines, :math:`n = 3840`; thick dotted lines,
    :math:`n = 5760` and thin dotted dashed lines, :math:`n = 7680`.
-   :width: 13.00000cm
+   :width: 5.12000in
 
 
 .. figure:: ../Pyfig/fig_spect_energy_budg_c=100_N=3840.png
@@ -23,7 +23,7 @@ List of Figures
    :math:`c
    = 100` and :math:`n = 3840`. The fluxes are nondimensionalized by
    :math:`{\varepsilon}` and plotted versus :math:`k/k_f`.
-   :width: 8.00000cm
+   :width: 3.15000in
 
 
 .. figure:: ../Pyfig/fig_Kolmo_c=20_N=3840.png
@@ -37,7 +37,7 @@ List of Figures
    :math:`{\langle \delta J_L |\delta {\textbf{u}}|^2 \rangle}`. The
    dotted straight line shows :math:`4 {\varepsilon}_q r`, where
    :math:`{\varepsilon}_q` is the quadratic energy dissipation rate.
-   :width: 8.00000cm
+   :width: 3.15000in
 
 
 .. figure:: ../Pyfig/fig_spectra_c=100_nh=7680.png
