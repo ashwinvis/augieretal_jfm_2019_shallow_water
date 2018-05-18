@@ -1,15 +1,19 @@
 import os
 import sys
 import re
+import gc
 from glob import glob
 from socket import gethostname
 from collections import OrderedDict
 import pandas as pd
+import numpy as np
 
 from fluiddyn.util.paramcontainer import ParamContainer
+from fluiddyn.io.redirect_stdout import stdout_redirected
+
 import fluidsim as fls
 
-from base import *
+from base import _eps, _t_stationary, _k_d, _k_f, epststmax
 
 
 def get_pathbase():
@@ -51,21 +55,40 @@ def keyparams_from_path(p):
 pd_columns = [
     r'$n$', r'$c$', r'$\nu_8$', r'$f$', r'$\epsilon$', r'$\frac{k_d}{k_f}$', 
     r'$F_f$', r'$Ro_f$', r'$Bu$','$\min h$', r'$\frac{\max |\bf u|}{c}$', 
-    '$t_{stat}$', 'short name'
+    '$t_{stat}$', r'$t_{\max}$', 'short name'
 ]
 
 
-def pandas_from_path(p, key):
+def pandas_from_path(p, key, as_df=False):
     init_field, c, nh, Bu, init_field_const = keyparams_from_path(p)
     params_xml_path = os.path.join(p, 'params_simul.xml')
     params = ParamContainer(path_file=params_xml_path)
-    sim = fls.load_sim_for_plot(p, merge_missing_params=True)
-    return pd.Series(
-        [nh, c, params.nu_8, params.f, _eps(sim, 0), 'kdkf',
-         'Fr','Ro', Bu, 'minh', 'maxuc',
-         _t_stationary(sim), key
-        ],
-        index=pd_columns)
+    # sim = fls.load_sim_for_plot(p, merge_missing_params=True)
+    
+    c = int(c)
+    kf = _k_f(params)
+    kd_kf = _k_d(params) / kf
+    # ts = _t_stationary(path=p)
+    # eps = _eps(t_start=ts, path=p)
+    eps, ts, tmax = epststmax(p)
+    print([type(o) for o in (eps, kf, c)])
+    Fr = (eps / kf) ** (1./3) / c
+    try:
+        Ro = (eps / kf**2) ** (1./3) / params.f
+    except ZeroDivisionError:
+        Ro = np.inf
+    minh = 0
+    maxuc = 0
+    # del sim
+    gc.collect()
+    data = [nh, c, params.nu_8, params.f, eps, kd_kf,
+         Fr, Ro, Bu, minh, maxuc,
+         ts, tmax, key
+        ]
+    if as_df:
+        return pd.DataFrame(data, columns=pd_columns)
+    else:
+        return pd.Series(data, index=pd_columns)
 
 
 def make_paths_dict(glob_pattern='SW1L*'):

@@ -3,6 +3,7 @@ import pylab as pl
 import h5py
 from fluiddyn.util.paramcontainer import ParamContainer
 from fluiddyn.output import rcparams
+from fluidsim.solvers.sw1l.output.spatial_means import SpatialMeansSW1L
 
 
 DPI = 300
@@ -49,6 +50,8 @@ def _delta_x(params):
     nh = min(params.oper.nx, params.oper.ny)
     return Lh / nh
 
+def _k_d(params):
+    return params.f / params.c2 ** 0.5
 
 def _k_f(params=None, params_xml_path=None):
     if params is None:
@@ -65,16 +68,22 @@ def _k_max(params):
     return k_max
 
 
-def _eps(sim, t_start):
-    dico = sim.output.spatial_means.load()
+def _eps(sim=None, t_start=0, path=None):
+    if sim is None and path is not None:
+        dico = SpatialMeansSW1L._load(path)
+    else:
+        dico = sim.output.spatial_means.load()
     t = dico['t']
     ind = _index_where(t, t_start)
     eps = dico['epsK_tot'] + dico['epsA_tot']
-    return eps[ind:].mean()
+    return float(eps[ind:].mean())
 
 
-def _t_stationary(sim, eps_percent=15):
-    dico = sim.output.spatial_means.load()
+def _t_stationary(sim=None, eps_percent=15, path=None):
+    if sim is None and path is not None:
+        dico = SpatialMeansSW1L._load(path)
+    else:
+        dico = sim.output.spatial_means.load()
     time = dico['t']
     epsilon = dico['epsK_tot'] + dico['epsA_tot']
     eps_end = epsilon[-1]
@@ -86,6 +95,31 @@ def _t_stationary(sim, eps_percent=15):
 
     return t
 
+
+def epsfit(path):
+    from scipy.optimize import curve_fit
+    dico = SpatialMeansSW1L._load(path)
+
+    t = dico['t']
+    epsilon = dico['epsK_tot'] + dico['epsA_tot']
+
+def epststmax(path=None, eps_percent=15):
+    dico = SpatialMeansSW1L._load(path)
+
+    time = t = dico['t']
+
+    epsilon = dico['epsK_tot'] + dico['epsA_tot']
+    eps_end = epsilon[-1]
+
+    for ts, eps in zip(time[::-1], epsilon[::-1]):
+        percent = abs(eps - eps_end) / eps_end * 100
+        if percent > eps_percent:
+            break
+            
+    ind = _index_where(t, ts)
+    eps_mean = float(epsilon[ind:].mean())
+
+    return eps_mean, ts, t[-1]
 
 So_var_dict = {}
 
