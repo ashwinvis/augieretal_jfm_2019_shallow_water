@@ -8,6 +8,8 @@ syntax: glob
 \#*\#
 
 Latex/article.pdf
+Latex/*.pdf
+*/.ipynb_checkpoints
 
 *.log
 *.aux
@@ -15,5 +17,8 @@ Latex/article.pdf
 *.dvi
 *.bbl
 *.blg
+
+*.fls
+*.fdb_latexmk
 
 auto/*

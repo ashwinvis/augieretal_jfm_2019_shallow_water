@@ -1,5 +1,8 @@
 from __future__ import print_function, division
 import pylab as pl
+from scipy.optimize import curve_fit
+from scipy import stats
+
 import h5py
 from fluiddyn.util.paramcontainer import ParamContainer
 from fluiddyn.output import rcparams
@@ -61,12 +64,15 @@ def _k_f(params=None, params_xml_path=None):
     return 2 * pl.pi / Lh * ((params.forcing.nkmax_forcing +
                               params.forcing.nkmin_forcing) // 2)
 
-
 def _k_max(params):
     delta_x = _delta_x(params)
     k_max = pl.pi / delta_x * params.oper.coef_dealiasing
     return k_max
 
+def _k_diss(params):
+    k_max = _k_max(params)
+    C = params.preprocess.viscosity_const
+    return k_max / C / pl.pi  # FIXME: Not sure why the pi is needed
 
 def _eps(sim=None, t_start=0, path=None):
     if sim is None and path is not None:
@@ -80,6 +86,7 @@ def _eps(sim=None, t_start=0, path=None):
 
 
 def _t_stationary(sim=None, eps_percent=15, path=None):
+    # Old function! Use epststmax instead
     if sim is None and path is not None:
         dico = SpatialMeansSW1L._load(path)
     else:
@@ -96,30 +103,38 @@ def _t_stationary(sim=None, eps_percent=15, path=None):
     return t
 
 
-def epsfit(path):
-    from scipy.optimize import curve_fit
-    dico = SpatialMeansSW1L._load(path)
-
-    t = dico['t']
-    epsilon = dico['epsK_tot'] + dico['epsA_tot']
-
 def epststmax(path=None, eps_percent=15):
     dico = SpatialMeansSW1L._load(path)
+    time = dico['t']
+    eps = dico['epsK_tot'] + dico['epsA_tot']
+    """
+    if 'noise' in path:
+        def f(x, amptan, ttan):
+            return amptan * pl.tanh(2 * (x / ttan)**4)
 
-    time = t = dico['t']
+        popt, pcov = curve_fit(f, time, eps)
+        eps_stat = popt[0]
+        time_stat = popt[1]
 
-    epsilon = dico['epsK_tot'] + dico['epsA_tot']
-    eps_end = epsilon[-1]
+        return eps_stat, time_stat, time[-1]
+    else:
+    """
+    def f(x, amptan, ttan, amplog, sigma):
+        return (amptan * pl.tanh(2 * (x/ttan)**4) +
+                amplog * stats.lognorm.pdf(x, scale=pl.exp(ttan), s=sigma))
 
-    for ts, eps in zip(time[::-1], epsilon[::-1]):
-        percent = abs(eps - eps_end) / eps_end * 100
-        if percent > eps_percent:
-            break
-            
-    ind = _index_where(t, ts)
-    eps_mean = float(epsilon[ind:].mean())
+    guesses = {
+        'amptan': pl.median(eps),
+        'ttan': time[eps==eps.max()],
+        'amplog': eps.max(),
+        'sigma': eps.std()
+    }
+    guesses = pl.array(list(guesses.values()))
+    popt, pcov = curve_fit(f, time, eps, guesses)
+    eps_stat = f(time, *popt)[-1]
+    time_stat = popt[1] + 6 * popt[3]
 
-    return eps_mean, ts, t[-1]
+    return eps_stat, time_stat, time[-1]
 
 So_var_dict = {}
 
