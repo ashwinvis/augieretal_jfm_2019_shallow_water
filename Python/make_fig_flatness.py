@@ -26,7 +26,7 @@ def _ax_inset(fig, xlabel, left, bottom=0.6, width=0.35 / 2, height=0.45 / 2):
 
 
 def fig12_flatness(path, fig, ax, tmin=0, tmax=1000, delta_t=0.5):
-    sim = fls.load_sim_for_plot(path)
+    sim = fls.load_sim_for_plot(path, merge_missing_params=True)
     order = [2, 4]
     key_var = ['uy', 'ux']
     rxs, So_var_dict, deltax = _rxs_str_func(

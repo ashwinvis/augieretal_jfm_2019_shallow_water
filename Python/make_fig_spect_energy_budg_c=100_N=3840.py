@@ -10,7 +10,7 @@ from paths import paths_sim, exit_if_figure_exists
 
 
 def fig2_seb(path, fig=None, ax=None, t_start=10):
-    sim = fls.load_sim_for_plot(path)
+    sim = fls.load_sim_for_plot(path, merge_missing_params=True)
 
     path_file = os.path.join(path, 'spect_energy_budg.h5')
     f = h5py.File(path_file, 'r')
@@ -25,11 +25,11 @@ def fig2_seb(path, fig=None, ax=None, t_start=10):
     transferEAd = f['transfer2D_EAd'][imin_plot:].mean(0) / eps
     # transferEPd = f['transfer2D_EPd'][imin_plot:].mean(0) / eps
 
-    PiEKr = cumsum_inv(transferEKr) * sim.oper.deltakh
-    PiEKd = cumsum_inv(transferEKd) * sim.oper.deltakh
-    PiEAr = cumsum_inv(transferEAr) * sim.oper.deltakh
-    PiEAd = cumsum_inv(transferEAd) * sim.oper.deltakh
-    # PiEPd = cumsum_inv(transferEPd) * sim.oper.deltakh
+    PiEKr = cumsum_inv(transferEKr) * sim.oper.deltak
+    PiEKd = cumsum_inv(transferEKd) * sim.oper.deltak
+    PiEAr = cumsum_inv(transferEAr) * sim.oper.deltak
+    PiEAd = cumsum_inv(transferEAd) * sim.oper.deltak
+    # PiEPd = cumsum_inv(transferEPd) * sim.oper.deltak
 
     print(eps)
     ax.axhline(1., color='k', ls=':')

@@ -36,7 +36,7 @@ def _mean_spectra(sim, tmin=0, tmax=1000):
 
 
 def fig7_spectra(path, fig, ax, t_start):
-    sim = fls.load_sim_for_plot(path)
+    sim = fls.load_sim_for_plot(path, merge_missing_params=True)
     kh, E_tot, EK, EA = _mean_spectra(sim, t_start)
     eps = _eps(sim, t_start)
     k_f = _k_f(sim.params)

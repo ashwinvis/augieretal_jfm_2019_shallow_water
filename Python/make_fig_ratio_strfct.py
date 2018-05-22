@@ -7,7 +7,7 @@ from paths import paths_sim, exit_if_figure_exists
 
 
 def fig11_ratio_struct(path, fig, ax1, order=[2, 3, 4, 5], tmin=0, tmax=1000, delta_t=0.5):
-    sim = fls.load_sim_for_plot(path)
+    sim = fls.load_sim_for_plot(path, merge_missing_params=True)
 
     key_var = ['ux', 'uy']
     rxs, So_var_dict, deltax = _rxs_str_func(

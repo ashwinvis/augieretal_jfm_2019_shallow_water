@@ -9,7 +9,7 @@ from paths import paths_sim, exit_if_figure_exists
 
 
 def fig3_struct(path, fig, ax1, tmin=0, tmax=1000):
-    sim = fls.load_sim_for_plot(path)
+    sim = fls.load_sim_for_plot(path, merge_missing_params=True)
     path_file = os.path.join(path, 'increments.h5')
     f = h5py.File(path_file, 'r')
     dset_times = f['times']

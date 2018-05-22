@@ -73,7 +73,7 @@ def fig1_energy(paths, fig=None, ax=None, t_start=0., legend=None, linestyle=Non
 
     for i, path in enumerate(paths):
         with stdout_redirected():
-            sim = fls.load_sim_for_plot(path)
+            sim = fls.load_sim_for_plot(path, merge_missing_params=True)
 
         P0 = _eps(sim, t_start)
         k_f = _k_f(sim.params)  # path + '/params_simul.xml')
