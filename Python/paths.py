@@ -76,7 +76,6 @@ def pandas_from_path(p, key, as_df=False):
     # eps = _eps(t_start=ts, path=p)
     eps, ts, tmax = epststmax(p)
     efr = params.preprocess.init_field_const
-    print([type(o) for o in (eps, kf, c)])
     Fr = (eps / kf) ** (1./3) / c
     try:
         Ro = (eps * kf**2) ** (1./3) / params.f
@@ -138,7 +137,7 @@ def exit_if_figure_exists(scriptname, extension='.png'):
     figname = os.path.splitext(scriptname)[0].lstrip('make_') + extension
     figpath = os.path.join(path_pyfig, figname)
 
-    if len(sys.argv) > 1 and 'remake'.startswith(sys.argv[1]):
+    if len(sys.argv) > 1 and 'remake'.startswith(sys.argv[1]) and os.path.exists(figpath):
         os.remove(figpath)
 
     if os.path.exists(figpath):

@@ -1,6 +1,9 @@
 from __future__ import print_function, division
+from warnings import warn
 import pylab as pl
+import numpy as np
 from scipy.optimize import curve_fit
+from scipy.signal import medfilt
 from scipy import stats
 
 import h5py
@@ -12,7 +15,7 @@ from fluidsim.solvers.sw1l.output.spatial_means import SpatialMeansSW1L
 DPI = 300
 
 
-def get_font(size=7):
+def get_font(size=10):
     _font = {'family': 'serif',
              'weight': 'normal',
              'size': size,
@@ -43,9 +46,28 @@ def matplotlib_rc(
 def set_figsize(*size):
     pl.rcParams['figure.figsize'] = tuple(size)
 
+def load_params(path):
+    if not path.endswith('.xml'):
+            path = os.path.join(path, 'params_simul.xml')
+    return ParamContainer(path_file=params_xml_path)
 
-def _index_where(arr, value):
-    return pl.argmin(abs(arr - value))
+def _index_where(arr, value, reverse=False):
+    if not reverse:
+        idx = pl.argmin(abs(arr - value))
+    else:
+        revidx = pl.argmin(abs(arr[::-1] - value))
+        idx = len(arr) - (revidx + 1)
+    return idx
+
+def _index_flat(y, x=None):
+    dx = x[1]-x[0]
+    dy = np.gradient(y, dx)
+    ddy = np.gradient(dy, dx)
+    curv = np.abs(ddy / (dy + 1) ** 1.5)
+    # value = max(1e-5, 0.01 * curv.max())
+    value = curv.std() * 0.01
+    return _index_where(curv, value, True)
+    # return np.argmin(abs(curv))
 
 
 def _delta_x(params):
@@ -56,9 +78,7 @@ def _delta_x(params):
 def _k_d(params):
     return params.f / params.c2 ** 0.5
 
-def _k_f(params=None, params_xml_path=None):
-    if params is None:
-        params = ParamContainer(path_file=params_xml_path)
+def _k_f(params=None):
 
     Lh = min(params.oper.Lx, params.oper.Ly)
     return 2 * pl.pi / Lh * ((params.forcing.nkmax_forcing +
@@ -103,41 +123,123 @@ def _t_stationary(sim=None, eps_percent=15, path=None):
     return t
 
 
-def epststmax(path=None, eps_percent=15):
+def epststmax(path):
     dico = SpatialMeansSW1L._load(path)
     time = dico['t']
     eps = dico['epsK_tot'] + dico['epsA_tot']
-    """
-    if 'noise' in path:
+    
+    
+    # if 'noise' in path:
+    if eps.max() > 2 * eps[-1]:
         def f(x, amptan, ttan):
             return amptan * pl.tanh(2 * (x / ttan)**4)
 
-        popt, pcov = curve_fit(f, time, eps)
-        eps_stat = popt[0]
-        time_stat = popt[1]
-
-        return eps_stat, time_stat, time[-1]
+        guesses = [pl.median(eps), time[eps==eps.max()]]
     else:
-    """
-    def f(x, amptan, ttan, amplog, sigma):
-        return (amptan * pl.tanh(2 * (x/ttan)**4) +
-                amplog * stats.lognorm.pdf(x, scale=pl.exp(ttan), s=sigma))
+        # def f(x, amptan, ttan, amplog, sigma):
+        def f(x, amptan, ttan, amplog, tlog, sigma):
+            return (amptan * pl.tanh(2 * (x/ttan)**4) +
+                    amplog * stats.lognorm.pdf(x, scale=pl.exp(tlog), s=sigma))
 
-    guesses = {
-        'amptan': pl.median(eps),
-        'ttan': time[eps==eps.max()],
-        'amplog': eps.max(),
-        'sigma': eps.std()
-    }
-    guesses = pl.array(list(guesses.values()))
-    popt, pcov = curve_fit(f, time, eps, guesses)
-    eps_stat = f(time, *popt)[-1]
-    time_stat = popt[1] + 6 * popt[3]
+        guesses = {
+            'amptan': pl.median(eps),
+            'ttan': time[eps==eps.max()],
+            'amplog': eps.max(),
+            'tlog': time[eps==eps.max()],
+            'sigma': eps.std()
+        }
+        guesses = pl.array(list(guesses.values()), dtype=float)
+
+    try:
+        popt, pcov = curve_fit(f, time, eps, guesses, maxfev=3000)
+    except RuntimeError:
+        print("Error while curve fitting data from path =", path)
+        raise
+
+    eps_fit = f(time, *popt)
+    eps_stat = float(eps_fit[-1])
+    try:
+        # idx = _index_flat(eps_fit, time)
+        time_stat = locate_knee(time, eps_fit, eps_stat)
+    except ValueError:
+        raise ValueError("While calculating curvature in {}".format(path))
+        # warn("While calculating curvature in {}".format(path))
+        # time_stat = popt[1] + 6 * popt[3]
 
     return eps_stat, time_stat, time[-1]
 
+def locate_knee(time, eps_fit, eps_stat):
+    from kneed import KneeLocator
+
+    while not np.array_equal(time, np.sort(time)):
+        idx_del = np.where(np.diff(time) < 0)[0] + 1
+        time = np.delete(time, idx_del)
+        eps_fit = np.delete(eps_fit, idx_del)
+    
+    if eps_fit.max() > 2 * eps_stat:
+        # log-norm + tanh
+        knee = KneeLocator(time, eps_fit, direction='decreasing')
+        idx = knee.knee_x
+    else:
+        knee = KneeLocator(time, eps_fit)
+        idx = knee.knee_x
+
+    if idx is None:
+        # non-stationary case
+        idx = -1
+
+    time_stat = time[idx]
+    return time_stat
+
 So_var_dict = {}
 
+def step_info(t, yout, thresh_rise=10, thresh_settling=30):
+    thresh_rise = 1 - thresh_rise / 100
+    thresh_settling = 1 + thresh_settling / 100
+    
+    yout = medfilt(yout, 69)  # median filter
+
+    overshoot_percent=(yout.max() / yout[-1] - 1) * 100
+    # rise_time_orig=(
+    #     t[next(i for i in range(0,len(yout)-1)
+    #            if yout[i]>yout[-1]*thresh_rise)]
+    #     - t[0]
+    # )
+    
+    # idx = np.where(yout > yout[-1] * thresh_rise)[0][0]
+    # rise_time = t[idx] - t[0]
+    # assert rise_time_orig == rise_time
+
+    # settling_time_orig=(
+    #     t[next(len(yout)-i for i in range(2,len(yout)-1)
+    #            if abs(yout[-i]/yout[-1])>thresh_settling)]
+    #     - t[0]
+    # )
+    idx = np.where(np.abs(yout / yout[-1]) > thresh_settling)[0][-1]
+    settling_time = t[idx] - t[0]
+    # assert settling_time_orig == settling_time
+
+    result = dict(
+        overshoot_percent=(yout.max() / yout[-1] - 1) * 100,
+        # rise_time=rise_time,
+        settling_time=settling_time,
+    )
+    return result
+
+def epststmax_stepinfo(path):
+    dico = SpatialMeansSW1L._load(path)
+    time = dico['t']
+    eps = dico['epsK_tot'] + dico['epsA_tot']
+    
+    try:
+        step = step_info(time, eps)
+    except IndexError:
+        print("index error in", path)
+        return 0,0,0
+    time_stat = step["settling_time"]
+    idx = _index_where(time, time_stat)
+    eps_stat = np.median(eps[idx:])
+    return eps_stat, time_stat, time[-1]
 
 def _rxs_str_func(sim, order, tmin, tmax, delta_t, key_var):
     np = pl
