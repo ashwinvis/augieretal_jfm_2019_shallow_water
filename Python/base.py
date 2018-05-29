@@ -123,11 +123,11 @@ def _t_stationary(sim=None, eps_percent=15, path=None):
     return t
 
 
-def epststmax(path):
+def epsetstmax(path):
     dico = SpatialMeansSW1L._load(path)
     time = dico['t']
     eps = dico['epsK_tot'] + dico['epsA_tot']
-    
+    E = dico['EK'] + dico['EA']
     
     # if 'noise' in path:
     if eps.max() > 2 * eps[-1]:
@@ -160,13 +160,15 @@ def epststmax(path):
     eps_stat = float(eps_fit[-1])
     try:
         # idx = _index_flat(eps_fit, time)
-        time_stat = locate_knee(time, eps_fit, eps_stat)
+        idx = locate_knee(time, eps_fit, eps_stat)
+        time_stat = time[idx]
     except ValueError:
         raise ValueError("While calculating curvature in {}".format(path))
         # warn("While calculating curvature in {}".format(path))
         # time_stat = popt[1] + 6 * popt[3]
 
-    return eps_stat, time_stat, time[-1]
+    E_stat = E[idx:].mean()
+    return eps_stat, E_stat, time_stat, time[-1]
 
 def locate_knee(time, eps_fit, eps_stat):
     from kneed import KneeLocator
@@ -188,8 +190,7 @@ def locate_knee(time, eps_fit, eps_stat):
         # non-stationary case
         idx = -1
 
-    time_stat = time[idx]
-    return time_stat
+    return idx
 
 So_var_dict = {}
 

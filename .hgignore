@@ -11,6 +11,8 @@ Latex/article.pdf
 Latex/*.pdf
 */.ipynb_checkpoints
 
+Python/output*.png
+
 *.log
 *.aux
 *.out

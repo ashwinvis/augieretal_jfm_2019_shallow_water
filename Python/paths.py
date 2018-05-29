@@ -13,7 +13,7 @@ from fluiddyn.io.redirect_stdout import stdout_redirected
 
 import fluidsim as fls
 
-from base import _eps, _t_stationary, _k_d, _k_f, _k_diss, epststmax
+from base import _eps, _t_stationary, _k_d, _k_f, _k_diss, epsetstmax
 
 
 def get_pathbase():
@@ -58,7 +58,7 @@ pd_columns = [
     r'$n$', r'$c$', r'$\nu_8$', r'$f$', r'$\epsilon$', r'$\frac{k_{diss}}{k_f}$', 
     r'$F_f$', r'$Ro_f$', r'$Bu$',
     # '$\min h$', r'$\frac{\max |\bf u|}{c}$',
-    EFR,
+    EFR, r'$E$',
     '$t_{stat}$', r'$t_{\max}$', 'short name'
 ]
 
@@ -74,7 +74,7 @@ def pandas_from_path(p, key, as_df=False):
     kd_kf = _k_diss(params) / kf
     # ts = _t_stationary(path=p)
     # eps = _eps(t_start=ts, path=p)
-    eps, ts, tmax = epststmax(p)
+    eps, E, ts, tmax = epsetstmax(p)
     efr = params.preprocess.init_field_const
     Fr = (eps / kf) ** (1./3) / c
     try:
@@ -88,7 +88,7 @@ def pandas_from_path(p, key, as_df=False):
     data = [nh, c, params.nu_8, params.f, eps, kd_kf,
          Fr, Ro, Bu,
          # minh, maxuc,
-         efr,
+         efr, E,
          ts, tmax, key
         ]
     if as_df:

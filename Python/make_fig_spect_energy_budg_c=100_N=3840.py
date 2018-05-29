@@ -5,7 +5,7 @@ import os
 import h5py
 from fluidsim.base.output.spect_energy_budget import cumsum_inv
 
-from base import _index_where, _k_f, _eps, set_figsize, matplotlib_rc, epststmax
+from base import _index_where, _k_f, _eps, set_figsize, matplotlib_rc, epsetstmax
 from paths import paths_sim, exit_if_figure_exists
 
 
@@ -17,7 +17,7 @@ def fig2_seb(path, fig=None, ax=None, t_start=None):
 
     k_f = _k_f(sim.params)
     # eps = _eps(sim, t_start)
-    eps, ts, tmax = epststmax(path)
+    eps, E, ts, tmax = epsetstmax(path)
     if t_start is None:
         t_start = ts
     imin_plot = _index_where(f['times'][...], t_start)
