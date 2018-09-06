@@ -36,7 +36,7 @@ def fig12_flatness(path, fig, ax, tmin=0, tmax=1000, delta_t=0.5):
     ax.set_ylabel('$F_T, F_L$')
 
     # ax.set_title('Flatness of longitundinal and transverse increments')
-    ax.hold(True)
+    # ax.hold(True)
     ax.set_xscale('log')
     ax.set_yscale('log')
 
