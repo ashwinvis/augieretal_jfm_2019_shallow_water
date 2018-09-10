@@ -242,7 +242,9 @@ def epststmax_stepinfo(path):
     eps_stat = np.median(eps[idx:])
     return eps_stat, time_stat, time[-1]
 
-def _rxs_str_func(sim, order, tmin, tmax, delta_t, key_var):
+def _rxs_str_func(
+    sim, order, tmin, tmax, delta_t, key_var, cache=True
+):
     np = pl
     self = sim.output.increments
 
@@ -290,7 +292,9 @@ imin = {3:8d} ; imax = {4:8d} ; delta_i = {5:8d}'''.format(
         o = float(o)
         for key in key_var:
             key_order = '{0}_{1:.0f}'.format(key, o)
-            if key_order in So_var_dict.keys():
+            if key_order in So_var_dict.keys() and cache:
+                print(
+                    "Skipping calculation because it exists in cache.")
                 continue
 
             pdf_var, values_inc_var, nb_rx_to_plot = self.load_pdf_from_file(
