@@ -11,6 +11,8 @@ from fluiddyn.util.paramcontainer import ParamContainer
 from fluiddyn.output import rcparams
 from fluidsim.solvers.sw1l.output.spatial_means import SpatialMeansSW1L
 
+from _try_dask_strfunc import strfunc_from_pdf5
+
 
 DPI = 300
 
@@ -300,7 +302,9 @@ imin = {3:8d} ; imax = {4:8d} ; delta_i = {5:8d}'''.format(
             pdf_var, values_inc_var, nb_rx_to_plot = self.load_pdf_from_file(
                 tmin=tmin, tmax=tmax, key_var=key)
 
-            So_var_dict[key_order] = self.strfunc_from_pdf(
-                pdf_var, values_inc_var, o, absolute=True)
+            absolute = (o % 2 == 0) # Use absolute values if order is even
+            So_var_dict[key_order] = strfunc_from_pdf5(
+                rxs,
+                pdf_var, values_inc_var, o, absolute=absolute)
 
     return rxs, So_var_dict, deltax

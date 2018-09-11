@@ -9,7 +9,7 @@ syntax: glob
 
 Latex/article.pdf
 Latex/*.pdf
-*/.ipynb_checkpoints
+**/.ipynb_checkpoints
 
 Python/output*.png
 
