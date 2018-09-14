@@ -132,7 +132,7 @@ if not os.path.exists(path_pyfig):
     os.mkdir(path_pyfig)
 
 
-def exit_if_figure_exists(scriptname, extension='.png'):
+def exit_if_figure_exists(scriptname, extension='.png', override_exit=False):
     scriptname = os.path.basename(scriptname)
     figname = os.path.splitext(scriptname)[0].lstrip('make_') + extension
     figpath = os.path.join(path_pyfig, figname)
@@ -140,7 +140,7 @@ def exit_if_figure_exists(scriptname, extension='.png'):
     if len(sys.argv) > 1 and 'remake'.startswith(sys.argv[1]) and os.path.exists(figpath):
         os.remove(figpath)
 
-    if os.path.exists(figpath):
+    if os.path.exists(figpath) and not override_exit:
         print('Figure {} already made. {} exiting...'.format(figname, scriptname))
         sys.exit(0)
     else:
