@@ -62,18 +62,23 @@ def fig3_struct(path, fig, ax1, tmin=0, tmax=1000):
     label1 = _label('J_L', 'uu')
     label2 = _label('u_L', 'h')
     label3 = label1[:-10] + ' + ' + label2[10:]
-    ax1.set_ylabel(label3.rstrip(' $') + ' / (4\epsilon_q r)$')
+    
+    def label_norm(label):
+        str_norm = ' / (4\epsilon_q r)$'
+        return label.rstrip(' $') + str_norm
 
-    ax1.plot(rxs / Lf, S_Kolmo / S_Kolmo_theo, 'k', linewidth=4,
-             label=label3)
+    ax1.set_ylabel(label_norm(label3))
+
+    ax1.plot(rxs / Lf, S_Kolmo / S_Kolmo_theo, 'k', linewidth=2,
+             label=(label3))
     ax1.plot(rxs / Lf, (S_uL2JL + S_uT2JL) / S_Kolmo_theo, 'r', linewidth=2,
-             label=label1)
+             label=(label1))
     ax1.plot(rxs / Lf, S_c2h2uL / S_Kolmo_theo, 'b', linewidth=2,
-             label=label2)
-    ax1.plot(rxs / Lf, S_uL2JL / S_Kolmo_theo,
-             'r--', linewidth=2, label=_label('J_L', 'u_L'))
-    ax1.plot(rxs / Lf, S_uT2JL / S_Kolmo_theo,
-             'r-.', linewidth=2, label=_label('J_L', 'u_T'))
+             label=(label2))
+    # ax1.plot(rxs / Lf, S_uL2JL / S_Kolmo_theo,
+    #          'r--', linewidth=2, label=_label('J_L', 'u_L'))
+    # ax1.plot(rxs / Lf, S_uT2JL / S_Kolmo_theo,
+    #          'r-.', linewidth=2, label=_label('J_L', 'u_T'))
 
     # cond = rxs < 6 * deltax
     # ax1.plot(rxs[cond] / Lf, 1.e0 * rxs[cond] ** 3 / S_Kolmo_theo[cond],
@@ -81,8 +86,9 @@ def fig3_struct(path, fig, ax1, tmin=0, tmax=1000):
 
     ax1.axhline(1., color='k', ls=':')
     # ax1.plot(rxs, pl.ones(rxs.shape), 'k:', linewidth=1)
-    ax.set_xlim([3e-3, 3e1])
-    ax1.legend(loc=1)
+    ax1.set_xlim([None, 1.5])
+    ax1.set_ylim([-0.05, 1.1])
+    ax1.legend() #loc=1)
 
 
 if __name__ == '__main__':
