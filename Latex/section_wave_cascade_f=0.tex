@@ -6,10 +6,24 @@
 
 
 \begin{figure}
-\centerline{\includegraphics[width=3.15in]{../Pyfig/fig_spect_energy_budg_c=100_N=3840}}
-\caption{Spectral energy fluxes averaged over a long simulation for $c
+\centerline{\includegraphics[width=\linewidth]{../Pyfig/fig_flux_struct_combined}}
+\caption{(Left) Spectral energy fluxes averaged over a long simulation for $c
 = 100$ and $n = 3840$.  The fluxes are nondimensionalized by $\eps$
-and plotted versus $k/k_f$.  }
+and plotted versus $k/k_f$.
+(Right)
+Third order structure functions involved in the exact Kolmogorov law (\ref{eq_Kolmo})
+averaged over a long simulation for $c = 20$ and $n = 3840$.
+%
+The structure functions are normalized by $4 \eps_q r$.
+%
+Black thick line, $\mean{ \delta J_L|\delta \uu|^2 }
++ c^2\mean{\delta u_L(\delta h)^2}$;
+light thin line, $c^2\mean{\delta u_L (\delta h)^2}$;
+dark thin line, $\mean{\delta J_L |\delta \uu|^2}$.
+%
+The dotted straight line shows $4 \eps_q r$,
+where $\eps_q$ is the quadratic energy dissipation rate.
+}
 \label{fig_seb}
 \end{figure}
 
@@ -44,27 +58,7 @@ number of the order of $k \sim 70 k_f$.
 
 
 
-\begin{figure}
-\centerline{\includegraphics[width=3.15in]{../Pyfig/fig_Kolmo_c=20_N=3840}}
-\caption{
-Third order structure functions involved in the exact Kolmogorov law (\ref{eq_Kolmo})
-averaged over a long simulation for $c = 20$ and $n = 3840$.
-%
-The structure functions are normalized by $4 \eps r$.
-%
-Black thick line, $\mean{ \delta J_L|\delta \uu|^2 }
-+ c^2\mean{\delta u_L(\delta h)^2}$;
-light thin line, $c^2\mean{\delta u_L (\delta h)^2}$;
-dark thin line, $\mean{\delta J_L |\delta \uu|^2}$.
-%
-The dotted straight line shows $4 \eps_q r$,
-where $\eps_q$ is the quadratic energy dissipation rate.
-}
-\label{fig_Kolmo}
-\end{figure}
-
-
-Figure~\ref{fig_Kolmo} shows the quantity $\mean{\delta J_L|\delta
+Figure~\ref{fig_seb} also shows the quantity $\mean{\delta J_L|\delta
 \uu|^2 } + c^2\mean{\delta u_L(\delta h)^2 }$ (black thick line)
 normalized by $4 \eps r$ for $c = 20$ and $n = 1920$.
 %

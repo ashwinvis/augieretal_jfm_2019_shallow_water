@@ -3,7 +3,7 @@ name := article
 dir := Latex
 path := $(dir)/$(name)
 
-latex := cd $(dir) && pdflatex $(name).tex
+latex := cd $(dir) && pdflatex -synctex=1 $(name).tex
 
 latex_files := $(dir)/section_basic_theory.tex \
   $(dir)/section_advanced_theory.tex $(dir)/section_methods.tex \
@@ -25,6 +25,19 @@ clean:
 cleanall: clean
 	rm -rf tmp
 	rm -f $(path).pdf
+
+edittex:
+	emacs $(path).tex &
+
+startworking: edittex $(path).pdf
+	evince $(path).pdf &
+
+vimtex:
+	gvim -p $(path).tex $(latex_files) --servername GVIM &
+	# NVIM_LISTEN_ADDRESS=GVIM nvim-gtk $(path).tex &
+
+doit: vimtex $(path).pdf
+	zathura $(path).pdf &
 
 $(path).pdf: $(path).log $(path).bbl
 	@if [ `grep "Package rerunfilecheck Warning: File" $(path).log | wc -l` != 0 ]; then $(latex); fi
