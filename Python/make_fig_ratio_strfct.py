@@ -11,13 +11,12 @@ def fig11_ratio_struct(path, fig, ax1, order=[2, 3, 4, 5], tmin=0, tmax=1000, de
 
     key_var = ['ux', 'uy']
     rxs, So_var_dict, deltax = _rxs_str_func(
-        sim, order, tmin, tmax, delta_t, key_var)
+        sim, order, tmin, tmax, delta_t, key_var, force_absolute=True)
 
     ax1.set_xlabel('$r_x/L_f$')
     ax1.set_ylabel('$R_p(r)$')
 
     # ax1.set_title('Ratio of longitundinal and transverse struct. functions')
-    ax1.hold(True)
     ax1.set_xscale('log')
     ones = pl.ones(rxs.shape)
     shock_model = {0: 1.,
@@ -38,15 +37,17 @@ def fig11_ratio_struct(path, fig, ax1, order=[2, 3, 4, 5], tmin=0, tmax=1000, de
                  linewidth=2, label='$R_{:.0f}$'.format(o))
         ax1.plot(rxs / L_f, ones * shock_model[int(o)], color2)
 
-    ax1.set_ylim([0., 10.])
+    ax1.set_xlim([0.002, 2.])
+    ax1.set_ylim([0., 11])
     ax1.legend()
 
 
 if __name__ == '__main__':
-    matplotlib_rc()
-    path_fig = exit_if_figure_exists(__file__)
+    matplotlib_rc(10)
+    path_fig = exit_if_figure_exists(__file__, '.pdf')
     set_figsize(10, 6)
     fig, ax = pl.subplots()
     fig11_ratio_struct(
         paths_sim['noise_c20nh7680Buinf'], fig, ax, pl.arange(2, 7), tmin=10)
+    fig.tight_layout()
     pl.savefig(path_fig)

@@ -11,7 +11,7 @@ from fluiddyn.util.paramcontainer import ParamContainer
 from fluiddyn.output import rcparams
 from fluidsim.solvers.sw1l.output.spatial_means import SpatialMeansSW1L
 
-from _try_dask_strfunc import strfunc_from_pdf5
+from _try_dask_strfunc import strfunc_from_pdf3 as strfunc_from_pdf
 
 
 DPI = 300
@@ -245,7 +245,7 @@ def epststmax_stepinfo(path):
     return eps_stat, time_stat, time[-1]
 
 def _rxs_str_func(
-    sim, order, tmin, tmax, delta_t, key_var, cache=True
+    sim, order, tmin, tmax, delta_t, key_var, cache=True, force_absolute=False
 ):
     np = pl
     self = sim.output.increments
@@ -302,8 +302,9 @@ imin = {3:8d} ; imax = {4:8d} ; delta_i = {5:8d}'''.format(
             pdf_var, values_inc_var, nb_rx_to_plot = self.load_pdf_from_file(
                 tmin=tmin, tmax=tmax, key_var=key)
 
-            absolute = (o % 2 == 0) # Use absolute values if order is even
-            So_var_dict[key_order] = strfunc_from_pdf5(
+            absolute = True if force_absolute else (o % 2 == 0) # Use absolute values if order is even
+
+            So_var_dict[key_order] = strfunc_from_pdf(
                 rxs,
                 pdf_var, values_inc_var, o, absolute=absolute)
 
