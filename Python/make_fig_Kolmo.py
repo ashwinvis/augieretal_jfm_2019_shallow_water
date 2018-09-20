@@ -86,9 +86,9 @@ def fig3_struct(path, fig, ax1, tmin=0, tmax=1000):
 
     ax1.axhline(1., color='k', ls=':')
     # ax1.plot(rxs, pl.ones(rxs.shape), 'k:', linewidth=1)
-    ax1.set_xlim([None, 1.5])
-    ax1.set_ylim([-0.05, 1.1])
-    ax1.legend() #loc=1)
+    ax1.set_xlim([None, 2])
+    ax1.set_ylim([-0.1, 1.1])
+    ax1.legend(loc=8)
 
 
 if __name__ == '__main__':

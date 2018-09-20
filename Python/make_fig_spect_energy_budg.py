@@ -48,7 +48,7 @@ def fig2_seb(path, fig=None, ax=None, t_start=None):
     ax.plot(khE, PiEK, 'r', linewidth=2, label=r'$\Pi_K$')
     ax.plot(khE, PiEA, 'b', linewidth=2, label=r'$\Pi_A$')
 
-    ax.set_ylim([-0.05, 1.1])
+    ax.set_ylim([-0.1, 1.1])
     ax.legend()
 
 
