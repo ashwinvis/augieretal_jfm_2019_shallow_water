@@ -146,3 +146,7 @@ def exit_if_figure_exists(scriptname, extension='.png', override_exit=False):
     else:
         print('Making Figure {}.. '.format(figname))
         return figpath
+
+
+def load_df(name="df_w"):
+    return pd.read_csv(f"dataframes/{name}.csv", index_col=0)
