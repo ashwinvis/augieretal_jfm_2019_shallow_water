@@ -11,6 +11,7 @@ syntax: glob
 \#*\#
 
 Latex/article.pdf
+Latex/article.synctex.gz
 Latex/*.pdf
 **/.ipynb_checkpoints
 

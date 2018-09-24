@@ -25,32 +25,37 @@ Todo
 ----
 
 - figure 1: label, all black curves in contrast to what is written in the
-  caption.
+  caption - as per Erik's request.
 
-- figure 2: texts too small (they have to be nearly as big as the text in the
-  caption).
+- figure 2: combines the following old figures:
 
-- figure 3: it has to be as nice as in the old version.
+  + old figure 2: texts too small (they have to be nearly as big as the text in the
+    caption).
 
-- figure 4: OK. we put the old figure.
+  + old figure 3: it has to be as nice as in the old version.
 
-- figure 5 (Time- and space-averaged energy): not included in the .tex file and
-  in the repository. Why ?
+- figure 3: OK. we put the old figure.
 
-- figure 6 (Compensated energy spectra versus $k/k_f$ for different wave speeds
-  $c$.): not included in the .tex file and in the repository. Why ?
+- figure 4 (Time- and space-averaged energy): Now included in the .tex file and
+  in the repository. Slightly bigger font needed, perhaps?
 
-- figure 7: Good in terms of content but we have to improve the quality! Text
-  too small, lines too big, bad resolution on the screen.
+- figure 5 (Compensated energy spectra versus $k/k_f$ for different wave speeds
+  $c$.): not included in the .tex file and in the repository. Why ?  -- to be
+  removed.
 
-- figure 8: text slightly too small.
+- figure 6: Good in terms of content but we have to improve the quality! Text
+  too small, lines too big, bad resolution on the screen. :todo:
 
-- figure 9: not included. Why ?
+- figure 7: text slightly too small. :todo:
 
-- figure 10: not included. Why ?
+- figure 8: not included. Why ? :todo: with new scaling
 
-- figure 11: nearly OK. It can be nicer (larger text, ylabel, ...).
+- figure 9: not included. Why ? :todo: with new scaling for structure functions
 
-- figure 12: nearly OK but why is there an empty axis ?
+- figure 10: nearly OK. It can be nicer (larger text, ylabel, ...).
 
-- figure 13: not included. Why ?
+- figure 11: nearly OK but why is there an empty axis ? -- empty axis to be
+  removed.
+
+- figure 12: not included. Why ? -- to be removed and maybe included in a
+  follow up paper
