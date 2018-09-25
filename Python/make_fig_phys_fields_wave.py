@@ -47,7 +47,7 @@ def fig_phys_subplot(sim, fig, ax, key_field, x_slice=None, y_slice=None, cmap='
     cbar.solids.set_rasterized(True)
     
 if __name__ == '__main__':
-    matplotlib_rc()
+    matplotlib_rc(fontsize=9)
     path_fig = exit_if_figure_exists(__file__, extension='.pdf')
     set_figsize(6.65, 6)
     fig, axes = plt.subplots(2, 2)
