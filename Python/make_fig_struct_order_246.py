@@ -29,7 +29,7 @@ def _label(key='ux', odr=5):
 
 def fig_struct_order(
     path, fig, ax, eps, Fr, order=[2, 4, 6], tmin=10, tmax=1000, delta_t=0.5,
-    run_nb = 0
+    run_nb = 0, label_func=None, coeff=1
 ):
     sim = fls.load_sim_for_plot(path, merge_missing_params=True)
     key = "ux"
@@ -40,31 +40,32 @@ def fig_struct_order(
         ax1.set_xlabel('$r_x/L_f$')
         ax1.set_xscale('log')
         ax1.set_yscale('log')
-
+    if label_func is None:
+        label_func = _label
     
     L_f = np.pi / _k_f(sim.params)
 
     color_list = ['r', 'b', 'g', 'c', 'm', 'y', 'k']
 
     for i, (o, ax1) in enumerate(zip(order, ax)):
-        ax1.set_ylabel(_label(key, o))
+        ax1.set_ylabel(label_func(key, o))
         key_order = '{0}_{1:.0f}'.format(key, o)
-        norm = (L_f * Fr**0.5)**(o / 3 - 1) * eps**(o/3) * rxs
+        norm = (L_f * Fr**0.5)**(o / 3 - 1) * eps**(o/3) * rxs * coeff
         So_var = So_var_dict[key_order] / norm
         ax1.plot(rxs / L_f, So_var, color_list[run_nb], linewidth=1,
-                 label=_label(key, o))
+                 label=label_func(key, o))
 
         # ax1.set_ylim([0.1, None])
         ax1.set_xlim([None, 2])
 
-def plot_df(df, fig, ax):
+def plot_df(df, fig, ax, **kwargs):
     for run_nb, (idx, values) in enumerate(df.iterrows()):
         run = values["short name"]
         eps = values["$\epsilon$"]
         Fr = values["$F_f$"]
         tmin = values["$t_{stat}$"]
         fig_struct_order(
-            paths_sim[run], fig, ax, eps, Fr, tmin=tmin, run_nb=run_nb)
+            paths_sim[run], fig, ax, eps, Fr, tmin=tmin, run_nb=run_nb, **kwargs)
         # if run_nb == 1:
         #     break
 
