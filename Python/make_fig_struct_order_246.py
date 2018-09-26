@@ -94,6 +94,10 @@ if __name__ == '__main__':
     matplotlib_rc(fontsize=9)
     path_fig = exit_if_figure_exists(__file__, '.png')
     fig, ax = plt.subplots(3, 2, figsize=(5, 6), sharey=False)
+    # ax[0,0].set_title('$n=3840$')
+    # ax[0,1].set_title('$n=7680$')
+    for row in range(3):
+        set_share_axes(ax[row,:], sharey=True)
 
     df_w = load_df("df_w")
     df_3840 = df_w[df_w["$n$"] == 3840]
@@ -109,10 +113,7 @@ if __name__ == '__main__':
         "increasing $c$", xy, xytext, "data",
         arrowprops={"arrowstyle": "simple"})
 
-    # ax[0,0].set_title('$n=3840$')
-    # ax[0,1].set_title('$n=7680$')
-    for row in range(3):
-        set_share_axes(ax[row,:], sharey=True)
+
     fig.tight_layout()
     fig.savefig(path_fig)
     fig.savefig(path_fig.replace('.png', ".pdf"))
