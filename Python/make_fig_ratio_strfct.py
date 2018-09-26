@@ -34,7 +34,7 @@ def fig11_ratio_struct(path, fig, ax1, order=[2, 3, 4, 5], tmin=0, tmax=1000, de
         So_ux = So_var_dict['{0}_{1:.0f}'.format('ux', o)]
         So_uy = So_var_dict['{0}_{1:.0f}'.format('uy', o)]
         ax1.plot(rxs / L_f, abs(So_ux) / abs(So_uy), color1,
-                 linewidth=2, label='$R_{:.0f}$'.format(o))
+                 linewidth=1, label='$R_{:.0f}$'.format(o))
         ax1.plot(rxs / L_f, ones * shock_model[int(o)], color2)
 
     ax1.set_xlim([0.002, 2.])
@@ -43,11 +43,12 @@ def fig11_ratio_struct(path, fig, ax1, order=[2, 3, 4, 5], tmin=0, tmax=1000, de
 
 
 if __name__ == '__main__':
-    matplotlib_rc(10)
-    path_fig = exit_if_figure_exists(__file__, '.pdf')
-    set_figsize(10, 6)
+    matplotlib_rc(11)
+    path_fig = exit_if_figure_exists(__file__, '.png')
+    set_figsize(5, 3)
     fig, ax = pl.subplots()
     fig11_ratio_struct(
         paths_sim['noise_c20nh7680Buinf'], fig, ax, pl.arange(2, 7), tmin=10)
     fig.tight_layout()
     pl.savefig(path_fig)
+    pl.savefig(path_fig.replace(".png", ".pdf"))
