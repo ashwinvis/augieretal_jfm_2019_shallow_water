@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from scipy.optimize import curve_fit
-from base import set_figsize, matplotlib_rc
+from base import set_figsize
 
 
 L_f = 50. / 6  # hardcoded Lh / nk_f
@@ -45,7 +45,6 @@ def plot_energy(
     C=[10, 20, 40, 100, 400, 700],
 ):
     if fig is None and ax is None:
-        matplotlib_rc()
         set_figsize(6.5, 3)
         fig, ax = plt.subplots(1, 2)
 
@@ -109,7 +108,7 @@ def plot_energy(
     # ax[1].set_xticks(N)
 
     for a in ax.ravel():
-         a.legend()
+         a.legend(fontsize=7)
 
     fig.tight_layout()
     return fig, ax
