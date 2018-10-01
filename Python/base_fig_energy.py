@@ -75,6 +75,8 @@ def plot_energy(
             # logx=True, logy=True,
         )
     ax[0].set_ylabel(E_eps)
+    ax[0].set_xlabel('$c$')
+
     # ax[0].set_xticks(C)
 
 
@@ -110,6 +112,7 @@ def plot_energy(
         # print('c =', c)
         # print(df[E_eLc])
     ax[1].set_ylabel(E_eLc)
+    ax[1].set_xlabel('$n$')
     ax[1].set_xlim([None, 1e4])
     # ax[1].set_xticks(N)
 
