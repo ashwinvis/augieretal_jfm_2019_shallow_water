@@ -64,13 +64,13 @@ def fig1_energy(paths, fig=None, ax=None, t_start=0., legend=None, linestyle=Non
 
         P0 = _eps(sim, t_start)
         k_f = _k_f(sim.params)  # path + '/params_simul.xml')
-
+        L_f = pl.pi / k_f
         dico = sim.output.spatial_means.load()
         E = dico["E"]
         t = dico["t"]
-        E_f = (P0 / k_f) ** (2. / 3)
-        T_f = (P0 * k_f ** 2) ** (-1. / 3)
-        # E = E / E_f
+        E_f = (P0 * L_f) ** (2. / 3)
+        T_f = (P0 / L_f ** 2) ** (-1. / 3)
+        E = E / E_f
         t = t / T_f
 
         label = legend[i]
@@ -84,10 +84,10 @@ def fig1_energy(paths, fig=None, ax=None, t_start=0., legend=None, linestyle=Non
 
 def ax_settings(ax):
     ax.set_xlim([0., None])
-    ax.set_ylim([0., 23.])
-    ax.set_xlabel("$t/T_f$")
+    ax.set_ylim([0., None])
+    ax.set_xlabel("$t (\epsilon/L_f^2)^{1/3}$")
     # ax.set_ylabel("$E/E_f$")
-    ax.set_ylabel("$E$")
+    ax.set_ylabel("$E/(\epsilon L_f)^{2/3}$")
     # ax.grid(True, axis='y', linestyle=':')
 
     # ax.legend(fontsize=fontsize - 1)
@@ -107,7 +107,8 @@ def get_legend_and_paths(c_list, nh_list):
 
 if __name__ == "__main__":
     matplotlib_rc(fontsize)
-    path_fig = exit_if_figure_exists(__file__, ".pdf", override_exit=False)
+    path_fig = exit_if_figure_exists(__file__, ".png", override_exit=False)
     set_figsize(5.12, 3.0)
     fig1_plot_all(paths_sim)
     pl.savefig(path_fig)
+    pl.savefig(path_fig.replace(".png", ".pdf"))

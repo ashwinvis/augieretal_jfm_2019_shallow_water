@@ -64,16 +64,16 @@ def fig3_struct(path, fig, ax1, tmin=0, tmax=1000):
     label3 = label1[:-10] + ' + ' + label2[10:]
     
     def label_norm(label):
-        str_norm = ' / (4\epsilon_q r)$'
+        str_norm = ' / (4\epsilon r)$'
         return label.rstrip(' $') + str_norm
 
     ax1.set_ylabel(label_norm(label3))
 
     ax1.plot(rxs / Lf, S_Kolmo / S_Kolmo_theo, 'k', linewidth=2,
              label=(label3))
-    ax1.plot(rxs / Lf, (S_uL2JL + S_uT2JL) / S_Kolmo_theo, 'r', linewidth=2,
+    ax1.plot(rxs / Lf, (S_uL2JL + S_uT2JL) / S_Kolmo_theo, 'r:', linewidth=2,
              label=(label1))
-    ax1.plot(rxs / Lf, S_c2h2uL / S_Kolmo_theo, 'b', linewidth=2,
+    ax1.plot(rxs / Lf, S_c2h2uL / S_Kolmo_theo, 'b--', linewidth=2,
              label=(label2))
     # ax1.plot(rxs / Lf, S_uL2JL / S_Kolmo_theo,
     #          'r--', linewidth=2, label=_label('J_L', 'u_L'))

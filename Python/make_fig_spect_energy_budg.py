@@ -45,8 +45,8 @@ def fig2_seb(path, fig=None, ax=None, t_start=None):
     ax.set_xscale('log')
     ax.set_yscale('linear')
     ax.plot(khE, PiE, 'k', linewidth=2, label=r'$\Pi$')
-    ax.plot(khE, PiEK, 'r', linewidth=2, label=r'$\Pi_K$')
-    ax.plot(khE, PiEA, 'b', linewidth=2, label=r'$\Pi_A$')
+    ax.plot(khE, PiEK, 'r:', linewidth=2, label=r'$\Pi_K$')
+    ax.plot(khE, PiEA, 'b--', linewidth=2, label=r'$\Pi_A$')
 
     ax.set_ylim([-0.1, 1.1])
     ax.legend()
