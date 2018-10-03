@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from scipy.optimize import curve_fit
-from base import set_figsize
+from base import set_figsize, markers
 
 
 L_f = 50. / 6  # hardcoded Lh / nk_f
@@ -38,8 +38,6 @@ def get_alpha(n, E):
     popt, pcov = curve_fit(model_func2, n, E)
     return popt
 
-def markers():
-    return iter(['o', '^', 'x', 's', 'D', '*'])
 
 def plot_energy(
     df_main, fig=None, ax=None,

@@ -25,7 +25,7 @@ def fig1_plot_all(paths):
     c_nh_skip = [(400, 7680), (40, 7680)]
 
     fig, ax = pl.subplots()
-
+    normalized = False
     styles = itertools.product("cmkrgb", ("-", "--", "-.", ":"))
     for c, nh_list in sorted(c_nh.items(), key=lambda t: t[0], reverse=True):
         count_nh = list(range(4))
@@ -46,13 +46,14 @@ def fig1_plot_all(paths):
                 continue
 
             legend, paths = get_legend_and_paths([c], [nh])
-            fig1_energy(paths, fig, ax, legend=legend, t_start=30., linestyle=style)
+            fig1_energy(
+                paths, fig, ax, legend=legend, t_start=30., linestyle=style, normalized=normalized)
+            
+    ax_settings(ax, normalized)
+    fig.tight_layout() # pad=2.3)
 
-    ax_settings(ax)
 
-
-def fig1_energy(paths, fig=None, ax=None, t_start=0., legend=None, linestyle=None):
-    fig.tight_layout(pad=2)
+def fig1_energy(paths, fig=None, ax=None, t_start=0., legend=None, linestyle=None, normalized=False):
     # fig.subplots_adjust(right=0.78)
 
     if legend is None:
@@ -68,30 +69,31 @@ def fig1_energy(paths, fig=None, ax=None, t_start=0., legend=None, linestyle=Non
         dico = sim.output.spatial_means.load()
         E = dico["E"]
         t = dico["t"]
-        E_f = (P0 * L_f) ** (2. / 3)
-        T_f = (P0 / L_f ** 2) ** (-1. / 3)
-        E = E / E_f
-        t = t / T_f
+        if normalized:
+            E_f = (P0 * L_f) ** (2. / 3)
+            T_f = (P0 / L_f ** 2) ** (-1. / 3)
+            E = E / E_f
+            t = t / T_f
+            print("{}\teps={}\tk_f={}\tE_f={}\tT_f={}".format(label, P0, k_f, E_f, T_f))
 
         label = legend[i]
 
         ax.plot(t, E, linestyle, linewidth=1., label=label)
 
-        print("{}\teps={}\tk_f={}\tE_f={}\tT_f={}".format(label, P0, k_f, E_f, T_f))
-
     # ax.text(t.max(), E.max(), label)
 
 
-def ax_settings(ax):
+def ax_settings(ax, normalized):
     ax.set_xlim([0., None])
     ax.set_ylim([0., None])
-    ax.set_xlabel("$t (\epsilon/L_f^2)^{1/3}$")
-    # ax.set_ylabel("$E/E_f$")
-    ax.set_ylabel("$E/(\epsilon L_f)^{2/3}$")
-    # ax.grid(True, axis='y', linestyle=':')
-
-    # ax.legend(fontsize=fontsize - 1)
-    # ax.legend(fontsize=fontsize - 1, bbox_to_anchor=(1.01, 1.))
+    if normalized:
+        ax.set_xlabel("$t (\epsilon/L_f^2)^{1/3}$")
+        # ax.set_ylabel("$E/E_f$")
+        ax.set_ylabel("$E/(\epsilon L_f)^{2/3}$")
+        # ax.grid(True, axis='y', linestyle=':')
+    else:
+        ax.set_xlabel("$t$")
+        ax.set_ylabel("$E$")
 
 
 def get_legend_and_paths(c_list, nh_list):

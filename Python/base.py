@@ -311,3 +311,7 @@ imin = {3:8d} ; imax = {4:8d} ; delta_i = {5:8d}'''.format(
             )
 
     return rxs, So_var_dict, deltax
+
+
+def markers():
+    return iter(['o', '^', 'x', 's', 'D', '*'])

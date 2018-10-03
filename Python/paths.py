@@ -27,6 +27,8 @@ def get_pathbase():
         pathbase = '/run/media/avmo/lacie/13KTH/'
         if not os.path.exists(pathbase):
             pathbase = '/scratch/avmo/13KTH/'
+    elif hostname.startswith('beskow'):
+        pathbase = '$SNIC_NOBACKUP/data/postproc_noise'
     else:
         raise ValueError('Unknown hostname')
 
