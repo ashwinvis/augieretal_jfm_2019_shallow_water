@@ -27,8 +27,8 @@ def get_pathbase():
         pathbase = '/run/media/avmo/lacie/13KTH/'
         if not os.path.exists(pathbase):
             pathbase = '/scratch/avmo/13KTH/'
-    elif hostname.startswith('beskow'):
-        pathbase = '$SNIC_NOBACKUP/data/postproc_noise'
+    elif os.getenv("SNIC_RESOURCE") == 'beskow':
+        pathbase = '$SNIC_NOBACKUP/data/'
     else:
         raise ValueError('Unknown hostname')
 
@@ -106,7 +106,7 @@ def make_paths_dict(glob_pattern='SW1L*'):
     '''
     paths = glob(glob_pattern)
     paths_dict = OrderedDict()
-    for p in paths:
+    for p in sorted(paths):
         init_field, c, nh, Bu, efr = keyparams_from_path(p)
         if efr is None:
             key = '{}_c{}nh{}Bu{}'.format(init_field, c, nh, Bu)
@@ -118,17 +118,18 @@ def make_paths_dict(glob_pattern='SW1L*'):
     return paths_dict
 
 
-def specific_paths_dict():
+def specific_paths_dict(patterns=('/noise/SW1L*NOISE2*', '/vortex_grid/SW1L*VG*')):
     paths_dict = {}
     pathbase = get_pathbase()
 
-    for pattern in ['/noise/SW1L*NOISE2*', '/vortex_grid/SW1L*VG*']:
+    for pattern in patterns:
         paths_dict.update(make_paths_dict(pathbase + pattern))
 
     return paths_dict
 
 
 paths_sim = specific_paths_dict()
+paths_sim_old = specific_paths_dict(['/noise/SW1L*NOISE_*'])
 path_pyfig = os.path.join(os.path.dirname(__file__), '../Pyfig/')
 if not os.path.exists(path_pyfig):
     os.mkdir(path_pyfig)

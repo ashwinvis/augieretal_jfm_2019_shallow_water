@@ -3,7 +3,7 @@ from peakutils import indexes
 import matplotlib.pyplot as plt
 import numpy as np
 import fluidsim as fls
-from paths import paths_sim
+from paths import paths_sim, paths_sim_old
 
 
 def detect_shocks(sim, i0=None, i1=None, debug=False, **kwargs):
@@ -55,8 +55,9 @@ def avg_shock_seperation(sim, num_samples=200, averaged=True, ci=0.95):
         return ds
 
 
-def avg_shock_seperation_from_shortname(short_name, save_as="shock_sep.csv"):
-    path = paths_sim[short_name]
+def avg_shock_seperation_from_shortname(short_name, save_as="shock_sep.csv",
+                                        dict_paths=paths_sim):
+    path = dict_paths[short_name]
     sim = fls.load_state_phys_file(path, merge_missing_params=True)
     mean, std = avg_shock_seperation(sim)
     if not os.path.exists(save_as):
@@ -71,9 +72,9 @@ def avg_shock_seperation_from_shortname(short_name, save_as="shock_sep.csv"):
 
 def run(nh_min, nh_max=10_000):
     df_all = load_df()
-    df = df[df["$n$" > nh_min] and df["$n"]]
-    for i in range(len(df7)):
-        short = df7.iloc[i]["short name"]
+    df = df[df["$n$" > nh_min] and df["$n$" < nh_max]]
+    for i in range(len(df)):
+        short = df.iloc[i]["short name"]
         print(paths_sim[short])
     
     return (
@@ -81,3 +82,11 @@ def run(nh_min, nh_max=10_000):
             avg_shock_seperation_from_shortname).apply(
                 pd.Series)
     )
+
+
+if __name__ == "__main__":
+    for dict_paths in (paths_sim, paths_sim_old):
+        for short in dict_paths:
+            print(short)
+            avg_shock_seperation_from_shortname(short, dict_paths=dict_paths)
+            print(f"mean = {mean}, std = {std}")
