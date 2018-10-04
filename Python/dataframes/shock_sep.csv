@@ -19,7 +19,7 @@ noise_c700nh1920Buinf,/media/avmo/lacie/13KTH/noise/SW1Lwaves_NOISE2_c=700_L=50.
 noise_c100nh7680Buinf,/cfs/klemming/nobackup/a/avmo/data/noise/SW1Lwaves_NOISE2_c=100_L=50.x50._7680x7680_2016-09-27_18-45-00,3.1293466560624816,0.11004808325915008
 noise_c10nh7680Buinf,/cfs/klemming/nobackup/a/avmo/data/noise/SW1Lwaves_NOISE2_c=10_L=50.x50._7680x7680_2016-11-14_18-20-10,5.9202318645566585,0.18138932537749355
 noise_c20nh7680Buinf,/cfs/klemming/nobackup/a/avmo/data/noise/SW1Lwaves_NOISE2_c=20_L=50.x50._7680x7680_2016-09-27_18-45-04,4.865432372231974,0.1514292961915507
-noise_c400nh7680Buinf,/cfs/klemming/nobackup/a/avmo/data/noise/SW1Lwaves_NOISE2_c=400_L=50.x50._7680x7680_2016-09-27_18-45-04,2.149476572983428,0.1350655338618306
-# noise_c40nh7680Buinf,/cfs/klemming/nobackup/a/avmo/data/noise/SW1Lwaves_NOISE2_c=40_L=50.x50._7680x7680_2016-11-14_18-18-10,4.202105663912294,0.1210248201348286
-noise_c40nh7680Buinf,/cfs/klemming/nobackup/a/avmo/data/noise/SW1Lwaves_NOISE_c=40_L=50.x50._7680x7680_2016-09-14_09-24-59,3.3833544538519473,0.1094041278575197
-noise_c20nh7680Buinf,/cfs/klemming/nobackup/a/avmo/data/noise/SW1Lwaves_NOISE_c=20_L=50.x50._7680x7680_2016-09-16_03-47-44,4.84817011134969,0.16902482675258265
+#noise_c400nh7680Buinf,/cfs/klemming/nobackup/a/avmo/data/noise/SW1Lwaves_NOISE2_c=400_L=50.x50._7680x7680_2016-09-27_18-45-04,2.149476572983428,0.1350655338618306
+#noise_c40nh7680Buinf,/cfs/klemming/nobackup/a/avmo/data/noise/SW1Lwaves_NOISE2_c=40_L=50.x50._7680x7680_2016-11-14_18-18-10,4.202105663912294,0.1210248201348286
+#noise_c40nh7680Buinf,/cfs/klemming/nobackup/a/avmo/data/noise/SW1Lwaves_NOISE_c=40_L=50.x50._7680x7680_2016-09-14_09-24-59,3.3833544538519473,0.1094041278575197
+#noise_c20nh7680Buinf,/cfs/klemming/nobackup/a/avmo/data/noise/SW1Lwaves_NOISE_c=20_L=50.x50._7680x7680_2016-09-16_03-47-44,4.84817011134969,0.16902482675258265
