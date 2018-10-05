@@ -4,7 +4,7 @@ import seaborn as sns
 import numpy as np
 import fluidsim as fls
 
-from base import _k_f, set_figsize, _rxs_str_func, matplotlib_rc
+from base import _k_f, set_figsize, _rxs_str_func, matplotlib_rc, set_share_axes
 from paths import paths_sim, exit_if_figure_exists, load_df
 
 
@@ -106,7 +106,7 @@ if __name__ == '__main__':
     matplotlib_rc(fontsize=fontsize)
     path_fig = exit_if_figure_exists(__file__)
     set_figsize(5, 4)
-    fig, ax = pl.subplots(2, 2, sharey=False, sharex=True)
+    fig, ax = pl.subplots(2, 2, sharey=False, sharex=False)
 
     df_w = load_df("df_w")
     df_3840 = df_w[df_w["$n$"] == 3840]
@@ -120,16 +120,17 @@ if __name__ == '__main__':
     sns.set_palette("cubehelix", 3)
     plot_df(df_7680, fig, ax[:,1], ax_inset7)
 
+    for ax1 in ax[1,:]:
+        ax1.set_yscale("linear")
+
     for ax1 in ax.flat:
         ax1.set_xlim([None, 10])
-    
+
     for ax1 in ax[0,:]:
         ax1.set_ylim([2, 500])
         ax1.set_xlabel(None)
+        ax1.xaxis.set_tick_params(which='both', labelleft=False, labelright=False)
         ax1.xaxis.offsetText.set_visible(False)
-
-    for ax1 in ax[1,:]:
-        ax1.set_yscale("linear")
 
     for ax1 in ax[:,1]:
         ax1.set_ylabel(None)
@@ -144,6 +145,13 @@ if __name__ == '__main__':
         (2e-1, 1e1), 
         "data",
         arrowprops={"arrowstyle": "simple"})
+    
+    for row in range(2):
+        set_share_axes(ax[row,:], sharey=True)
+
+    for col in range(2):
+        set_share_axes(ax[:, col], sharex=True)
+
     fig.tight_layout()
     pl.savefig(path_fig)
     pl.savefig(path_fig.replace(".png", ".pdf"))
