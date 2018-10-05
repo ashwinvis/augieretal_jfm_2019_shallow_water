@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
 import fluidsim as fls
 from fractions import Fraction
 from base import _rxs_str_func, _k_f, matplotlib_rc, So_var_dict
@@ -30,8 +31,9 @@ def _label(key='ux', odr=5):
 
 if __name__ == '__main__':
     matplotlib_rc(fontsize=9)
+    sns.set_palette("GnBu_d", 5)
     path_fig = exit_if_figure_exists(__file__, '.png')
-    fig, ax = plt.subplots(1, 2, figsize=(5, 2), sharey=True)
+    fig, ax = plt.subplots(1, 2, figsize=(5, 2.2), sharey=True)
 
     df_w = load_df("df_w")
     df_3840 = df_w[df_w["$n$"] == 3840]
@@ -41,13 +43,15 @@ if __name__ == '__main__':
     plot_df(df_7680, fig, [ax[1]], order=[5], label_func=_label, coeff=-1)
     
     # Add arrow and text
-    xy = (0.03, 100)
-    xytext = (0.03, 0.5)
+    xy = (0.03, 40)
+    xytext = (0.03, 4)
     ax[0].annotate(
         "increasing $c$", xy, xytext, "data",
         arrowprops={"arrowstyle": "simple"})
     for ax1 in ax:
         ax1.set_xlim([None, 1.5])
+        ax1.set_ylim([1, 500])
+    ax[1].set_ylabel(None)
     fig.tight_layout()
     fig.savefig(path_fig)
     fig.savefig(path_fig.replace('.png', ".pdf"))

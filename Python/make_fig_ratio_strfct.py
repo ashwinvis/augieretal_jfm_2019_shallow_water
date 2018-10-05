@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 import pylab as pl
+import seaborn as sns
 import fluidsim as fls
 
-from base import _k_f, set_figsize, _rxs_str_func, matplotlib_rc
+from base import _k_f, set_figsize, _rxs_str_func, matplotlib_rc, rev_legend
 from paths import paths_sim, exit_if_figure_exists
+
 
 
 def fig11_ratio_struct(path, fig, ax1, order=[2, 3, 4, 5], tmin=0, tmax=1000, delta_t=0.5):
@@ -13,7 +15,7 @@ def fig11_ratio_struct(path, fig, ax1, order=[2, 3, 4, 5], tmin=0, tmax=1000, de
     rxs, So_var_dict, deltax = _rxs_str_func(
         sim, order, tmin, tmax, delta_t, key_var, force_absolute=True)
 
-    ax1.set_xlabel('$r_x/L_f$')
+    ax1.set_xlabel('$r/L_f$')
     ax1.set_ylabel('$R_p(r)$')
 
     # ax1.set_title('Ratio of longitundinal and transverse struct. functions')
@@ -27,22 +29,28 @@ def fig11_ratio_struct(path, fig, ax1, order=[2, 3, 4, 5], tmin=0, tmax=1000, de
                    5: 15. * pl.pi / 16,
                    6: 16. / 5}
     L_f = pl.pi / _k_f(sim.params)
-    color_list = ['r', 'b', 'g', 'c', 'm', 'y', 'k']
-    for i, o in enumerate(order):
-        color1 = color_list[i]
-        color2 = ':' + color1
+    # color_list = ['r', 'b', 'g', 'c', 'm', 'y', 'k']
+    color_list = iter(sns.color_palette())
+    for o in order:
+        color1 = next(color_list)
+        # color2 = ':' + color1
         So_ux = So_var_dict['{0}_{1:.0f}'.format('ux', o)]
         So_uy = So_var_dict['{0}_{1:.0f}'.format('uy', o)]
-        ax1.plot(rxs / L_f, abs(So_ux) / abs(So_uy), color1,
+        ax1.plot(rxs / L_f, abs(So_ux) / abs(So_uy), c=color1,
                  linewidth=1, label='$R_{:.0f}$'.format(o))
-        ax1.plot(rxs / L_f, ones * shock_model[int(o)], color2)
+        ax1.plot(rxs / L_f, ones * shock_model[int(o)], linestyle=":",
+                 c=color1)
 
-    ax1.set_xlim([0.002, 2.])
+    ax1.set_xlim([0.002, 3])
     ax1.set_ylim([0., 11])
-    ax1.legend()
+
+    rev_legend(ax, loc=1, fontsize=9)
+    
+    # ax1.legend()
 
 
 if __name__ == '__main__':
+    sns.set_palette("GnBu_d", 5)
     matplotlib_rc(11)
     path_fig = exit_if_figure_exists(__file__, '.png')
     set_figsize(5, 3)

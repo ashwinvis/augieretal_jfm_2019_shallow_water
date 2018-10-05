@@ -22,7 +22,7 @@ def detect_shocks(sim, i0=None, i1=None, debug=False, **kwargs):
     # peaks, _ = find_peaks(div1d, height=height, **kwargs)
     peaks = indexes(-div1d, thres=0.5, min_dist=3)
     if debug:
-        print("Height =", height)
+        # print("Height =", height)
         print(f"Detected {len(peaks)} peaks")
         plt.figure(dpi=150)
         x = sim.oper.x_seq

@@ -2,16 +2,19 @@
 from fractions import Fraction
 import pylab as pl
 import matplotlib.pyplot as plt
+import seaborn as sns
 import fluidsim as fls
 import h5py
 
-from base import _k_f, _eps, set_figsize, matplotlib_rc, _index_where
+from base import (
+    _k_f, _eps, set_figsize, matplotlib_rc, _index_where, linestyles, rev_legend)
 from paths import paths_sim, exit_if_figure_exists, load_df
 
 
-color_list = \
-    iter(['r', 'b', 'g', 'c', 'm', 'y', 'k'])
+#color_list = \
+#    iter(['r', 'b', 'g', 'c', 'm', 'y', 'k'])
     # iter(plt.cm.jet(pl.linspace(0,1,3)))
+style = linestyles()
 
 
 def _label(odr=2):
@@ -76,18 +79,18 @@ def fig7_spectra(path, fig, ax, Fr, c, t_start, run_nb):
         kh_f, E_tot / norm,
         # "k",
         # color_list[run_nb],
-        next(color_list),
-        linewidth=1, 
+        next(style),
+        linewidth=1.7, 
         label=f'$c = {c}$')
 
     # ax.plot(kh_f, EK / norm, 'r', linewidth=2, label='$E_K$')
     # ax.plot(kh_f, EA / norm, 'b', linewidth=2, label='$E_A$')
     
     if run_nb == 0:
-        s1 = slice(_index_where(kh_f, 2), _index_where(kh_f, 100))
+        s1 = slice(_index_where(kh_f, 3), _index_where(kh_f, 150))
         s2 = slice(_index_where(kh_f, 30), _index_where(kh_f, 200))
         ax.plot((kh_f)[s1], 0.7 * (kh_f ** -2 / norm)[s1], 'k-', linewidth=1)
-        ax.text(10, 0.055, '$k^{-2}$')
+        ax.text(10, 0.2, '$k^{-2}$')
         # ax.plot((kh_f)[s2], (kh_f ** -1.5 / norm)[s2], 'k-', linewidth=1)
         # ax.text(70, 1.5, '$k^{-3/2}$')
     ax.set_xscale('log')
@@ -95,7 +98,8 @@ def fig7_spectra(path, fig, ax, Fr, c, t_start, run_nb):
 
     ax.set_xlabel('$k/k_f$')
     ax.set_ylabel(_label())
-    ax.legend()
+    # ax.legend()
+    rev_legend(ax)
     fig.tight_layout()
 
 
@@ -111,6 +115,7 @@ def plot_df(df, fig, ax):
 
 
 if __name__ == '__main__':
+    sns.set_palette("GnBu_d", 3)
     matplotlib_rc(11)
     path_fig = exit_if_figure_exists(__file__)
     set_figsize(5, 3)

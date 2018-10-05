@@ -315,3 +315,11 @@ imin = {3:8d} ; imax = {4:8d} ; delta_i = {5:8d}'''.format(
 
 def markers():
     return iter(['o', '^', 'x', 's', 'D', '*'])
+
+
+def linestyles():
+    return iter(['-', '--', ':', '-.'])
+
+def rev_legend(ax, *args, **kwargs):
+    handles, labels = ax.get_legend_handles_labels()
+    ax.legend(handles[::-1], labels[::-1], *args, **kwargs)
