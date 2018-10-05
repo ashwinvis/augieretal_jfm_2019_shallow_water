@@ -115,9 +115,9 @@ if __name__ == '__main__':
     ax_inset3 = None  # _ax_inset(fig, '$r/L_f$', 0.325, 0.362)
     ax_inset7 = None  # _ax_inset(fig, '$r:/L_f$', 0.775, 0.362)
 
-    sns.set_palette("GnBu_d", 5)
+    sns.set_palette("cubehelix", 5)
     plot_df(df_3840, fig, ax[:,0], ax_inset3)
-    sns.set_palette("GnBu_d", 3)
+    sns.set_palette("cubehelix", 3)
     plot_df(df_7680, fig, ax[:,1], ax_inset7)
 
     for ax1 in ax.flat:
@@ -140,7 +140,7 @@ if __name__ == '__main__':
     ax[1,0].set_ylabel('$F_T/F_L$')
     ax[0,0].annotate(
         "increasing $c$",
-        (1e-2, 3e0),
+        (3e-2, 3e0),
         (2e-1, 1e1), 
         "data",
         arrowprops={"arrowstyle": "simple"})

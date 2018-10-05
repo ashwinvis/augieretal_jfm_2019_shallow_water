@@ -2,6 +2,7 @@ from __future__ import print_function, division
 from warnings import warn
 import pylab as pl
 import numpy as np
+import seaborn as sns
 from scipy.optimize import curve_fit
 from scipy.signal import medfilt
 from scipy import stats
@@ -320,6 +321,16 @@ def markers():
 def linestyles():
     return iter(['-', '--', ':', '-.'])
 
+
 def rev_legend(ax, *args, **kwargs):
     handles, labels = ax.get_legend_handles_labels()
     ax.legend(handles[::-1], labels[::-1], *args, **kwargs)
+
+
+def palette(nb_colors=5, preview=False, **kwargs):
+    defaults = dict(rot=0.85, hue=1)
+    defaults.update(kwargs)
+    pal = sns.cubehelix_palette(nb_colors, **defaults)
+    if preview:
+        sns.palplot(pal2)
+    return pal

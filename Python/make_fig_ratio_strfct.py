@@ -3,12 +3,12 @@ import pylab as pl
 import seaborn as sns
 import fluidsim as fls
 
-from base import _k_f, set_figsize, _rxs_str_func, matplotlib_rc, rev_legend
+from base import _k_f, set_figsize, _rxs_str_func, matplotlib_rc, rev_legend, palette
 from paths import paths_sim, exit_if_figure_exists
 
 
-
-def fig11_ratio_struct(path, fig, ax1, order=[2, 3, 4, 5], tmin=0, tmax=1000, delta_t=0.5):
+def fig11_ratio_struct(path, fig, ax1, order=[2, 3, 4, 5], tmin=0, tmax=1000,
+                       delta_t=0.5):
     sim = fls.load_sim_for_plot(path, merge_missing_params=True)
 
     key_var = ['ux', 'uy']
@@ -50,7 +50,7 @@ def fig11_ratio_struct(path, fig, ax1, order=[2, 3, 4, 5], tmin=0, tmax=1000, de
 
 
 if __name__ == '__main__':
-    sns.set_palette("GnBu_d", 5)
+    sns.set_palette("cubehelix", 5)
     matplotlib_rc(11)
     path_fig = exit_if_figure_exists(__file__, '.png')
     set_figsize(5, 3)

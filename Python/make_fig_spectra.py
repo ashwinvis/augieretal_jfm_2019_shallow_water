@@ -79,8 +79,9 @@ def fig7_spectra(path, fig, ax, Fr, c, t_start, run_nb):
         kh_f, E_tot / norm,
         # "k",
         # color_list[run_nb],
-        next(style),
-        linewidth=1.7, 
+        c="k",
+        linestyle=next(style),
+        linewidth=1, 
         label=f'$c = {c}$')
 
     # ax.plot(kh_f, EK / norm, 'r', linewidth=2, label='$E_K$')
@@ -115,7 +116,7 @@ def plot_df(df, fig, ax):
 
 
 if __name__ == '__main__':
-    sns.set_palette("GnBu_d", 3)
+    sns.set_palette("cubehelix", 3)
     matplotlib_rc(11)
     path_fig = exit_if_figure_exists(__file__)
     set_figsize(5, 3)

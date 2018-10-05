@@ -33,15 +33,13 @@ def _label(key='ux', odr=5):
 
 def fig_struct_order(
     path, fig, ax, eps, Fr, order=[2, 4, 6], tmin=10, tmax=1000,
-    delta_t=0.5,
-    run_nb = 0, label_func=None, coeff=1, ylabel=True
+    delta_t=0.5, key="ux",
+    run_nb = 0, label_func=None, coeff=1, ylabel=True, test=False
 ):
     sim = fls.load_sim_for_plot(path, merge_missing_params=True)
-    key = "ux"
     rxs, So_var_dict, deltax = _rxs_str_func(
         sim, order, tmin, tmax, delta_t, [key],
-#         cache=True
-        cache=False
+        cache=test
     )
     
     for ax1 in ax:
@@ -55,10 +53,15 @@ def fig_struct_order(
 
     #color_list = ['r', 'b', 'g', 'c', 'm', 'y', 'k']
     color_list = sns.color_palette()
+    if coeff == "1/c":
+       coeff = 1 / sim.params.c2 ** 0.5
+    elif coeff == "c":
+        coeff = sim.params.c2 ** 0.5
+
     for i, (o, ax1) in enumerate(zip(order, ax)):
         ax1.set_ylabel(label_func(key, o))
         key_order = '{0}_{1:.0f}'.format(key, o)
-        norm = (L_f * Fr**0.5)**(o / 3 - 1) * eps**(o/3) * rxs * coeff
+        norm = (L_f * Fr**0.5)**(o / 3 - 1) * eps**(o/3) * rxs * coeff ** o
         So_var = So_var_dict[key_order] / norm
         ax1.plot(rxs / L_f, So_var, 
                  c=color_list[run_nb],
@@ -77,8 +80,8 @@ def plot_df(df, fig, ax, **kwargs):
         tmin = values["$t_{stat}$"]
         fig_struct_order(
             paths_sim[run], fig, ax, eps, Fr, tmin=tmin, run_nb=run_nb, **kwargs)
-#         if run_nb == 1:
-#             break
+        if "test" in kwargs and kwargs["test"] and run_nb == 1:
+            break
 
 
 def set_share_axes(axs, target=None, sharex=False, sharey=False):
@@ -105,7 +108,6 @@ def set_share_axes(axs, target=None, sharex=False, sharey=False):
 
 if __name__ == '__main__':
     matplotlib_rc(fontsize=9)
-    sns.set_palette("GnBu_d", 5)
 
     path_fig = exit_if_figure_exists(__file__, '.png')
     fig, ax = plt.subplots(3, 2, figsize=(5, 6),
@@ -118,13 +120,15 @@ if __name__ == '__main__':
     df_w = load_df("df_w")
     df_3840 = df_w[df_w["$n$"] == 3840]
     df_7680 = df_w[df_w["$n$"] == 7680]
-    
+
+    sns.set_palette("cubehelix", 5)
     plot_df(df_3840, fig, ax[:,0])
+    sns.set_palette("cubehelix", 3)
     plot_df(df_7680, fig, ax[:,1])
-    for ax1 in ax[:,1]:
+    for ax1 in ax[:,1].flat:
         ax1.set_ylabel(None)
         ax1.yaxis.set_tick_params(which='both', labelleft=False, labelright=False)
-        ax.yaxis.offsetText.set_visible(False)
+        ax1.yaxis.offsetText.set_visible(False)
 
     for ax1 in ax[:-1,:].flat:
         ax1.set_xlabel(None)
