@@ -70,7 +70,7 @@ def fig_struct_order(
 
         if o == 2:
             ax1.set_ylim([1e-1, 8])
-        ax1.set_xlim([None, 2])
+        ax1.set_xlim([1e-3, 2])
 
 def plot_df(df, fig, ax, **kwargs):
     for run_nb, (idx, values) in enumerate(df.iterrows()):

@@ -41,7 +41,7 @@ def fig11_ratio_struct(path, fig, ax1, order=[2, 3, 4, 5], tmin=0, tmax=1000,
         ax1.plot(rxs / L_f, ones * shock_model[int(o)], linestyle=":",
                  c=color1)
 
-    ax1.set_xlim([0.002, 3])
+    ax1.set_xlim([0.001, 3])
     ax1.set_ylim([0., 11])
 
     rev_legend(ax, loc=1, fontsize=9)

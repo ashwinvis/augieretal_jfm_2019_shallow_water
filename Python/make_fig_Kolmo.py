@@ -56,7 +56,7 @@ def fig3_struct(path, fig, ax1, tmin=0, tmax=1000):
                 pre = 'c ^ 2'
             y2 = r'(\delta {})^2'.format(y)
 
-        return '$ \langle {} \delta {} {} \\rangle $'.format(pre, x, y2)
+        return '$ -\langle {} \delta {} {} \\rangle $'.format(pre, x, y2)
 
     ax1.set_xlabel('$r/L_f$')
     label1 = _label('J_L', 'uu')

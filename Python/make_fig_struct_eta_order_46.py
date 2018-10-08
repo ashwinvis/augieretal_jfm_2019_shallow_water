@@ -61,7 +61,7 @@ if __name__ == '__main__':
     ax[0,0].annotate(
         "increasing $c$", xy, xytext, "data",
         arrowprops={"arrowstyle": "simple"})
-q
+
     fig.tight_layout()
     fig.savefig(path_fig)
     fig.savefig(path_fig.replace('.png', ".pdf"))
