@@ -1,5 +1,6 @@
 from __future__ import print_function, division
 from warnings import warn
+import itertools
 import pylab as pl
 import numpy as np
 import seaborn as sns
@@ -319,7 +320,7 @@ def markers():
 
 
 def linestyles():
-    return iter(['-', '--', ':', '-.'])
+    return itertools.cycle(['-', '--', ':', '-.'])
 
 
 def rev_legend(ax, *args, **kwargs):
