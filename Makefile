@@ -1,5 +1,5 @@
 
-name := article
+name := ArticleNew
 dir := Latex
 path := $(dir)/$(name)
 
