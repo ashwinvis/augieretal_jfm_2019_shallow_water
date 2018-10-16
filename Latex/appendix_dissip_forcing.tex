@@ -1,9 +1,39 @@
-
-
 In this appendix, we give the expressions of the kinetic energy
 dissipation and forcing rates, which are unusual for the one-layer
 shallow-water model since the kinetic energy has not a quadratic
 expression.
+
+Since only the ageostrophic variable is forced ($\hat f_d = 0$),%
+(i) only the thickness fluctuation $\eta$ is forced in the
+non-rotating case and %
+(ii) the force terms in (\ref{eqapmnum}) are simply equal to $\hat
+f_\pm = \hat f_a/2$.
+%
+In order to compute the force $\hat f_a$, we start from a
+pre-normalized force $\hat f_{0}$ obtained from a normal random
+process decorrelated in time.
+%
+The force is then normalized such that the quadratic part of the total
+energy $\langle|\uu|^2 + c^2 \eta^2\rangle/2$ is injected at a
+constant rate.
+%
+The spectral injection rate of the quadratic energy averaged over one
+time step is (see appendix~\ref{app_comp})
+\begin{equation}
+P_q(\kk, t) 
+= 
+\Re\{ \hat \uu(\kk)^* \cdot \hat \ff(\kk) 
++
+c^2 \hat \eta(\kk)^* \hat f_\eta(\kk) \}
++ 
+(|\hat\ff|^2 + c^2 |\hat f_\eta|^2) \delta t /2,
+\end{equation}
+where $\Re$ denotes the real part.
+%
+Writing $\hat f_a = \alpha \hat f_{0}$, it is straightforward to solve
+a second-order equation for the coefficient $\alpha$ in order to fix
+the injection rate $\Add{P_0 \equiv} \sum_\kk P_q(\kk, t)$ to unity.
+
 
 
 We consider viscous operators such as $\p_t \uu |_{\mbox{\tiny diss}}

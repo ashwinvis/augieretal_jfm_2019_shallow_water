@@ -1,99 +1,10 @@
 
 
-\subsection{Downscale energy cascade of waves}
-\label{subsection_cascade}
-
-
-
 \begin{figure}
-\centerline{\includegraphics[width=\linewidth]{../Pyfig/fig_flux_struct_combined}}
-\caption{(Left) Spectral energy fluxes averaged over a long simulation for $c
-= 100$ and $n = 3840$.  The fluxes are nondimensionalized by $\eps$
-and plotted versus $k/k_f$.
-(Right)
-Third order structure functions involved in the exact Kolmogorov law (\ref{eq_Kolmo})
-averaged over a long simulation for $c = 20$ and $n = 3840$.
-%
-The structure functions are normalized by $4 \eps_q r$.
-%
-Black thick line, $\mean{ \delta J_L|\delta \uu|^2 }
-+ c^2\mean{\delta u_L(\delta h)^2}$;
-light thin line, $c^2\mean{\delta u_L (\delta h)^2}$;
-dark thin line, $\mean{\delta J_L |\delta \uu|^2}$.
-%
-The dotted straight line shows $4 \eps_q r$,
-where $\eps_q$ is the quadratic energy dissipation rate.
-}
-\label{fig_seb}
-\end{figure}
-
-
-The spectral energy fluxes of total energy, KE and APE are plotted in
-figure~\ref{fig_seb} as functions of $k/k_f$.
-%
-The fluxes are approximately zero at the wave numbers smaller than the
-forced wave numbers.  They increase sharply at the forced wave numbers
-to values close to $\eps$ for the total energy flux and to $0.5\eps$
-for the KE and APE fluxes.  The fluxes then decrease to zero over the
-dissipation range.
-%
-The energy is transferred from the forced wave numbers to the
-dissipation wave numbers with a constant flux equal to the mean
-forcing and dissipation rates.
-%
-There is an inertial range where the flux is constant and
-equipartitioned between equal KE and APE fluxes.
-%
-However, at wave numbers $k \simeq 2 k_f$, the flux is not exactly
-equal to $\eps$.  This is very likely related to the energy injection
-at wave numbers for which the force is zero, which is due to the
-non-quadraticity of the kinetic energy (see appendix~\ref{app_comp}).
-%
-Nevertheless this effect is non-negligible only for wave number of the
-order of $k\simeq 2 k_f$, i.e.\ at the first harmonics of the forced
-wave numbers, such that there is a clear and wide inertial range
-between $k\gtrsim 3 k_f$ to the dissipation range starting at wave
-number of the order of $k \sim 70 k_f$.
-
-
-
-
-Figure~\ref{fig_seb} also shows the quantity $\mean{\delta J_L|\delta
-\uu|^2 } + c^2\mean{\delta u_L(\delta h)^2 }$ (black thick line)
-normalized by $4 \eps r$ for $c = 20$ and $n = 1920$.
-%
-In this section, the brackets $\mean{}$ denote the average over space
-and time.
-%
-The dotted straight line shows the quantity $4 \eps_q r$, where
-$\eps_q$ is the quadratic energy dissipation rate (see
-appendix~\ref{app_comp}) which takes place at small scales.
-%
-We see that the Kolmogorov law (\ref{eq_Kolmo}) is well satisfied
-between \Add{$r \simeq 0.02L_f$ and $r \simeq 0.1 L_f$}.  The dark and
-light thin continuous lines correspond to the quantities $\mean{\delta
-J_L|\delta \uu|^2 }$ and $c^2\mean{\delta u_L(\delta h)^2}$,
-respectively.
-%
-These two quantities are nearly equal over the inertial and
-dissipation ranges, which is consistent with a wave cascade when
-$f=0$.
-%
-The agreement with the Kolmogorov law and the equality between
-$\mean{\delta J_L|\delta \uu|^2 }$ and $c^2\mean{\delta u_L(\delta
-h)^2}$ are the equivalents in the separation space of the plateau in
-the total energy flux and the equality between $\Pi_K$ and $\Pi_A$,
-respectively.
-
-
-
-
-\begin{figure}
-\centerline{
-\includegraphics[width=3.15in]{../Old/Figs/fig_spatiotempspectra_c20_Nh3840}}
-\caption{Spatio-temporal spectra of KE (dark lines) and APE (light
-lines) for $c = 20$ and $n = 3840$ versus $\omega/\omega_l$, where
-$\omega_l = c k$.  From the larger to the smaller spectra, $k/\delta k
+ \centerline{
+ \includegraphics[width=3.15in]{../Pyfig/fig_spatiotempspectra}}
+\caption{Spatio-temporal spectra of KE  and APE for $c = 20$ and $n = 3840$ versus $\omega/\omega_l$, where
+$\omega_l = c k$.  From top to bottom: $k/\delta k
 = 12$, 27, 62, 143, 327, and 746.  }
 \label{fig_spatiotemp_spectra}
 \end{figure}
@@ -101,17 +12,24 @@ $\omega_l = c k$.  From the larger to the smaller spectra, $k/\delta k
 Figure~\ref{fig_spatiotemp_spectra} presents the spatio-temporal
 spectra plotted as a function of the normalized frequency
 $\omega/\omega_l$.
-%\PA{Explain how these spectra have been calculated.}
+%\PA{Explain how these spectra have been calculated.}  
 In order to calculate these spectra, we have saved well-resolved time
 series of $\hat d(\kk)$ and $\hat a(\kk)$ for wave numbers inside
 particular shells such as $k\leqslant \kk<k+\delta k$, computed the
 temporal spectrum of each signal and averaged over the wave numbers
 inside each shell.
+
+\begin{figure}
+ \centerline{
+ \includegraphics[width=6.0in]{../Pyfig/fig_phys_fields_wave}}
+\caption{ }
+\label{Physical}
+\end{figure}
 %
 The spectra are strongly dominated by large peaks at $\omega =
 \omega_l$ indicating that the characteristic frequency for each wave
 number is the linear frequency.  However, the widening of the peaks
-can be explained only by nonlinear effects.  \Add{The equipartition
+can be explained only by nonlinear effects.  The equipartition
 between kinetic and potential energies is expected since the flow only
 consists of gravity waves and the total energy is nearly equal to the
 quadratic energy which is equal to the sum over all waves of their
@@ -130,28 +48,7 @@ equipartitioned quadratic energy.}
 
 \subsection{Time- and space-averaged energy as a function of $c$}
 
-\begin{figure}
-\centerline{
-\includegraphics[width=\linewidth]{../Pyfig/fig_energy_w}
-}
-\caption{Time- and space-averaged energy
-$\langle h|\uu|^2 + c^2 h^2 \rangle/2$
-of the statistically stationary flows.
-%
-In (\textit{a}), the energy is divided by
-$\sqrt{\eps}$ and plotted versus $c$ for 3 resolutions:
-$n = 960$, dotted lines;
-$n = 1920$, continuous lines and
-$n = 3840$, dashed lines.
-The cyan curves show the law $C_n \sqrt{\eps L_f c}$,
-with $C_n$ a fit coefficient.
-%
-In (\textit{b}), the energy is divided by
-$\sqrt{\eps L_f c}$ and plotted versus $n$
-for six values of $c$ as indicated in the legend.
-}
-\label{fig_Evsc}
-\end{figure}
+
 
 
 Figure~\ref{fig_Evsc}(\textit{a}) shows the time- and space-averaged
@@ -205,48 +102,20 @@ would be too costly.
 
 
 
-\subsection{Energy spectra}
+
 
 
 We now turn to the study of the energy spectra.  A dimensional
 analysis based on the assumption that the spectra only depend on
 $\eps$, $c$ and $k_f$ gives the following general expression
 \begin{equation}
-E_{\alpha, \beta}(k) = k^{-\alpha} \eps^\beta   c^{2- 3\beta}
+E_{\alpha, \beta}(k) = k^{-\alpha} \eps^\beta   c^{2- 3\beta} 
 {k_f}^{\alpha -1 - \beta}, \label{eq_E_alpha_beta}
 \end{equation}
 where $\alpha$ and $\beta$ are two free parameters.
 
 
 
-\begin{figure}
-% \centerline{
-% \includegraphics[width=\halfwidth]{../Figs/fig_spectra_c_Nx=1920_k32}
-% \includegraphics[width=\halfwidth]{../Figs/fig_spectra_c_Nx=3840_k32}
-% }
-% \centerline{
-% \includegraphics[width=\halfwidth]{../Figs/fig_spectra_c_Nx=1920_k2}
-% \includegraphics[width=\halfwidth]{../Figs/fig_spectra_c_Nx=3840_k2}
-% }
-\caption{
-Compensated energy spectra versus $k/k_f$ for different wave speeds $c$.
-%
-The spectra are compensated by $k^{-3/2}\sqrt{\varepsilon c} $
-in (\textit{a,b})
-and by $k^{-2}c^{1/3} \eps^{5/9} k_f^{4/9} $
-in (\textit{c,d}).
-%
-The resolution is
-$n = 1920$ in (\textit{a,c}) and
-$n = 3840$ in (\textit{b,d}).
-%
-In (\textit{a,c}), the wave speed goes from 10 to 1000
-and
-in (\textit{b,d}) from 10 to 200
-(for the precise values, see figure~\ref{fig_Evstime}).
-}
-\label{fig_spectra_c}
-\end{figure}
 
 
 The scaling of the energy as $\sqrt{\eps L_f c}$ suggests that the
@@ -277,7 +146,7 @@ two-dimensional acoustic turbulence \cite[]{FalkovichMeyer1996}.
 
 Inserting $\alpha = 2$ in the spectrum (\ref{eq_E_alpha_beta}) gives
 \begin{equation}
-E_\beta(k) = k^{-2} {k_f}^{1-\beta} c^{2-3\beta} \eps^\beta
+E_\beta(k) = k^{-2} {k_f}^{1-\beta} c^{2-3\beta} \eps^\beta  
 \end{equation}
 and we have found that the numerical spectra are very close to the
 spectrum $E_\beta(k)$ with $\beta = 5/9$.
@@ -293,15 +162,7 @@ c^{1/3} \eps^{5/9} k_f^{4/9}$.
 
 
 
-\begin{figure}
-\centerline{\includegraphics[width=8cm]{../Pyfig/fig_spectra_c=100_nh=7680}}
-\caption{Compensated spectra
-of total energy (thick black line)
-kinetic energy (thin dark line) and
-available potential energy (thin light line)
-for $c = 40$ and $n = 7680$.}
-\label{fig_spectra_c40}
-\end{figure}
+
 
 Figure~\ref{fig_spectra_c40} shows the compensated spectra $E(k) / (
 k^{-2} c^{1/3} \eps^{5/9} k_f^{4/9} )$ of total energy (black line),
@@ -329,7 +190,7 @@ $k^{-3/2}$ spectrum even at very large resolutions.
 
 % The compensated spectra $E(k) / ( k^{-3/2}\sqrt{\eps c})$ are plotted
 % for different resolutions %
-% in figure~\ref{fig_spectra_resol}(\textit{a}) for $c=10$ and
+% in figure~\ref{fig_spectra_resol}(\textit{a}) for $c=10$ and 
 % in figure~\ref{fig_spectra_resol}(\textit{b}) for $c=40$.
 % %
 % We see that an inertial range with a $k^{-2}$ scaling starts to appear
@@ -362,8 +223,7 @@ very intermittent.
 
 
 \begin{figure}
-% \setlength{\halfwidth}{2.72in}
-\centerline{\includegraphics[width=5.20in]{../Pyfig/fig_phys_fields_wave}}
+\setlength{\halfwidth}{2.72in}
 % \centerline{
 % \includegraphics[width=\halfwidth]{../Figs/fig_2Dh_c20}
 % \hspace{-4mm}
@@ -375,7 +235,7 @@ very intermittent.
 % \includegraphics[width=\halfwidth]{../Figs/fig_2Duy_c200}
 % }
 \caption{
-Snapshots for $n = 1920$ and two values of the wave speed
+Snapshots for $n = 1920$ and two values of the wave speed 
 $c= 20$ (\textit{a,c}) and $c= 200$ (\textit{b,d}).
 The colors represent the thickness in (\textit{a,b}) and
 the $y$-component of the velocity in (\textit{c,d}).
@@ -463,7 +323,7 @@ presented in \S~\ref{subsection_shock_model}.
 % \includegraphics[width=\halfwidth]{../Figs/fig_interm_strfct_uy}
 % }
 \caption{
-Compensated fifth-order structure functions $\mean{|\delta u_L|^5}/r$
+Compensated fifth-order structure functions $\mean{|\delta u_L|^5}/r$ 
 of (\textit{a}) the longitudinal increments and (\textit{b}) the
 transverse increments. %
 The crosses indicate the range of separation $r$ where the exponent
@@ -505,11 +365,11 @@ explained by the presence of discontinuities related to the shocks.
 % \includegraphics[width=\halfwidth]{../Figs/fig_interm_uy}
 % }
 \caption{
-Exponents $\zeta_p$ of the structure functions
-of (\textit{a}) the longitudinal increments
+Exponents $\zeta_p$ of the structure functions 
+of (\textit{a}) the longitudinal increments 
 and (\textit{b}) the transverse increments versus the order $p$.
 %
-The dashed lines correspond to
+The dashed lines correspond to 
 the Kolmogorov scaling laws $r^{p/3}$ and $\zeta_p = p/3$.
 The wave speed and the resolution are $c = 40$ and $n = 7680$.
 }
@@ -552,9 +412,9 @@ computed.
 
 
 \begin{figure}
-\centerline{\includegraphics[width=\halfwidth]{../Pyfig/fig_ratio_strfct}}
+\centerline{\includegraphics[width=8cm]{../Pyfig/fig_ratio_strfct}}
 \caption{
-Ratio of the structure functions of the velocity increments
+Ratio of the structure functions of the velocity increments 
 $R_p(r) \equiv \mean{|\delta u_L|^p} / \mean{|\delta u_T|^p}$
 for $p = 2,$ 3 and 4.
 The dotted straight lines indicate the values computed by the shock model:
@@ -578,13 +438,22 @@ are more irregular for the smallest Froude number.
 
 
 \begin{figure}
-\centerline{\includegraphics[width=5.12in]{../Pyfig/fig_flatness}}
+\centerline{\includegraphics[width=12cm]{../Pyfig/fig_flatness}}
 \caption{ Flatness of the longitudinal and transverse increments for
 $c = 10$ and $n = 7680$. The straight continuous lines indicate the
 $r^{-1}$-scaling and the straight dashed line the $r^{-3/2}$-scaling.
-The inset shows the ratio $F_T/F_L$ and the corresponding value
-computed by the shock model, $F_T/F_L = 1.5$.  }
+The inset shows the ratio $F_T/F_L$ and the corresponding value computed by the shock model, $F_T/F_L = 1.5$.  }
 \label{fig_flatness}
+\end{figure}'
+
+\begin{figure}
+\centerline{\includegraphics[width=8cm]{../Pyfig/fig_spectra}}
+\caption{Compensated spectra
+of total energy (thick black line)
+kinetic energy (thin dark line) and
+available potential energy (thin light line)
+for $c = 40$ and $n = 7680$.}
+\label{fig_spectra_c40}
 \end{figure}
 %
 Figure~\ref{fig_flatness} shows the flatness of the longitudinal and
@@ -644,9 +513,18 @@ value 1.5.
 % atmosphere.  How important are the discontinuities on horizontal
 % cross-sections in these cases?
 % %
-% It is well known that the fronts separating cold and warm regions
+% It is well known that the fronts separating cold and warm regions 
 % explain many meteorological phenomena.
 % %
-% The curves in figure~\ref{fig_flatness} seem to indicate that
+% The curves in figure~\ref{fig_flatness} seem to indicate that 
 % they could also have strong effects on the statistics of the atmosphere
 % over a quite large range of scales.
+
+
+
+
+
+
+
+
+

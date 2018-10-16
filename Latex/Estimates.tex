@@ -1,0 +1,58 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx}
+ 
+           
+\topmargin 0in % 25mm-1in makes the body start 25mm below top of paper
+\headheight 3ex 
+\headsep 14mm
+
+\advance \topmargin by -\headheight
+\advance \topmargin by -\headsep
+     
+% height of thesis textarea (11pt font):
+\topskip 5ex
+\textheight 225mm  
+     
+\oddsidemargin 	4mm     % 3cm - 1in - 1mm correction lwmech4
+\evensidemargin \oddsidemargin
+% width of thesis textarea (11pt font):
+\textwidth 160mm
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\parskip 0ex
+\parindent 1em
+
+\setlength{\unitlength}{1truemm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\noindent {\bf \large Estimate of the characteristic shock width and lifetime in  terms of $ \nu, \; \epsilon, \; Re $ and $ Fr $.}
+\vskip 5mm
+\noindent Definitions
+\begin{equation}
+Re = \frac{\varepsilon^{1/3} L^{4/3}}{\nu} \, ,\;\;\;\;\; Fr = \frac{\varepsilon^{1/3} L^{1/3}}{c} 
+\end{equation} 
+The characteristic shock width, $ \delta x $, can be estimated by assuming that all dissipation takes place within the shocks and that the dissipation scale is equal to $ \delta x $. The mean dissipation over the domain area $ \cal{A} $
+can thus be estimated as
+\begin{equation}
+\varepsilon \sim \nu  \frac{\Delta u^2} {\delta x^2} \frac{L_s \delta x} {\cal{A}}\sim \frac{\nu \varepsilon^{2/3} }{\delta x d^{1/3}} \, ,
+\end{equation} 
+With 
+\begin{equation} \label{dScale}
+d \sim Fr L   
+\end{equation} 
+we find that
+\begin{equation}
+\delta x \sim Re^{-1/4} Fr^{-1/3} \, \frac{\nu^{3/4}}{\varepsilon^{1/4}} \, ,
+\end{equation}
+where we recognise $ {\nu^{3/4}}/{\varepsilon^{1/4}} $ as the Kolmogorov length scale. The characteristic life time can be estimated as
+\begin{equation}
+\tau \sim  \frac{\Delta u^2}{\varepsilon} \frac{L_s \delta x}{A} \sim \frac{\delta x}{\; (\varepsilon d)^{1/3}} \sim Re^{-1/2} Fr^{-2/3} \left ( \frac {\nu}{\epsilon} \right )^{1/2} 
+\end{equation} 
+where we recognise  $ (  {\nu}/{\epsilon}  )^{1/2} $ as the Kolmogorov time scale. A necessary condition for the appearance of shocks is that $ \delta x \ll d $, leading to the condition
+\begin{equation}
+Re^{5/4} Fr^{4/3} \gg 1 \, .
+\end{equation} 
+It may be conjectured that this is not only a necessary condition but also a sufficient conditions for shocks to appear.
+
+\end{document}

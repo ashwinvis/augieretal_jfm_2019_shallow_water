@@ -1,161 +1,27 @@
 
 
 
-\subsection{Physical system and governing equations}
 
-We consider a thin layer of fluid over a flat bottom and with a free
-surface.
-%
-Under the assumption that the characteristic horizontal scale of the
-flow $L$ is much larger than the mean layer thickness $H_0$, it can be
-shown that the pressure is only a function of the local layer
-thickness $H(x, y)$, i.e.\ that the flow is hydrostatic.
-%
-Further assuming that the horizontal flow is vertically invariant, it
-can be shown that the shallow-water system is governed by the
-Saint-Venant equations \cite[see for example][]{VallisLIVRE2006}
-\begin{eqnarray}
-(\p_t + \uu\cdot \bnabla ) \uu   
-&=& - c^2 \bnabla h - f \eez \wedge \uu + \nu \bnabla^2 \uu,   \label{eq_uu}\\
+In a non-rotating system of reference the SW equations for a thin layer of fluid over a flat bottom and with a free
+surface can be written as  \cite[see for example][]{VallisLIVRE2006}
+\begin{eqnarray} \label{UEq}
+\p_t \uu + \uu\cdot \bnabla  \uu   
+&=& - c^2 \bnabla h + \frac{\nu}{h}  \bnabla^2 \uu,   \label{eq_uu}\\ \label{HEq}
 \p_t   h    &=& - \bnabla \cdot (h \uu).  \label{eq_h}
 \end{eqnarray}
 where $\uu$ is the horizontal velocity, %
-$h = H/H_0$ the normalized layer thickness, %
-$\bnabla$ the horizontal gradient, %
-$\nu$ the kinetic viscosity, %
-$f$ the Coriolis parameter %
-and %
-$c = \sqrt{gH_0}$, with $g$ the gravitational acceleration.
-%
-In the following, the Coriolis parameter is assumed to be spatially
-homogeneous.
-
-
-
-\subsection{Eigenmodes of the linearized equations}
-
-\label{subsection_eigen}
-
-Neglecting the non-linear and the dissipative terms, the governing
-equations can be rewritten as
-\begin{equation}
-\p_t q = 0, \mbox{\hspace{1cm}} 
-\p_t d = a \mbox{\hspace{6mm} and \hspace{6mm}} 
-\p_t a = - c^2\varkappa^2 d, 
+$h = 1 + \eta $ the non-dimensional thickness of the fluid layer,  $ \eta $ being the surface displacement, 
+$\nu$ the kinematic viscosity and $ c $ is the gravity wave speed. The SW equations conserve mass, $ h $, and momentum $ {\bf J} = h{\bf u} $. As a matter of fact, we have constructed the viscous term in (\ref{UEq}) in such a way that momentum is conserved and energy dissipation is positive definite. This can only be accomplished by permitting the term to be nonlinear in the flow variables. There are different forms of nonlinear terms that fulfill both conditions and it may be disputed which is the best one. However, in the simulations we will use diffusion terms in both (\ref{UEq}) and (\ref{HEq}) that will not fulfill any of these two conditions in a strict sense. Therefore, we will not discuss this matter further. The inviscid SW equations conserve a local
+quantity along trajectories of the fluid particles, the Ertel
+potential vorticity $\ErtelPV = \zeta /h$, where $\zeta  $ is the vorticity, which in a rotating system should be interpreted as absolute vorticity. In this paper this conservation law will be of no relevance since we only consider
+irrotational flows for which the velocity can be written as $ \uu = \bnabla \phi $ , where $ \phi $ is the velocity potential. In a domain with no net fluxes through the boundaries the inviscid equations conserve total energy $ E_K + E_P $, where $ E_K =   {\bf J}  \cdot {\uu} /2 $ is kinetic energy and $ E_P = c^{2} h^2/2 $ is potential energy. The latter can be split into three terms as \begin{equation}
+E_P = c^2/2 + c^2\eta+ c^2 \eta^2/2, 
 \end{equation}
-where $q = \zeta - f\eta$ is the linear Charney potential vorticity, %
-$d = \bnabla \cdot \uu$ the horizontal divergence, %
-$a = -c^2\bnabla^2 \eta + f\zeta$ an ageostrophic variable and %
-$\varkappa^2 = {k_d}^2 - \bnabla^2$ the Helmholtz operator, %
-with $k_d = f/c$ the deformation wave number. %
-Here, $\eta = h-1$ is the normalized surface displacement and %
-$\zeta = \eez \cdot (\bnabla \wedge \uu)$ is the vertical component of
-the vorticity.
-%
-The dispersion relation is $\omega^2 = {\omega_l}^2$, where
+where the first term corresponds the potential energy of the state with no
+surface displacement.  The third term, which is quadratic in the surface displacement, may be named available potential energy (APE),
+$E_A = c^2\eta^2/2$, a concept introduced by  \cite{Lorenz1955}. As a consequence of mass and energy conservation the SW equations also conserve the sum of kinetic and available potential energy, $ E_K + E_A $.
+ The velocity potential and the displacement of the linearized inviscid SW equations both satisfy the wave equation,
 \begin{equation}
- \omega_l(\kk) \equiv c  \sqrt{ {k_d}^2 + |\kk|^2 } = \sqrt{ f^2 + c^2|\kk|^2 },
+\frac{\partial ^2 \eta}{\partial t^2} = c^2 \nabla^2 \eta \, ,
 \end{equation}
-which implies that in the non-rotating case the waves are
-non-dispersive.
-%
-The eigenfunctions of the linear operator are the prograde and
-retrograde linear waves with positive and negative frequencies,
-respectivelly.
-%
-Denoting the prograde quantities by the index $+$, the retrograde
-quantities by the index $-$ and the temporal and spatial Fourier
-transform by a tilde, we have by definition %
-$a = a_+ + a_-$, $d = d_+ + d_-$, %
-$\widetilde{\p_t a_\pm} = \mp i \omega_l \tilde a_\pm$ and %
-$\widetilde{\p_t d_\pm} = \mp i \omega_l \tilde d_\pm$.
-%
-The linearized governing equations for the waves can be rewritten as %
-$i \tilde a_\pm = \pm \omega_l \tilde d_\pm$, which gives %
-$ \tilde a_\pm = \tilde a /2 \pm \omega_l \tilde d /(2i) .$
-
-
-
-
-\subsection{Conserved quantities}
-
-
-The non-dissipative one-layer shallow-water equations conserve a local
-quantity along the trajectories of the fluid particles, the Ertel
-potential vorticity $\ErtelPV = \zeta_a/h$, where $\zeta_a = \zeta +
-f$ is the absolute vorticity.
-%
-Note that since the lagrangian derivative of the Ertel potential
-vorticity is $\D_t \ErtelPV = 0$, the space-averaged Ertel potential
-vorticity is not conserved $\p_t \meanx{\ErtelPV} = \meanx{d \ErtelPV}
-\neq 0 $, where the brackets $\meanx{}$ denote the space average.
-%
-In the case of two-dimensional turbulence, it can be shown that the
-energy can not cascade towards small scales due to the 
-constraints that the enstrophy $\meanx{ \zeta^2/2 }$ is conserved and
-that the spectra of energy and enstrophy are proportional
-\cite[]{Kraichnan1967}.
-%
-This result was further extended by \cite{Charney1971} to the case of
-quasi-geostrophic turbulence using the analogy between the
-enstrophy and the Charney linear potential enstrophy $\meanx{ q^2/2
-}$, where $q$ is the linear potential vorticity equal in the shallow
-water case to $q = \zeta - f \eta$.
-%
-Note, however, that the analogy does not hold for the nonlinear Ertel
-potential vorticity $\ErtelPV$ and that the local conservation of
-$\ErtelPV$ is a much weaker constraint for the dynamics of the flows.
-
-
-The non-dissipative one-layer shallow-water equations also conserve
-some space-averaged quantities.
-%
-For example, since
-\begin{equation}
-(\D_t+d) \zeta_a = 0 \Rightarrow \p_t \meanx{\zeta_a} = 0 ,
-\end{equation}
-the space-averaged absolute vorticity $\meanx{\zeta_a }$ is conserved.
-Since the governing equation for the thickness $h$ and the mass flux
-$\JJ = h \uu$ are
-\begin{eqnarray}
-(\D_t+d) h 
-&=& 0, \label{eq_h_2}\\
-(\D_t+d) \JJ 
-&=& - \bnabla E_P - f \eez \wedge \JJ, \label{eq_JJ}
-\end{eqnarray}
-where $E_P = c^2 h^2/2$ is the total potential energy, the
-space-averaged thickness $\meanx{ h }$ is conserved and the kinetic
-momentum $\meanx{ \JJ }$ is conserved in the absolute not-rotating
-reference frame.
-%
-Note that in contrast to the case of the Navier-Stokes equations, 
-the dissipative shallow-water equations do not conserve $\meanx{ \JJ }$,
-even with a Newtonian viscous operator.
-
-The non-dissipative one-layer shallow-water equations also conserve
-the space-averaged total energy, the local energy being the sum of the
-local potential energy (PE), $E_P = c^2 h^2/2$, and the local kinetic
-energy (KE), $E_K = \JJ\cdot\uu/2$.  Using (\ref{eq_uu}),
-(\ref{eq_h_2}) and (\ref{eq_JJ}), it is straightforward to show that
-\begin{eqnarray}
-(\D_t + d) E_K
-&=&  
-- \uu \cdot \bnabla E_P, \\
-(\D_t + d) E_P
-&=&  
-- E_P \bnabla \cdot \uu.
-\end{eqnarray}
-%
-The space-averaged conversion from potential energy to kinetic energy
-is equal to $C = -\meanx{ \uu \cdot \bnabla E_P } = \meanx{ E_P
-\bnabla \cdot \uu }$.
-%
-The total potential energy can be split in three parts
-\begin{equation}
-E_P = c^2/2 + c^2\eta+ c^2 \eta^2/2.
-\end{equation}
-The first term corresponds the potential energy of the state with null
-surface displacement.  The second term is a contribution to the
-potential energy which is zero in average.  We call the third term
-$E_A = c^2\eta^2/2$ the available potential energy (APE).  Its
-space-average is indeed equal to the space-averaged APE.
+with equipartition between KE and APE over a wave period in each Fourier mode.
