@@ -1,26 +1,43 @@
 
-
-
-
 In a non-rotating system of reference the SW equations for a thin layer of fluid over a flat bottom and with a free
 surface can be written as  \cite[see for example][]{VallisLIVRE2006}
 \begin{eqnarray} \label{UEq}
-\p_t \uu + \uu\cdot \bnabla  \uu   
+\p_t \uu + \uu\cdot \bnabla  \uu
 &=& - c^2 \bnabla h + \frac{\nu}{h}  \bnabla^2 \uu,   \label{eq_uu}\\ \label{HEq}
 \p_t   h    &=& - \bnabla \cdot (h \uu).  \label{eq_h}
 \end{eqnarray}
-where $\uu$ is the horizontal velocity, %
-$h = 1 + \eta $ the non-dimensional thickness of the fluid layer,  $ \eta $ being the surface displacement, 
-$\nu$ the kinematic viscosity and $ c $ is the gravity wave speed. The SW equations conserve mass, $ h $, and momentum $ {\bf J} = h{\bf u} $. As a matter of fact, we have constructed the viscous term in (\ref{UEq}) in such a way that momentum is conserved and energy dissipation is positive definite. This can only be accomplished by permitting the term to be nonlinear in the flow variables. There are different forms of nonlinear terms that fulfill both conditions and it may be disputed which is the best one. However, in the simulations we will use diffusion terms in both (\ref{UEq}) and (\ref{HEq}) that will not fulfill any of these two conditions in a strict sense. Therefore, we will not discuss this matter further. The inviscid SW equations conserve a local
-quantity along trajectories of the fluid particles, the Ertel
-potential vorticity $\ErtelPV = \zeta /h$, where $\zeta  $ is the vorticity, which in a rotating system should be interpreted as absolute vorticity. In this paper this conservation law will be of no relevance since we only consider
-irrotational flows for which the velocity can be written as $ \uu = \bnabla \phi $ , where $ \phi $ is the velocity potential. In a domain with no net fluxes through the boundaries the inviscid equations conserve total energy $ E_K + E_P $, where $ E_K =   {\bf J}  \cdot {\uu} /2 $ is kinetic energy and $ E_P = c^{2} h^2/2 $ is potential energy. The latter can be split into three terms as \begin{equation}
-E_P = c^2/2 + c^2\eta+ c^2 \eta^2/2, 
+where $\uu$ is the horizontal velocity, $h = 1 + \eta $ the non-dimensional
+thickness of the fluid layer, $ \eta $ being the surface displacement, $\nu$
+the kinematic viscosity and $ c $ is the gravity wave speed. The SW equations
+conserve mass, $ h $, and momentum $ {\bf J} = h{\bf u} $. As a matter of fact,
+we have constructed the viscous term in (\ref{UEq}) in such a way that momentum
+is conserved and energy dissipation is positive definite. This can only be
+accomplished by permitting the term to be nonlinear in the flow variables.
+There are different forms of nonlinear terms that fulfill both conditions and
+it may be disputed which is the best one. However, in the simulations we will
+use diffusion terms in both (\ref{UEq}) and (\ref{HEq}) that will not fulfill
+any of these two conditions in a strict sense. Therefore, we will not discuss
+this matter further. The inviscid SW equations conserve a local quantity along
+trajectories of the fluid particles, the Ertel potential vorticity $\ErtelPV =
+\zeta /h$, where $\zeta $ is the vorticity, which in a rotating system should
+be interpreted as absolute vorticity. In this paper this conservation law will
+be of no relevance since we only consider irrotational flows for which the
+velocity can be written as $ \uu = \bnabla \phi $ , where $ \phi $ is the
+velocity potential. In a domain with no net fluxes through the boundaries the
+inviscid equations conserve total energy $ E_K + E_P $, where $ E_K = {\bf J}
+\cdot {\uu} /2 $ is kinetic energy and $ E_P = c^{2} h^2/2 $ is potential
+energy. The latter can be split into three terms as
+\begin{equation}
+E_P = c^2/2 + c^2\eta+ c^2 \eta^2/2,
 \end{equation}
 where the first term corresponds the potential energy of the state with no
-surface displacement.  The third term, which is quadratic in the surface displacement, may be named available potential energy (APE),
-$E_A = c^2\eta^2/2$, a concept introduced by  \cite{Lorenz1955}. As a consequence of mass and energy conservation the SW equations also conserve the sum of kinetic and available potential energy, $ E_K + E_A $.
- The velocity potential and the displacement of the linearized inviscid SW equations both satisfy the wave equation,
+surface displacement. The third term, which is quadratic in the surface
+displacement, may be named available potential energy (APE), $E_A =
+c^2\eta^2/2$, a concept introduced by \cite{Lorenz1955}. As a consequence of
+mass and energy conservation the SW equations also conserve the sum of kinetic
+and available potential energy, $ E_K + E_A $. The velocity potential and the
+displacement of the linearized inviscid SW equations both satisfy the wave
+equation,
 \begin{equation}
 \frac{\partial ^2 \eta}{\partial t^2} = c^2 \nabla^2 \eta \, ,
 \end{equation}

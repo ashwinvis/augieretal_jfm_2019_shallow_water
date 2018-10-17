@@ -199,7 +199,7 @@
 { Shallow water wave turbulence}
 
 \author[P. Augier, A.V. Mohanan and E. Lindborg]%
-{Pierre Augier$^{1}$,   A. V. Mohanan$^{2}$ 
+{Pierre Augier$^{1}$,   A. V. Mohanan$^{2}$
 and Erik Lindborg$^2$ \ns }
 
 \affiliation{$^2$ KTH Mechanics,
@@ -220,18 +220,35 @@ $^1$ LEGI, BP53,
 
 
 % \baselineskip 8mm
+
 \begin{abstract}
-The dynamics of irrotational shallow water wave turbulence forced in large scales
-and dissipated  at small scales is investigated.
-First, we derive the shallow water analogue of the `four-fifths law' of three-dimensional turbulence for a third order structure function involving velocity and displacement increments.
-Using this relation and assuming that the flow is dominated by shocks we develop a simple model predicting that the shock amplitude scales as $ (\epsilon d)^{1/3} $, where $ \eps $ is the mean dissipation rate and $ d $ the mean distance between the shocks, and that the
-$ p $:th order displacement and velocity structure functions scale as
-$ (\eps d)^{p/3} r/d $, where $ r $ is the separation. 
-Then we carry out a series of forced simulations with resolutions up to $7680^2$, varying the Froude number,  $F_{f} = \eps^{1/3}  / ck_f^{1/3} $, where $ k_f $  is the forcing wave number and $c$ is the wave speed.
-In all simulations a stationary state is reached  in which there is a constant spectral energy flux and equipartition between kinetic and potential energy in the constant flux range. The third order structure function relation is satisfied with a high degree of accuracy. 
-Mean energy is found to scale as $ E \sim \sqrt{\epsilon c/k_f} $,  and is also dependent on resolution, indicating that shallow water wave turbulence does not fit into the paradigm of a Richardson-Kolmogorov cascade.  
-In all simulations shocks develop, displayed as long thin bands of negative divergence in flow visualizations. The mean distance between the shocks is found to scale  as $ d \sim F_f^{1/2}/k_f $. Structure functions of second and higher order are found to scale in good agreement with the model. We conclude that in the weak limit, $ F_f \rightarrow 0 $, shocks will become denser and weaker and finally disappear for a finite Reynolds number. On the other hand, for a given $ F_{f} $, no matter how small, shocks will prevail if the Reynolds number is sufficiently large. 
- 
+
+The dynamics of irrotational shallow water wave turbulence forced in large
+scales and dissipated at small scales is investigated. First, we derive the
+shallow water analogue of the `four-fifths law' of three-dimensional turbulence
+for a third order structure function involving velocity and displacement
+increments. Using this relation and assuming that the flow is dominated by
+shocks we develop a simple model predicting that the shock amplitude scales as
+$ (\epsilon d)^{1/3} $, where $ \eps $ is the mean dissipation rate and $ d $
+the mean distance between the shocks, and that the $ p $:th order displacement
+and velocity structure functions scale as $ (\eps d)^{p/3} r/d $, where $ r $
+is the separation. Then we carry out a series of forced simulations with
+resolutions up to $7680^2$, varying the Froude number, $F_{f} = \eps^{1/3} /
+ck_f^{1/3} $, where $ k_f $ is the forcing wave number and $c$ is the wave
+speed. In all simulations a stationary state is reached in which there is a
+constant spectral energy flux and equipartition between kinetic and potential
+energy in the constant flux range. The third order structure function relation
+is satisfied with a high degree of accuracy. Mean energy is found to scale as $
+E \sim \sqrt{\epsilon c/k_f} $, and is also dependent on resolution, indicating
+that shallow water wave turbulence does not fit into the paradigm of a
+Richardson-Kolmogorov cascade. In all simulations shocks develop, displayed as
+long thin bands of negative divergence in flow visualizations. The mean
+distance between the shocks is found to scale as $ d \sim F_f^{1/2}/k_f $.
+Structure functions of second and higher order are found to scale in good
+agreement with the model. We conclude that in the weak limit, $ F_f \rightarrow
+0 $, shocks will become denser and weaker and finally disappear for a finite
+Reynolds number. On the other hand, for a given $ F_{f} $, no matter how small,
+shocks will prevail if the Reynolds number is sufficiently large.
 
 \end{abstract}
 
@@ -256,7 +273,7 @@ atmosphere \cite[]{VallisLIVRE2006, Wirth2013}.
 %
 The single layer SW equations are very similar to
 the two-dimensional compressible Navier-Stokes equations.  The
-equations do not capture baroclinic instability but they constitute 
+equations do not capture baroclinic instability but they constitute
 one of the simplest hydrodynamic models with coexisting eigenmodes of
 the linearized operator with zero linear frequency and with finite
 non-zero linear frequency, $\omega  \pm\sqrt{f^2 + c^2
@@ -281,7 +298,7 @@ Due to their relative simplicity, the SW equations have
 been used to study issues like the projection on the balanced manifold
 \cite[]{Lorenz1980, MohebalhojehDritschel2000} and the production of
 waves by balanced flows \cite[]{FargeSadourny1989,
-LahayeZeitlin2012,Vanneste2013}. 
+LahayeZeitlin2012,Vanneste2013}.
 In this study, we consider the
 same equations in order to address a related but different issue.
 
@@ -325,31 +342,36 @@ results and between these results and available theoretical results.
 whereas those shown by \cite{LahayeZeitlin2012} scale as $k^{-6}$.
 
 Some predictions are based on the weak wave turbulence formalism
-\cite[]{ZakharovLvovFalkovich1992, Nazarenko2011}.  In the case of
-inertia-gravity waves, \cite{FalkovichMedvedev1992} showed that the
-exact solutions of the kinetic equation corresponding to a constant
-downscale energy flux is associated with a spectrum scaling as $E(k)
-\sim  k^{-8/3}$, while \cite{ZakharovSagdeev1970} 
-used weak turbulence formalism to derive a spectrum of the form $ E(k) \sim  k^{-3/2} $ for acoustic turbulence. This prediction is of particular interest, since the aqoustic equations and the SW equations are identical when a first order expansion is made in
-density or displacement pertubations. It may be questioned, however,  that weak turbulence formalism is applicable to acoustic and SW wave turbulence, no matter how weak the nonlinearities are supposed to be. As pointed out by \cite{KadomtsevPet1970} and 
-\cite{FalkovichMeyer1996}, when dispersion is small enough, waves moving in the same direction have
-the same velocity and interact strongly, which leads to the
-formation of shocks.  In this case, the weak wave turbulence
-formalism is unable to give valuable results.  Such sharp and long
-structures have been observed in many simulations
-\cite[]{FargeSadourny1989, PolvaniMcWilliamsSpallFord1994,
-LahayeZeitlin2012} but their effects are not well understood.
+\cite[]{ZakharovLvovFalkovich1992, Nazarenko2011}. In the case of
+inertia-gravity waves, \cite{FalkovichMedvedev1992} showed that the exact
+solutions of the kinetic equation corresponding to a constant downscale energy
+flux is associated with a spectrum scaling as $E(k) \sim k^{-8/3}$, while
+\cite{ZakharovSagdeev1970} used weak turbulence formalism to derive a spectrum
+of the form $ E(k) \sim k^{-3/2} $ for acoustic turbulence. This prediction is
+of particular interest, since the aqoustic equations and the SW equations are
+identical when a first order expansion is made in density or displacement
+pertubations. It may be questioned, however, that weak turbulence formalism is
+applicable to acoustic and SW wave turbulence, no matter how weak the
+nonlinearities are supposed to be. As pointed out by \cite{KadomtsevPet1970}
+and \cite{FalkovichMeyer1996}, when dispersion is small enough, waves moving in
+the same direction have the same velocity and interact strongly, which leads to
+the formation of shocks. In this case, the weak wave turbulence formalism is
+unable to give valuable results. Such sharp and long structures have been
+observed in many simulations \cite[]{FargeSadourny1989,
+PolvaniMcWilliamsSpallFord1994, LahayeZeitlin2012} but their effects are not
+well understood.
 %
-As shown by \cite{Burgers1948} the energy spectrum of a flow dominated by shocks will scale as $ k^{-2} $, a 
- prediction which has been confirmed by a great number of simulations of Burgers equation \cite[for a review, see ] []{Frisch2001}.
- The shocks also lead to very strong intermittency, as demonstrated by
-\cite{BouchaudMezardParisi1995} and \cite{WeinanKhaninMazelSinai1997}
-for Burgers turbulence.
+As shown by \cite{Burgers1948} the energy spectrum of a flow dominated by
+shocks will scale as $ k^{-2} $, a prediction which has been confirmed by a
+great number of simulations of Burgers equation \cite[for a review, see ]
+[]{Frisch2001}. The shocks also lead to very strong intermittency, as
+demonstrated by \cite{BouchaudMezardParisi1995} and
+\cite{WeinanKhaninMazelSinai1997} for Burgers turbulence.
 %
-\cite{FalkovichMeyer1996} simulated acoustic turbulence dominated by shocks 
+\cite{FalkovichMeyer1996} simulated acoustic turbulence dominated by shocks
 and reported spectra scaling as $ k^{-2} $.
 \cite{YuanHamilton1994} carried out
-forced dissipative simulations of the SW equations showing similar spectra. 
+forced dissipative simulations of the SW equations showing similar spectra.
 However, the resolution in both these studies was quite coarse, ($386^2$
 and $101^2$ grid points, respectively) so that the scaling range was very
 narrow.  Moreover, \cite{FalkovichMeyer1996} used a very particular
@@ -364,15 +386,16 @@ simulated at high resolutions.
 %
 Is it possible to obtain a statistically stationary state in the very
 fast wave regime, and how does the mean energy in this hypothetical
-regime depends on the forcing and the wave speed?  
-% What is the slope of 
-How do energy spectra scale with the 
-input parameters? From a theoretical point of view, the most interesting issue is, perhaps,  the nature of the dynamics in the limit of weak nonlinearities. Will shocks prevail in this limit?
+regime depends on the forcing and the wave speed?
+% What is the slope of
+How do energy spectra scale with the input parameters? From a theoretical point
+of view, the most interesting issue is, perhaps, the nature of the dynamics in
+the limit of weak nonlinearities. Will shocks prevail in this limit?
 %
 Such questions are still open and straightforward simulations may
 provide the answers.
-In this paper, we investigate the dynamics of single layer SW wave turbulence 
-forced  at large scales by means of 
+In this paper, we investigate the dynamics of single layer SW wave turbulence
+forced  at large scales by means of
 simulations with up the  $7680^2$ grid points.
 %
 Before presenting the results of the simulations we develop some theory.
@@ -403,24 +426,110 @@ Before presenting the results of the simulations we develop some theory.
 
 \section{Conclusions}
 
-We have carried out a theoretical and numerical investigation of SW wave turbulence. First, we derived the SW analogue (\ref{eq_Kolmo}) of the the `four-fifths' law of Kolmogorov turbulence. Using this relation and straightforward statistical and geometrical arguments we developed a simple shock model predicting that the shock amplitude scales as $ (\epsilon d)^{1/3} $, where $ d $ is the mean distance between the shocks, and that the $ p $:th order structure function above a certain minimum will scale as $ (\epsilon d)^{p/3} r/d $. Then, we carried out a series of twenty forced dissipative simulations, varying the Froude number and the resolution. In all simulations, a statistically stationary state were reached and in all simulations we observed shocks. The flow variables in each Fourier mode were found to evolve in accordance with linear wave dynamics, with equipartition between APE and KE over a period. The third order structure function relation was fulfilled with a high degree of accuracy. From the simulations we made two interesting observations that fall outside the predictive range of the model. The first observation  was  that mean energy in the stationary state approximately scales as (\ref{MeanEnergy}), suggesting that the normalised dissipation (\ref{Dissipation}) will go to zero both in the limit of small viscosity and large  wave speed. This is different from three dimensional Kolmogorov turbulence as well as strongly stratified turbulence, where, in both cases, dissipation is finite in the limit of small viscosity, and in the latter case also is independent of the degree of stratification. This observation suggests that SW wave turbulence does not fit into the paradigm of a local Richardson-Kolmogorov cascade. The second observation we made was that the mean distance between the shocks scales as $ c^{-1/2} $, if the other parameters are held constant. As we increased $ c $, the shocks were thus becoming denser. Using this observation we tested the shock model by plotting the normalised and compensated structure functions of different orders. Generally we found that there was a quite good agreement between the simulation results and the model predictions, becoming better with decreasing  wave speed and increasing resolution. 
+We have carried out a theoretical and numerical investigation of SW wave
+turbulence. First, we derived the SW analogue (\ref{eq_Kolmo}) of the the
+`four-fifths' law of Kolmogorov turbulence. Using this relation and
+straightforward statistical and geometrical arguments we developed a simple
+shock model predicting that the shock amplitude scales as $ (\epsilon d)^{1/3}
+$, where $ d $ is the mean distance between the shocks, and that the $ p $:th
+order structure function above a certain minimum will scale as $ (\epsilon
+d)^{p/3} r/d $. Then, we carried out a series of twenty forced dissipative
+simulations, varying the Froude number and the resolution. In all simulations,
+a statistically stationary state were reached and in all simulations we
+observed shocks. The flow variables in each Fourier mode were found to evolve
+in accordance with linear wave dynamics, with equipartition between APE and KE
+over a period. The third order structure function relation was fulfilled with a
+high degree of accuracy. From the simulations we made two interesting
+observations that fall outside the predictive range of the model. The first
+observation was that mean energy in the stationary state approximately scales
+as (\ref{MeanEnergy}), suggesting that the normalised dissipation
+(\ref{Dissipation}) will go to zero both in the limit of small viscosity and
+large wave speed. This is different from three dimensional Kolmogorov
+turbulence as well as strongly stratified turbulence, where, in both cases,
+dissipation is finite in the limit of small viscosity, and in the latter case
+also is independent of the degree of stratification. This observation suggests
+that SW wave turbulence does not fit into the paradigm of a local
+Richardson-Kolmogorov cascade. The second observation we made was that the mean
+distance between the shocks scales as $ c^{-1/2} $, if the other parameters are
+held constant. As we increased $ c $, the shocks were thus becoming denser.
+Using this observation we tested the shock model by plotting the normalised and
+compensated structure functions of different orders. Generally we found that
+there was a quite good agreement between the simulation results and the model
+predictions, becoming better with decreasing wave speed and increasing
+resolution.
 
-Combining the model and the observations we can get a quite good picture of the dynamics in the limit of weak nonlinearities, $ F_{f} \rightarrow  0 $.  
-The picture may become more vivid if we say `wave breaking' were we previously have talked about shock formation, and also say
-`wave lengths' were we previously have talked about length scales. We identify the longest wave length, $ \lambda_l $,  with the forcing scale $  L_f $ and the breaking wave length, $ \lambda_b $, with the mean distance, $ d $, between the shocks. There are two dynamically different  regimes, the short wave  regime, $ [\delta x, \; \lambda_b] $, and the long wave regime, $ [\lambda_b, \, \lambda_l] $. We first consider the latter, whose width scales  $ \lambda_{l} /\lambda_b \sim F_f^{-1/2} $. Identifying the amplitude of the breaking waves with the shock amplitude, $ (\eps d)^{1/3} $, we find that the ratio between the amplitude of the longest waves and the breaking waves scales as $ E^{1/2}/(\eps d)^{1/3} \sim F_{f}^{-5/12} n^{\alpha/2} $, where we may substitute  $ n $ with a Reynolds number to some power.  Thus, for small $ F_f $ and large Reynolds number the longest waves are not directly influenced by wave breaking. The Reynolds number dependence of the amplitude ratio makes it unlikely that a general similarity theory can be easily formulated for this range. Therefore, predictions from weak turbulence theory \cite[for example][]{ZakharovSagdeev1970}
-are not likely to hold for this range, although it is not directly influenced by wave breaking. The exact values of the power law exponents in the argument leading to this conclusion are, of course, not important. As for the short wave regime, the width scales as $  \lambda_b /\delta x \sim F_f^{1/2} $ for fixed $ \delta x $ or fixed Reynolds number. As $ F_{f} \rightarrow 0 $ the range will eventually become so narrow so that breaking will disappear. On the other hand, it may be argued that wave breaking will take place for any small $ F_f $, provided that the Reynolds number is sufficiently large, since the shock width $ \delta x $ is decreasing indefinitely with increasing Reynolds number. 
+Combining the model and the observations we can get a quite good picture of the
+dynamics in the limit of weak nonlinearities, $ F_{f} \rightarrow 0 $. The
+picture may become more vivid if we say `wave breaking' were we previously have
+talked about shock formation, and also say `wave lengths' were we previously
+have talked about length scales. We identify the longest wave length, $
+\lambda_l $, with the forcing scale $ L_f $ and the breaking wave length, $
+\lambda_b $, with the mean distance, $ d $, between the shocks. There are two
+dynamically different regimes, the short wave regime, $ [\delta x, \;
+\lambda_b] $, and the long wave regime, $ [\lambda_b, \, \lambda_l] $. We first
+consider the latter, whose width scales $ \lambda_{l} /\lambda_b \sim
+F_f^{-1/2} $. Identifying the amplitude of the breaking waves with the shock
+amplitude, $ (\eps d)^{1/3} $, we find that the ratio between the amplitude of
+the longest waves and the breaking waves scales as $ E^{1/2}/(\eps d)^{1/3}
+\sim F_{f}^{-5/12} n^{\alpha/2} $, where we may substitute $ n $ with a
+Reynolds number to some power. Thus, for small $ F_f $ and large Reynolds
+number the longest waves are not directly influenced by wave breaking. The
+Reynolds number dependence of the amplitude ratio makes it unlikely that a
+general similarity theory can be easily formulated for this range. Therefore,
+predictions from weak turbulence theory \cite[for
+example][]{ZakharovSagdeev1970} are not likely to hold for this range, although
+it is not directly influenced by wave breaking. The exact values of the power
+law exponents in the argument leading to this conclusion are, of course, not
+important. As for the short wave regime, the width scales as $ \lambda_b
+/\delta x \sim F_f^{1/2} $ for fixed $ \delta x $ or fixed Reynolds number. As
+$ F_{f} \rightarrow 0 $ the range will eventually become so narrow so that
+breaking will disappear. On the other hand, it may be argued that wave breaking
+will take place for any small $ F_f $, provided that the Reynolds number is
+sufficiently large, since the shock width $ \delta x $ is decreasing
+indefinitely with increasing Reynolds number.
 
-The question that originally motivated this study was if SW wave turbulence can be used as a model for energy dissipation in the the atmosphere and the oceans. Undoubtedly, the answer to this question is negative and the reason for this is not primarily the appearance of shocks and the associated $ k^{-2} $-spectrum which is not consistent with the observed $ k^{-5/3} $-spectrum. The main reason is that 
-SW wave turbulence is  a far too inefficient agent of dissipation. Since the Reynolds number of geophysical flows is extremely large and the stratification is strong, the  relation (\ref{Dissipation}) implies that dissipation would be absent in the interior of the atmosphere and the oceans with SW turbulence as the responsible agent. This not what we observe.
+The question that originally motivated this study was if SW wave turbulence can
+be used as a model for energy dissipation in the the atmosphere and the oceans.
+Undoubtedly, the answer to this question is negative and the reason for this is
+not primarily the appearance of shocks and the associated $ k^{-2} $-spectrum
+which is not consistent with the observed $ k^{-5/3} $-spectrum. The main
+reason is that SW wave turbulence is a far too inefficient agent of
+dissipation. Since the Reynolds number of geophysical flows is extremely large
+and the stratification is strong, the relation (\ref{Dissipation}) implies that
+dissipation would be absent in the interior of the atmosphere and the oceans
+with SW turbulence as the responsible agent. This not what we observe.
 
-Although the answer to the question that originally motivated this study is negative, it may lead us or some other investigators to pursue another interesting research direction. As pointed out in the introduction, the acoustic equations are to the lowest order expansion in density pertubations identical to the SW equations. This study may therefore give important clues to the long standing problem of acoustic turbulence, in two and three dimensions. A similar shock model as we developed in two dimensions may easily be formulated in three dimensions, where the third order structure function law will be  similar to (\ref{eq_Kolmo}), with the only difference that the constant $ 4 $ on the right hand side should be replaced by $ 8/3 $. In three dimensions we find
+Although the answer to the question that originally motivated this study is
+negative, it may lead us or some other investigators to pursue another
+interesting research direction. As pointed out in the introduction, the
+acoustic equations are to the lowest order expansion in density pertubations
+identical to the SW equations. This study may therefore give important clues to
+the long standing problem of acoustic turbulence, in two and three dimensions.
+A similar shock model as we developed in two dimensions may easily be
+formulated in three dimensions, where the third order structure function law
+will be similar to (\ref{eq_Kolmo}), with the only difference that the constant
+$ 4 $ on the right hand side should be replaced by $ 8/3 $. In three dimensions
+we find
 \begin{equation}
-\meane{ |\delta \uu|^2 \delta J_L } 
+\meane{ |\delta \uu|^2 \delta J_L }
 + c^2\meane{ (\delta h)^2 \delta u_L } = - \frac{8}{3} \varepsilon r. \label{eq_Kolmo3}
 \end{equation}
- In the case of acoustic turbulence $ \delta h $ should  be interpreted as a normalised density increment rather than a displacement increment.  If shocks in  three dimensions are assumed to form as  smooth surfaces rather than smooth lines, then the mean distance, $ d $, between the shocks will appear in the model as $ d \sim {\cal{V}}/A_s $, where $ A_{s} $ is the total  shock area and $ \cal{V} $ is the volume of the domain. The shock amplitude will thus scale as $ (\epsilon d)^{1/3} $ and the structure functions will scale as $ (\epsilon d)^{p/3} r/d $ also in three dimensions, provided, of course, that shocks will form in a similar way as in two dimensions. If they do, the most interesting questions are if the mean energy and the mean distance between the shocks scale in a similar way in three dimensions as in two dimensions. Simulations or experiments of acoustic turbulence may provide answers to these questions -- answers that will lead to further clues to a theoretical understanding of acoustic turbulence. 
- We hope that the present study will stimulate research in this direction.  
- 
+In the case of acoustic turbulence $ \delta h $ should be interpreted as a
+normalised density increment rather than a displacement increment. If shocks in
+three dimensions are assumed to form as smooth surfaces rather than smooth
+lines, then the mean distance, $ d $, between the shocks will appear in the
+model as $ d \sim {\cal{V}}/A_s $, where $ A_{s} $ is the total shock area and
+$ \cal{V} $ is the volume of the domain. The shock amplitude will thus scale as
+$ (\epsilon d)^{1/3} $ and the structure functions will scale as $ (\epsilon
+d)^{p/3} r/d $ also in three dimensions, provided, of course, that shocks will
+form in a similar way as in two dimensions. If they do, the most interesting
+questions are if the mean energy and the mean distance between the shocks scale
+in a similar way in three dimensions as in two dimensions. Simulations or
+experiments of acoustic turbulence may provide answers to these questions --
+answers that will lead to further clues to a theoretical understanding of
+acoustic turbulence. We hope that the present study will stimulate research in
+this direction.
+
 
 
 %\appendix
@@ -435,4 +544,3 @@ Although the answer to the question that originally motivated this study is nega
 \bibliography{biblio}
 
 \end{document}
-
