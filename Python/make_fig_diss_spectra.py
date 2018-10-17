@@ -37,18 +37,20 @@ def fig7_spectra(path, fig, ax, Fr, c, t_start, run_nb):
     kh_f = kh / k_d
     integral = np.trapz(2 * E_tot*norm, kh_f, dx=kh_f[1] - kh_f[0])
 
+    kdiss_max = kh_f[np.where(
+        (E_tot * norm) == (E_tot * norm).max())
+    ]
     ax.plot(
         kh_f, 2 * E_tot * norm / eps, # (2 * integral),
         c=color_list[run_nb],
         linewidth=1, 
         # label=f'$c = {c}, n= {sim.params.oper.nx}$'
-        label=f'int={integral}'
+        label=f'{kdiss_max}'
+        # label=f'int={integral}'
     )
     
     
-    ax.vlines(kh_f[np.where(
-        (E_tot * norm) == (E_tot * norm).max())
-    ], 0, 2.2, colors=color_list[run_nb], linewidth=0.5)
+    ax.vlines(kdiss_max, 0, 2.2, colors=color_list[run_nb], linewidth=0.5)
 
     # more minor ticks
     minor_locator = AutoMinorLocator(5)
