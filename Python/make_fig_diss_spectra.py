@@ -2,6 +2,7 @@
 from fractions import Fraction
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.ticker import AutoMinorLocator
 import seaborn as sns
 import fluidsim as fls
 import h5py
@@ -18,7 +19,7 @@ from make_fig_spectra import _mean_spectra
 
 
 def _label():
-    numerator = r'\nu_8 k^{8} k_d E(k)'
+    numerator = r'2 \nu_8 k^{8} k_d E(k) / \epsilon'
     return f"${numerator}$"
 
 
@@ -34,23 +35,27 @@ def fig7_spectra(path, fig, ax, Fr, c, t_start, run_nb):
     color_list = sns.color_palette()
 
     kh_f = kh / k_d
+    integral = np.trapz(2 * E_tot*norm, kh_f, dx=kh_f[1] - kh_f[0])
+
     ax.plot(
-        kh_f, E_tot * norm,
+        kh_f, 2 * E_tot * norm / eps, # (2 * integral),
         c=color_list[run_nb],
         linewidth=1, 
-        label=f'$c = {c}, n= {sim.params.oper.nx}$')
+        # label=f'$c = {c}, n= {sim.params.oper.nx}$'
+        label=f'int={integral}'
+    )
+    
     
     ax.vlines(kh_f[np.where(
         (E_tot * norm) == (E_tot * norm).max())
-    ], 0, 1.2, colors=color_list[run_nb], linewidth=0.5)
+    ], 0, 2.2, colors=color_list[run_nb], linewidth=0.5)
 
-#     if run_nb == 0:
-#         s1 = slice(_index_where(kh_f, 3), _index_where(kh_f, 80))
-#         s2 = slice(_index_where(kh_f, 30), _index_where(kh_f, 200))
-#         ax.plot((kh_f)[s1], 0.7 * (kh_f ** -2 / norm)[s1], 'k-', linewidth=1)
-#         ax.text(10, 0.2, '$k^{-2}$')
-    ax.set_ylim(0, 1.2)
-    ax.set_xlim(0.6, 2.)
+    # more minor ticks
+    minor_locator = AutoMinorLocator(5)
+    ax.xaxis.set_minor_locator(minor_locator)
+
+    ax.set_ylim(0, 2.2)
+    ax.set_xlim(0.6, 2.5) #2
 
     ax.set_xlabel('$k/k_d$')
     ax.set_ylabel(_label())
@@ -74,7 +79,7 @@ if __name__ == '__main__':
     matplotlib_rc(11)
     path_fig = exit_if_figure_exists(__file__)
     set_figsize(7, 3)
-    fig, ax = plt.subplots(1, 2, sharex=False, sharey=True)
+    fig, ax = plt.subplots(1, 2, sharex=True, sharey=True)
     
     df_w = load_df("df_w")
     df_c20 = df_w[df_w["$c$"] == 20]
@@ -86,6 +91,11 @@ if __name__ == '__main__':
     plot_df(df_n1920, fig, ax[1])
     
     ax[1].set_ylabel(None)
+    arrowkwargs = dict(
+        xycoords="data", arrowprops={"arrowstyle": "simple"})
+    ax[0].annotate("increasing $n$", (1.5, 2.05), (0.65, 2), **arrowkwargs)
+    ax[1].annotate("increasing $c$", (1, 2.05), (1.32, 2), **arrowkwargs)
+
     fig.tight_layout()
 
     fig.savefig(path_fig)
