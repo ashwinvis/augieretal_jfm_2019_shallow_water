@@ -66,7 +66,7 @@ from the following equations
 where we have used the assumption that the velocity field is irrotational in
 (\ref{IRR}). We consider two points, positioned at $ \bf x $ and $ {\bf
 x}^\prime $, separated by the vector $ {\bf r} = {\bf x}^\prime - {\bf x} $.
-Using Cartesian tensor notation we denote derivates with respect to $ {\bf x} $
+Using Cartesian tensor notation we denote derivatives with respect to $ {\bf x} $
 as $ \partial_i $ and derivatives with respect to $ {\bf x}^\prime $ as $
 \partial^{\prime}_i $. Treating $ \bf x $ and $ {\bf x}^\prime $ as independent
 variables we find
@@ -141,10 +141,14 @@ longitudinal increments.
 
 
 
-We will now use (\ref{eq_Kolmo}) together with straightforward geometrical and statistical arguments to construct a model for velocity and displacement structure functions of any order above a certain minimum.
-The model is similar to the one developed by \cite{BouchaudMezardParisi1995} for Burgers equation, although we derive it by using quite different arguments.
-We consider a domain with total area  $ {\mA} $ occupied by shocks which we
-consider as smooth lines. We denote the total length of all shocks by $ L_s $.  The mean distance between the shocks within the domain can be estimated as
+We will now use (\ref{eq_Kolmo}) together with straightforward geometrical and
+statistical arguments to construct a model for velocity and displacement
+structure functions of any order above a certain minimum. The model is similar
+to the one developed by \cite{BouchaudMezardParisi1995} for Burgers equation,
+although we derive it by using quite different arguments. We consider a domain
+with total area $ {\mA} $ occupied by shocks which we consider as smooth lines.
+We denote the total length of all shocks by $ L_s $. The mean distance between
+the shocks within the domain can be estimated as
 \begin{equation}
 d \simeq \frac{\mA} {L_s} .
 \end{equation}
@@ -215,7 +219,9 @@ and the structure functions of order $ p $ will consequently scale as
 \begin{equation} \label{StrucFunc}
 \meane{|\delta u |^p}  \sim \meane{(c|\delta h |)^p} \sim  (\varepsilon  d)^{p/3} \,  \frac{r}{d} \, .
 \end{equation}
-Assuming that (\ref{StrucFunc}) is valid for second order moments and that the non-quadratic contribution to the KE spectrum is negligible the corresponding scaling law for the energy spectra reads
+Assuming that (\ref{StrucFunc}) is valid for second order moments and that the
+non-quadratic contribution to the KE spectrum is negligible the corresponding
+scaling law for the energy spectra reads
 \begin{equation} \label{Spectra}
 E_K(k)  \sim  E_A(k) \sim \varepsilon ^{2/3} d^{-1/3} k^{-2} \, .
 \end{equation}
@@ -231,9 +237,26 @@ F_T &=&  \frac{\meane{|\delta u_T|^4}}{\meane{|\delta u_T|^2}^2}
 The ratio between the two flatness factors is equal  to
 $F_T/F_L = 3/2$ according to the model.
 
-Being such a simple model it must have  limitations. First, it is obvious that  the model can  only be valid for separations  that fulfill the condition $ \delta x \ll r \ll d $,  where $ \delta x $ is the shock width.  Second, the model cannot be valid for low order moments or structure functions. The minimum order for which the model may be valid is not easily determined.
-According to  \cite{BouchaudMezardParisi1995} structure functions of shock dominated turbulence of all orders $ p  \ge 1 $ scale linearly in $ r $. It is quite easily argued, however, that the shocks can not determine the scaling of the structure functions of order $ p=1 $.
-To see this, consider the first order moment of the absolute value of $ \delta u_L $.
-The longitudinal velocity increment is always negative over a shock, that is to say that the difference of the projection of the velocity on the direction over which the shock is crossed is always negative. In a domain with periodic boundary conditions the mean value of $ \delta u_L $   is zero. The negative values of $ \delta u_L $ for separations where a shock is crossed must therefore be compensated by positive values for separations where no shock is crossed. There is no reason to believe that these values are all positive,  but they are only positive on average. Thus,
-$ \means{ |\delta u_L | } < \langle | \delta u_L | \rangle _{ns} $, where the left hand side is the mean value over all separations where a shock is crossed and the right hand side is the mean value over separations where no shock is crossed.  Therefore, the model is not valid for first order moments. It may be conjectured that it is valid for
-second and higher order structure functions.
+Being such a simple model it must have limitations. First, it is obvious that
+the model can only be valid for separations that fulfill the condition $ \delta
+x \ll r \ll d $, where $ \delta x $ is the shock width. Second, the model
+cannot be valid for low order moments or structure functions. The minimum order
+for which the model may be valid is not easily determined. According to
+\cite{BouchaudMezardParisi1995} structure functions of shock dominated
+turbulence of all orders $ p \ge 1 $ scale linearly in $ r $. It is quite
+easily argued, however, that the shocks can not determine the scaling of the
+structure functions of order $ p=1 $. To see this, consider the first order
+moment of the absolute value of $ \delta u_L $. The longitudinal velocity
+increment is always negative over a shock, that is to say that the difference
+of the projection of the velocity on the direction over which the shock is
+crossed is always negative. In a domain with periodic boundary conditions the
+mean value of $ \delta u_L $ is zero. The negative values of $ \delta u_L $ for
+separations where a shock is crossed must therefore be compensated by positive
+values for separations where no shock is crossed. There is no reason to believe
+that these values are all positive, but they are only positive on average.
+Thus, $ \means{ |\delta u_L | } < \langle | \delta u_L | \rangle _{ns} $, where
+the left hand side is the mean value over all separations where a shock is
+crossed and the right hand side is the mean value over separations where no
+shock is crossed. Therefore, the model is not valid for first order moments. It
+may be conjectured that it is valid for second and higher order structure
+functions.

@@ -1,6 +1,9 @@
 We have carried out a series of twenty forced-dissipative simulations of the SW
-equations in a quadratic domain with periodic boundary conditions using a
-standard pseudo spectral code. The simulations were started from zero initial
+equations in a quadratic domain with periodic boundary conditions using the
+standard open-source pseudo-spectral code FluidSim \cite[]{fluiddyn, fluidfft,
+fluidsim}.
+%
+The simulations were started from zero initial
 conditions and were run till a statistically stationary state was reached. The
 equations were reformulated in terms of the three eigenmodes of the linearized
 equations in Fourier space. One of these eigenmodes is zero for an irrotational
@@ -34,14 +37,14 @@ Most of the aliasing is removed by truncating 8/9 of the modes along each
 direction \cite[for a detail discussion on the issues of the non-conservation
 of the non-quadratic energy and the aliasing errors in the truncated one-layer
 shallow water model, see][]{FargeSadourny1989}. The resolution is characterized
-by the number of nodes, $n$, in the each direction and has been varied from 960
+by the number of nodes, $n$, in each direction and has been varied from 960
 to 7680.
 %
 The wave speed $c$ has been varied over almost two orders of magnitude from 10
 to 700. The wave modes are forced in a shell in spectral space corresponding to
 relatively small wave numbers, $ 5 \delta k < |\kk| < 8 \delta k$, where $
 \delta k = 2 \pi /L $ and $ L $ is the length of the side of the quadratic
-domain. The forcing is white noice in time and designed so that the energy
+domain. The forcing is white noise in time and designed so that the energy
 injection rate is normalized to unity at each time step. The energy is
 dissipated at the smallest resolved scales by hyperviscosity. The value of the
 hyperviscosity, $\nu_8$, is chosen in such a way that the maximum wave number
@@ -137,7 +140,7 @@ dependence can be approximately written as
 \begin{equation} \label{MeanEnergy}
 E \propto \sqrt{L_f c \eps} \, n^{\alpha}  \, ,
 \end{equation}
-where $ L_f = \pi/k_f $ is the forcing scale. In figure \ref{MeanE} to the
+where $ L_f = \pi/k_f $ is the forcing scale. In figure~\ref{MeanE} to the
 left, we see $ E/\sqrt{\eps} $ as function of $ c $ for different resolutions $
 n $. For each resolution the points are approaching a power law $ C_n c^{1/2} $
 with increasing values of $ C_n $ for increasing $ n $. In the same figure to
@@ -186,7 +189,7 @@ limit of large Reynolds number \cite[]{Frisch}. As we just discussed, these
 assumptions seem to be violated in the case of SW wave turbulence.
 Nevertheless, the analogous law (\ref{eq_Kolmo}) that we derived for SW wave
 turbulence is satisfied with a high degree of accuracy in our simulations. In
-figure \ref{Flux} we wee the spectral energy flux from run W7 to the left and
+figure~\ref{Flux} we see the spectral energy flux from run W7 to the left and
 the third order structure function to the right. There is a broad constant flux
 range with equipartition between KE and APE flux and an almost equally broad
 range where (\ref{eq_Kolmo}) is satisfied, with equipartition between the two
@@ -248,7 +251,7 @@ can be described as a linear wave.
 
 Visualizations of the flow field give a completely different picture from what
 may be expected from a collection of linear gravity waves. They are totally
-dominated by the appearance of shock waves. In figure (\ref{Physical}) we see
+dominated by the appearance of shock waves. In figure~\ref{Physical} we see
 the divergence, $ \nabla \cdot {\bf u} $, to the left and the velocity
 component in the $ y $-direction, $ u_y $, to the right. The two figures at the
 top are from run W6 while the two figures at the bottom are from run W17. The
@@ -276,7 +279,7 @@ the number of spikes. Generally, we found that $ d \sim c^{-1/2} $, or
 \begin{equation} \label{MeanDistance}
 d \propto L_f F_f ^{1/2} \, ,
 \end{equation}
-independent of resolution $ n $. In figure (\ref{fig_distance}) we have plotted
+independent of resolution $ n $. In figure~\ref{fig_distance} we have plotted
 $ d/L_f $ versus Froude number for all twenty runs. As can be seen the points
 follow the $ F_f^{1/2} $-curve quite well, although there seems to be a slight
 systematic deviation at the highest $ F_f $, which may be due to the fact that
@@ -338,13 +341,13 @@ increasingly strong for large $ d $ (small $ c $). Thus, the assumption that
 the structure functions are totally dominated by increments where a shock is
 crossed will be better fulfilled for small $ c $. This effect is expected to be
 particularly important for lower order structure functions. The scaling
-(\ref{StrucFunc2}) is also expected top become better and better fulfilled with
+(\ref{StrucFunc2}) is also expected to become better and better fulfilled with
 increased resolution $ n $, since $ \delta x $ is decreasing with increasing $
 n $.
 
 As expected, we have found that the displacement structure functions scale
 exactly in the same way as the velocity structure functions, why we only plot
-velocity structure functions. In figure (\ref{fig_StrucFunc}) we see the
+velocity structure functions. In figure~\ref{fig_StrucFunc} we see the
 compensated and normalised second, fourth and sixth order longitudinal
 structure functions from the five simulations with $ n = 3840 $ to the left and
 the three simulations with $ n = 7860 $ to the right. At small separation, $ r
@@ -362,7 +365,7 @@ the structure functions should become increasingly dominant with increasing
 order. Plots of the transverse structure functions are very similar to the
 plots of the longitudinal structure functions, with the difference that the
 transverse structure functions are somewhat smoother at $ r \approx \delta x $.
-In figure (\ref{fig_ratio}) we see the ratio $ R_{p}(r) = \langle \mid \delta
+In figure~\ref{fig_ratio} we see the ratio $ R_{p}(r) = \langle \mid \delta
 u_L \mid ^{p} \rangle / \langle \mid \delta u_T \mid ^{p} \rangle$ for $ p=
 2,3,4,5,6 $ from run W4, together with dotted straight lines, indicating the
 values predicted by (\ref{Ratio}). As can be seen, there is a quite good
@@ -371,7 +374,7 @@ agreement with the predicted values in a limited range of separations, $ r >
 becomes more narrow with increasing $ p $, an observation that we cannot
 explain. It may also be noted that $ R_2 \rightarrow 3 $ in the limit of small
 $ r $, which is the theoretical single point limit for an irrotational
-isotropic field. In figure (\ref{fig_flatness}) we se the flatness factor, $
+isotropic field. In figure~\ref{fig_flatness} we se the flatness factor, $
 F_T $, of the transverse structure functions at the top and the ratio, $
 F_T/F_L $, at the bottom. The figures to the left show the results from the
 five simulations with $ n = 3840 $ and the figures to the right show the
@@ -392,7 +395,7 @@ shown to the left. This is in accordance with the shock model predictions
 
 Finally, we present energy spectra. As expected, we found that APE and KE
 spectra were almost indistinguishable from each other, why we only plot the
-total spectra. In figure (\ref{fig_spectra_c40}) we see the compensated and
+total spectra. In figure~\ref{fig_spectra_c40} we see the compensated and
 normalised energy spectra from the three highest resolution runs. The
 compensated spectra are almost flat in a broad range. In the high wave number
 end the compensated spectra show a `bottleneck', which we interpret as a
