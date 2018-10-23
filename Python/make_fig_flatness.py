@@ -122,9 +122,13 @@ if __name__ == '__main__':
 
     for ax1 in ax[1,:]:
         ax1.set_yscale("linear")
+        ax1.hlines([1.5], 1e-3, 10, linestyles="dashed", linewidths=(0.5,))
 
     for ax1 in ax.flat:
-        ax1.set_xlim([None, 10])
+        ax1.set_xlim([1e-3, 10])
+
+    for ax1 in ax[1,:].flat:
+        ax1.set_ylim([0.7, 1.6])
 
     for ax1 in ax[0,:]:
         ax1.set_ylim([2, 500])
