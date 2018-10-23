@@ -17,7 +17,7 @@
 
 \usepackage{color}
 \usepackage{soul}
-
+\usepackage{booktabs}
 \pdfoptionpdfminorversion 4
 
 % \pdfcompresslevel0
@@ -150,7 +150,7 @@
 \newcommand{\NN}{\textbf{N}}
 
 
-\newcommand{\eps}{\varepsilon}
+
 
 
 \newcommand{\ErtelPV}{\mathcal{Q}}
@@ -195,18 +195,17 @@
 \newtheorem{lemma}{Lemma}
 \newtheorem{corollary}{Corollary}
 
-\title[Wave energy cascade in shallow-water flows]%
-{Wave energy cascade in forced-dissipative one-layer shallow-water flows}
+\title[Shallow water wave turbulence]%
+{ Shallow water wave turbulence}
 
-\author[P. Augier and E. Lindborg]%
-{Pierre Augier$^{1,2}$%
-  \thanks{Email address for correspondence: p.augier@damtp.cam.ac.uk},\ns
-and Erik Lindborg$^1$}
+\author[P. Augier, A.V. Mohanan and E. Lindborg]%
+{Pierre Augier$^{1}$,   A. V. Mohanan$^{2}$
+and Erik Lindborg$^2$ \ns }
 
-\affiliation{$^1$Linn\'e Flow Centre, KTH Mechanics,
+\affiliation{$^2$ KTH Mechanics,
 SE-100 44 Stockholm, Sweden\\[\affilskip]
-$^2$Department of Applied Mathematics and Theoretical Physics,
-University of Cambridge, Cambridge CB3 0WA, United Kingdom}
+$^1$ LEGI, BP53,
+38041 Grenoble Cedex, France}
 
 \pubyear{2013}
 \volume{???}
@@ -221,39 +220,36 @@ University of Cambridge, Cambridge CB3 0WA, United Kingdom}
 
 
 % \baselineskip 8mm
+
 \begin{abstract}
-The dynamics of one-layer shallow-water flows forced in medium-scale
-wave modes and dissipation acting at small scales is investigated by
-means of theoretical analysis and numerical simulations with
-resolutions up to $7680^2$.
-%
-We first focus on the non-rotating case for which a statistically
-stationary regime is obtained for all resolutions and Froude numbers
-$F_f = \eps/(k_f c)$, where $\eps$ is the energy dissipation rate,
-$k_f$ the forcing wave number and $c$ the wave speed.
-%
-All the injected energy goes into a downscale energy
-cascade. Consequently, the spectral energy flux is constant and
-positive between the forcing wave number and the wave numbers where
-dissipation is active.  The spectral energy flux is exactly
-equipartioned between kinetic and potential energy.  An exact third
-order structure function law of Kolmogorov type is derived and
-numerically verified.  However, the downscale cascade is less
-efficient than in three-dimensional Navier-Stokes turbulence, since
-the mean energy of the statistically stationary flow scales as
-$\sqrt{\eps c /k_f}$ and varies with the dissipative scale.
-%
-Moreover, the spectra scale as $k^{-2}$ and the structure functions of
-order larger than two scale approximately as $r$.
-%
-%
-This intermittent scaling is explained by a simple model based on the
-assumption that the statistics is totally determined by shocks.
-%
-It is verified that the dynamics is not drastically modified by system
-rotation as long as the forcing wave number is larger than the
-deformation wave number $k_d = f/c$, where $f$ is the Coriolis
-parameter.
+
+The dynamics of irrotational shallow water wave turbulence forced in large
+scales and dissipated at small scales is investigated. First, we derive the
+shallow water analogue of the `four-fifths law' of Kolmogorov turbulence
+for a third order structure function involving velocity and displacement
+increments. Using this relation and assuming that the flow is dominated by
+shocks we develop a simple model predicting that the shock amplitude scales as
+$ (\epsilon d)^{1/3} $, where $ \epsilon $ is the mean dissipation rate and $ d $
+the mean distance between the shocks, and that the $ p $:th order displacement
+and velocity structure functions scale as $ (\epsilon d)^{p/3} r/d $, where $ r $
+is the separation. Then we carry out a series of forced simulations with
+resolutions up to $7680^2$, varying the Froude number, $F_{f} = \epsilon^{1/3} /
+ck_f^{1/3} $, where $ k_f $ is the forcing wave number and $c$ is the wave
+speed. In all simulations a stationary state is reached in which there is a
+constant spectral energy flux and equipartition between kinetic and potential
+energy in the constant flux range. The third order structure function relation
+is satisfied with a high degree of accuracy. Mean energy is found to scale as $
+E \sim \sqrt{\epsilon c/k_f} $, and is also dependent on resolution, indicating
+that shallow water wave turbulence does not fit into the paradigm of a
+Richardson-Kolmogorov cascade. In all simulations shocks develop, displayed as
+long thin bands of negative divergence in flow visualisations. The mean
+distance between the shocks is found to scale as $ d \sim F_f^{1/2}/k_f $.
+Structure functions of second and higher order are found to scale in good
+agreement with the model. We conclude that in the weak limit, $ F_f \rightarrow
+0 $, shocks will become denser and weaker and finally disappear for a finite
+Reynolds number. On the other hand, for a given $ F_{f} $, no matter how small,
+shocks will prevail if the Reynolds number is sufficiently large.
+
 \end{abstract}
 
 % \begin{keywords}
@@ -261,73 +257,54 @@ parameter.
 
 \section{Introduction}
 
-
-
-
-
-The shallow-water models have been widely used to study basic
+The shallow water (SW) equations  have been widely used to study basic
 mechanisms occurring in geophysical flows \cite[see for
 example][]{VallisLIVRE2006}.
 %
-These models are based on the hydrostatic approximation which is
+The equations are based on the hydrostatic approximation which is
 extremely well satisfied for a very wide range of scales in the oceans
-and in the atmosphere \Add{and on which are based the so-called
-primitive equations}.  They also rely on a stronger hypothesis
+and in the atmosphere.  They also rely on a stronger hypothesis
 regarding the density stratification.  The fluid is assumed to be
 structured in a limited number of thin homogeneous layers, which leads
-to equations involving only two-dimensional operators. \Add{However,
-as long as there is no overturning, the shallow-water model in the
-limit of a large number of layers and the primitive equations describe
-the same dynamics. In the opposite limit, two models are particularly
-important from the theoretical point of view.} The two-layer
-shallow-water model captures the baroclinic instability which is of
+to equations involving only two-dimensional operators. The two-layer
+SW equations capture the baroclinic instability which is of
 primary importance for the dynamics of the oceans and of the
 atmosphere \cite[]{VallisLIVRE2006, Wirth2013}.
 %
-The equations of the one-layer shallow-water model are very similar to
+The single layer SW equations are very similar to
 the two-dimensional compressible Navier-Stokes equations.  The
-one-layer model does not capture the baroclinic instability but it is
+equations do not capture baroclinic instability but they constitute
 one of the simplest hydrodynamic models with coexisting eigenmodes of
 the linearized operator with zero linear frequency and with finite
-non-zero linear frequency, $\omega = \pm \omega_l = \pm\sqrt{f^2 + c^2
-k^2}$, where $f$ is the Coriolis parameter, $c$ the wave speed and $k
+non-zero linear frequency, $\omega = \pm\sqrt{f^2 + c^2
+k^2}$, where $f$ is the Coriolis parameter, $c$ the gravity wave speed and $k
 = |\kk|$ the wave number.
 %
 
-For geophysical applications, it is convenient to consider the limits
-for which the linear frequency $\omega_{l}$ is much larger than the
-characteristic nonlinear frequency $\omega_{nl} = U k$, where $U$ is a
-characteristic velocity.  In the limit $f/\omega_{nl} \sim
-ck/\omega_{nl} \rightarrow \infty$, one can obtain a quasi-geostrophic
-one-layer shallow-water model, i.e. derive self-consistent evolution
-equations for the 0-linear-frequency variable, the Charney potential
-vorticity.  In this limit, the dynamics of the 0-linear-frequency
-variable is totally decorrelated from the fast waves.
+For geophysical applications, it is convenient to consider the limit
+for which the linear wave frequency  is much larger than the
+characteristic nonlinear frequency $ U k$, where $U$ is a
+characteristic velocity.  In this limit, one can obtain a quasi-geostrophic
+single layer SW model, i.e. derive self-consistent evolution
+equations for a zero frequency variable, the Charney potential
+vorticity, which is totally decoupled from the fast waves.
 %
 For finite rotation and wave speed, there are slow balanced motions,
 which are associated with relatively weak non-zero linear frequency
-modes.
+modes and there is only a weak
+interaction between waves and the balanced motions.
 %
-When $\omega_{nl}(k) \ll \omega_{l}(k) $, there is only a weak
-interaction between waves and the balanced modes.
-%
-Due to its relative simplicity, the one-layer shallow-water model has
+Due to their relative simplicity, the SW equations have
 been used to study issues like the projection on the balanced manifold
 \cite[]{Lorenz1980, MohebalhojehDritschel2000} and the production of
 waves by balanced flows \cite[]{FargeSadourny1989,
-LahayeZeitlin2012,Vanneste2013}. \Add{In this study, we consider the
-same model in order to address a related but different issue.}
+LahayeZeitlin2012,Vanneste2013}.
+In this study, we consider the
+same equations in order to address a related but different issue.
 
 Balanced flows have a dynamics which is very similar to
-two-dimensional turbulence.
-%
-In the quasi-geostrophic limit, the space-averaged energy and the
-space-averaged potential enstrophy are conserved, positive definite
-and proportional in Fourier space. This leads\Add{, as in
-two-dimensional turbulence,} to an upscale energy cascade and a
-downscale enstrophy cascade.
-%
-Thus, the small-scale dissipation vanishes in the limit of zero
+two-dimensional turbulence, with an upscale energy cascade. %
+Small scale energy dissipation vanishes in the limit of zero
 viscosity.
 %
 In contrast to this, statistical mechanics indicates that wave energy
@@ -341,18 +318,14 @@ statistically stationary shallow-water flows can be obtained forcing
 quasi-geostrophic modes at large scales and with dissipation only at
 small scales.
 %
-\Add{They propose that the $k^{-5/3}$ spectra that are observed at the
-atmospheric meso-scales} \cite[]{NastromGage1985, FrehlichSharman2010}
-\Add{and reproduced by some atmospheric models based on the primitive
-equations} \cite[]{KoshykHamilton2001, Skamarock2004,
-Hamilton_etal2008} \Add{could be reproduced by the one-layer
-shallow-water model by a downscale energy cascade of waves.}
-
-
-
+They propose that the $k^{-5/3}$ spectra that are observed at the
+atmospheric meso-scales  \cite[]{NastromGage1985,LiLindborg2018}
+and reproduced by some atmospheric models based on the primitive
+equations \cite[]{KoshykHamilton2001, Skamarock2004,
+Hamilton_etal2008} could be reproduced by the one-layer
+shallow-water model by a downscale energy cascade of waves.
 However, few studies have investigated the dynamics of the downscale
-energy cascade of waves in shallow-water models.
-%
+energy cascade of waves in SW models.
 Most numerical studies have investigated decaying flows and have not
 focused on the cascade \cite[]{FargeSadourny1989,
 LarichevMcWilliams1991, SpallMcWilliams1992,
@@ -361,247 +334,896 @@ PolvaniMcWilliamsSpallFord1994, LahayeZeitlin2012}.
 Moreover, there are strong discrepancies between different numerical
 results and between these results and available theoretical results.
 %
-\cite{FargeSadourny1989} reported spectra scaling like $k^{-4}$
-whereas those shown by \cite{LahayeZeitlin2012} scale like $k^{-6}$.
+\cite{FargeSadourny1989} reported spectra scaling as $k^{-4}$
+whereas those shown by \cite{LahayeZeitlin2012} scale as $k^{-6}$.
 
 Some predictions are based on the weak wave turbulence formalism
-\cite[]{ZakharovLvovFalkovich1992, Nazarenko2011}.  In the case of
-inertial-gravity waves, \cite{FalkovichMedvedev1992} showed that the
-exact solutions of the kinetic equation corresponding to a constant
-downscale energy flux is associated with a spectrum scaling like $E(k)
-\sim P^{2/3} k^{-8/3}$.
+\cite[]{ZakharovLvovFalkovich1992, Nazarenko2011}. In the case of
+inertia-gravity waves, \cite{FalkovichMedvedev1992} showed that the exact
+solutions of the kinetic equation corresponding to a constant downscale energy
+flux is associated with a spectrum scaling as $E(k) \sim k^{-8/3}$, while
+\cite{ZakharovSagdeev1970} used weak turbulence formalism to derive a spectrum
+of the form $ E(k) \sim k^{-3/2} $ for acoustic turbulence. This prediction is
+of particular interest, since the acoustic equations and the SW equations are
+identical when a first order expansion is made in density or displacement
+perturbations. It may be questioned, however, that weak turbulence formalism is
+applicable to acoustic and SW wave turbulence, no matter how weak the
+nonlinearities are supposed to be. As pointed out by \cite{KadomtsevPet1970}
+and \cite{FalkovichMeyer1996}, when dispersion is small enough, waves moving in
+the same direction have the same velocity and interact strongly, which leads to
+the formation of shocks. In this case, the weak wave turbulence formalism is
+unable to give valuable results. Such sharp and long structures have been
+observed in many simulations \cite[]{FargeSadourny1989,
+PolvaniMcWilliamsSpallFord1994, LahayeZeitlin2012} but their effects are not
+well understood.
 %
-However, as pointed out by \cite{FalkovichMeyer1996} when the
-dispersion is small enough, waves moving in the same direction have
-the same velocity and interact strongly, which can lead to the
-formation of shocks. \Add{In this case, the weak wave turbulence
-formalism is unable to give valuable results.}  Such sharp and long
-structures have been observed in many simulations
-\cite[]{FargeSadourny1989, PolvaniMcWilliamsSpallFord1994,
-LahayeZeitlin2012} but \Add{their effects} are not well understood.
+As shown by \cite{Burgers1948} the energy spectrum of a flow dominated by
+shocks will scale as $ k^{-2} $, a prediction which has been confirmed by a
+great number of simulations of Burgers equation \cite[for a review, see ]
+[]{Frisch2001}. The shocks also lead to very strong intermittency, as
+demonstrated by \cite{BouchaudMezardParisi1995} and
+\cite{WeinanKhaninMazelSinai1997} for Burgers turbulence.
 %
-\cite{Kuznetsov2004} predicted that a flow dominated by shocks should
-be associated with spectra scaling like $E(k) \sim k^{-2}$.
-%
-\cite{FalkovichMeyer1996} simulated acoustic turbulence dominated by shocks 
-and reported spectra in agreement with this theoretical prediction.
-%
-The shocks also lead to very strong intermittency, as demonstrated by
-\cite{BouchaudMezardParisi1995} and \cite{WeinanKhaninMazelSinai1997}
-in the case of Burgers turbulence.
-%
+\cite{FalkovichMeyer1996} simulated acoustic turbulence dominated by shocks
+and reported spectra scaling as $ k^{-2} $.
+\cite{YuanHamilton1994} carried out
+forced dissipative simulations of the SW equations showing similar spectra.
+However, the resolution in both these studies was quite coarse, ($386^2$
+and $101^2$ grid points, respectively) so that the scaling range was very
+narrow.  Moreover, \cite{FalkovichMeyer1996} used a very particular
+type of strongly anisotropic forcing with waves in only one
+direction while \cite{YuanHamilton1994} forced in geostrophic modes
+which severely complicates the interpretation.
 
-The dynamics of waves in complex shallow-water flows is not well
-understood.  \Add{Our long-term goal is to understand this dynamics
-which involves interactions between balance and unbalance parts of the
-flow. However, even the wave cascade without balance flow is not well
-understood.} A statistically stationary wave cascade has never been
-simulated at high resolution.
+The dynamics of waves in complex SW flows is not well
+understood.  Even wave dynamics in absence of a balanced flow is not well
+understood. A statistically stationary wave cascade has never been
+simulated at high resolutions.
 %
 Is it possible to obtain a statistically stationary state in the very
 fast wave regime, and how does the mean energy in this hypothetical
-regime depends on the forcing and the wave speed?  
-% What is the slope of 
-\Add{How does} the energy spectra \Add{scale as a function of the
-input parameters}?
+regime depends on the forcing and the wave speed?
+% What is the slope of
+How do energy spectra scale with the input parameters? From a theoretical point
+of view, the most interesting issue is, perhaps, the nature of the dynamics in
+the limit of weak nonlinearities. Will shocks prevail in this limit?
 %
-All these questions are open and straightforward simulations may
+Such questions are still open and straightforward simulations may
 provide the answers.
-
-
-
-
-\cite{YuanHamilton1994} and \cite{FalkovichMeyer1996} carried out
-forced dissipated simulation of the one-layer shallow water model and
-acoustic turbulence, respectively.
-% 
-However, the resolution in both studies was quite coarse \Add{($386^2$
-and $101^2$ grid points, respectively)} so that the inertial range was very
-narrow.  Moreover, \cite{FalkovichMeyer1996} used a very particular
-type of strongly anisotropic forcing \Add{with waves in only one
-direction} while \cite{YuanHamilton1994} forced in geostrophic modes
-which severely complicates the interpretation.
-
-
-
-In this paper, we investigate the dynamics of one-layer shallow-water
-flows forced in the wave modes by means of high resolution numerical
-simulations \Add{with up the  $7680^2$ grid points}.
+In this paper, we investigate the dynamics of single layer SW wave turbulence
+forced  at large scales by means of
+simulations with up the  $7680^2$ grid points.
 %
-The model is described in section~\ref{section_basic_theory}.
+Before presenting the results of the simulations we develop some theory.
 %
-We then derive some new theoretical results for this model and for
-turbulence dominated by shocks
-(section~\ref{section_advanced_theory}).
+
+
+\section{Theory}
+
+In a non-rotating system of reference the SW equations for a thin layer of fluid over a flat bottom and with a free
+surface can be written as  \cite[see for example][]{VallisLIVRE2006}
+\begin{eqnarray} \label{UEq}
+\p_t \uu + \uu\cdot \bnabla  \uu   
+&=& - c^2 \bnabla h + \frac{\nu}{h}  \bnabla^2 \uu,   \label{eq_uu}\\ \label{HEq}
+\p_t   h    &=& - \bnabla \cdot (h \uu).  \label{eq_h}
+\end{eqnarray}
+where $\uu$ is the horizontal velocity, %
+$h = 1 + \eta $ the non-dimensional thickness of the fluid layer,  $ \eta $ being the surface displacement, 
+$\nu$ the kinematic viscosity and $ c $ is the gravity wave speed. The SW equations conserve mass, $ h $, and momentum $ {\bf J} = h{\bf u} $. As a matter of fact, we have constructed the viscous term in (\ref{UEq}) in such a way that momentum is conserved and energy dissipation is positive definite. This can only be accomplished by permitting the term to be nonlinear in the flow variables. There are different forms of nonlinear terms that fulfil both conditions and it may be disputed which is the best one. However, in the simulations we will use diffusion terms in both (\ref{UEq}) and (\ref{HEq}) that will not fulfil any of these two conditions in a strict sense and we will therefore not discuss this matter further. The inviscid SW equations conserve a local
+quantity along trajectories of the fluid particles, the Ertel
+potential vorticity $\ErtelPV = \zeta /h$, where $\zeta  $ is the vorticity, which in a rotating system should be interpreted as absolute vorticity.  This conservation law will be of no relevance in the present study in which we only consider
+irrotational flows for which the velocity can be written as $ \uu = \bnabla \phi $ , where $ \phi $ is the velocity potential. In a domain with no net fluxes through the boundaries the inviscid equations conserve energy, $ E = E_K + E_P $, where $ E_K =   {\bf J}  \cdot {\uu} /2 $ is kinetic energy and $ E_P = c^{2} h^2/2 $ is potential energy. The latter can be split into three terms as \begin{equation}
+E_P = c^2/2 + c^2\eta+ c^2 \eta^2/2, 
+\end{equation}
+where the first term corresponds to the potential energy of a state with no
+surface displacement.  The third term, which is quadratic in the surface displacement, may be named available potential energy (APE),
+$E_A = c^2\eta^2/2$, a concept introduced by  \cite{Lorenz1955}. As a consequence of mass and energy conservation the SW equations also conserve the sum of kinetic and available potential energy, $ E_K + E_A $.
+ The velocity potential and the displacement of the linearised inviscid SW equations both satisfy the wave equation,
+\begin{equation}
+\frac{\partial ^2 \eta}{\partial t^2} = c^2 \nabla^2 \eta \, ,
+\end{equation}
+with equipartition between KE and APE over a wave period in each Fourier mode.
+
+In order to analyze the spectral flux of energy, we derive the spectral energy
+budget, i.e.\ the governing equations for spectral KE and APE
+functions. This is not as straightforward as in incompressible turbulence since
+the expression of the kinetic energy  is not
+quadratic. To define the spectral KE function, we use the relation
+\begin{equation}
+\mean { E_K } = \sum_\kk \scalarprod{\uu}{\JJ}/2,
+\end{equation}
+where
+\begin{equation}
+\scalarprod{\baa}{\bb} \equiv \Re\{ \hat \baa(\kk)^* \cdot \hat \bb(\kk) \},
+\end{equation}
+and $\Re$ denotes the real part, $\kk$ is the wave number and the
+hat denotes the Fourier transform.
 %
-The numerical methods and the forcing are described in
-section~\ref{section_methods}.
+The spectral KE function can therefore be defined as
+\begin{equation}
+E_K(\kk) \equiv \scalarprod{\uu}{\JJ}/2.
+\end{equation}
+Similarly, the APE can be written as the sum over all wave numbers of
+the spectral APE function 
+\begin{equation}
+E_A(\kk) =  c^2 \scalarprod{\eta}{\eta}/2 \, .
+\end{equation}
+The inviscid equation for the spectral KE and APE functions can be written as
+\begin{eqnarray}
+\p_t E_K(\kk) &=& T_K(\kk) - C (\kk),\\
+\p_t E_A(\kk) &=& T_A(\kk) + C (\kk),
+\end{eqnarray}
+where
+\begin{equation}
+T_K(\kk) 
+= -\scalarprod{\bnabla \cdot \uu}{E_K} 
+-\scalarprod{\uu }{\bnabla E_K } \, ,
+\end{equation}
+\begin{equation}
+T_A(\kk) = -c^2 \scalarprod{\bnabla \eta }{\JJ}- c^2\scalarprod{\eta}{\bnabla \cdot \JJ}  \, ,
+\end{equation}
+are the spectral transfer functions of KE and APE, respectively, and
+\begin{equation}
+C (\kk) 
+= \scalarprod{\uu}{\bnabla E_P}
+\end{equation}
+is the spectral KE-APE conversion function.
+The spectral energy flux functions of KE and APE are defined as
+\begin{eqnarray}
+\Pi_K (k) = \sum_{| {\bf k}^{\prime} | > k} T_K ( {\bf k}^\prime ) \, , \;\;\;  \Pi_A (k) = \sum_{| {\bf k}^{\prime} | > k} T_A ( {\bf k}^\prime ) 
+\end{eqnarray} 
+
+
+We will now derive an analogue of the so called `four-fifths  law' \cite[]{Kolmogorov1941} for the the third order velocity structure function of incompressible isotropic turbulence.   In the case of irrotational SW wave turbulence the analogous law contains a third order structure function involving both velocity and displacement increments.  In order for such a law to exist it is necessary that the velocity field is either non-divergent (incompressible) or irrotational. To derive the law it is convenient to start from the following equations
+\begin{eqnarray} \label{IRR}
+\p_t \uu &=& -\bnabla \cdot (\uu \cdot \uu /2) - c^2 \bnabla h  \\
+\p_t \JJ &=& -\p_j (u_j \JJ) - \bnabla E_p,\\
+\p_t h   &=& -\bnabla \cdot \JJ \, ,
+\end{eqnarray}
+where we have used the  assumption that the velocity field is irrotational in (\ref{IRR}). We consider two points, positioned at $ \bf x $ and $ {\bf x}^\prime $, separated by the vector $ {\bf r} = {\bf x}^\prime - {\bf x} $.
+Using Cartesian tensor notation we denote derivates with respect to $ {\bf x} $ as $ \partial_i $ and derivatives with respect to $ {\bf x}^\prime $ as $ \partial^{\prime}_i $. Treating $ \bf x $ and $ {\bf x}^\prime $ as independent variables we find
+
+\begin{equation}
+\p_t ( J_i' u_i ) = - \p_i( J_i'|\uu|^2/2) - \p_i'(u_j J_j' u_i')
+-\p_i (J_i' c^2 h)  - \p_i' (u_i E_p')
+\end{equation}
+and
+\begin{equation}
+\p_t ( h' h ) = - \p_i( h'J_i ) - \p_i'( hJ_i' ),
+\end{equation}
+which gives
+\begin{eqnarray}
+\p_t ( \JJ'\cdot\uu + \JJ\cdot\uu' + 2c^2 h'h )
+&=& - \p_i( J_i'|\uu|^2/2) - \p_i'( J_i|\uu'|^2/2) %\nonumber \\&& 
+- \p_i'(u_j J_j' u_i') - \p_i(u_j' J_j u_i) \nonumber\\
+&& -c^2\p_i (J_i'h) - c^2\p_i' (J_ih') %\nonumber\\&& 
+- \p_i' (u_i E_p') - \p_i (u_i' E_p) \nonumber\\
+&& -2c^2\p_i' (J_i'h) - 2c^2\p_i (J_ih').
+\end{eqnarray}
+We then assume homogeneity and take the average denoted by
+$\meane{}$.   For
+every function $g(\xx, \xx')$, we have $\p_i' \meane{g} =
+-\p_i\meane{g} = \bnabla_{\rr} \meane{g}|_i$. We thus obtain
+\begin{eqnarray}
+\p_t \meane{ \JJ'\cdot\uu + \JJ\cdot\uu' + 2c^2 h'h }
+&=& + \bnabla_{\rr}\cdot\meane{ \JJ'|\uu|^2/2 - \JJ|\uu'|^2/2 } \nonumber\\
+&& - \bnabla_{\rr}\cdot\meane{ u_j J_j' \uu' - u_j' J_j \uu } \nonumber\\
+&& - \bnabla_{\rr}\cdot\meane{ \uu E_p'- \uu' E_p } \nonumber\\
+&& -c^2\bnabla_{\rr}\cdot\meane{ \JJ'h - \JJ h' }
+\end{eqnarray}
 %
-The main numerical results corresponding to the simple case without
-global rotation are presented in
-section~\ref{section_wave_cascade_f=0}.
+We then introduce the structure functions and the operator $\delta$
+returning the increment of a variable between two points separated by $\rr$, 
+for example $\delta h (\xx, \rr) = h(\xx+\rr)- h(\xx)$.
 %
-We investigate the sensibility of the non-rotating results to a
-moderate rotation (section~\ref{section_rotation}).
+Using homogeneity again, we obtain
+\begin{equation}
+\meane{ (\delta h)^2 \delta\uu } = 
+-\meane{ h'^2 \uu } + \meane{ h^2 \uu' }
++2\meane{ hh' \uu } - 2\meane{ hh' \uu' }
+\end{equation}
+and 
+\begin{equation}
+\meane{ |\delta \uu|^2 \delta\JJ } = 
+\meane{  |\uu|^2 \JJ' } - \meane{ |\uu'|^2\JJ }
++\meane{ u_ju_j' \JJ' } - \meane{  u_ju_j' \JJ },
+\end{equation}
+which gives
+\begin{equation}
+2\p_t \meane{ \JJ'\cdot\uu + \JJ\cdot\uu' + 2c^2 h'h }
+= \bnabla_{\rr} \cdot ( \meane{ |\delta \uu|^2 \delta\JJ } 
++ c^2\meane{ (\delta h)^2 \delta\uu } ).
+\end{equation}
+For separations that are considerably larger than dissipative scales of motion and considerably smaller than forcing scales a standard argument \cite[see for example][]{Frisch} gives that the left hand side is approximately equal to $ -8 \epsilon $, where $ \epsilon $ is the mean dissipation rate. It is interesting to note that a factor of $ 8 $ appears in the case when the velocity field is irrotational while a corresponding factor of $ 4 $ appears in the case when the velocity field is non-divergent. 
+Assuming isotropy and integrating yield the Kolmogorov law for
+irrotational shallow water wave  turbulence
+\begin{equation}
+\meane{ |\delta \uu|^2 \delta J_L } 
++ c^2\meane{ (\delta h)^2 \delta u_L } = -4 \epsilon r, \label{eq_Kolmo}
+\end{equation}
+where $J_L \equiv
+\JJ\cdot\rr / |\rr|$ and $u_L \equiv \uu\cdot\rr / |\rr|$ are
+longitudinal increments.
 
 
-\section{The one-layer shallow-water model}
-\label{section_basic_theory}
-\input{section_basic_theory}
 
-\section{Theoretical analysis}
-\label{section_advanced_theory}
-\input{section_advanced_theory}
 
-\section{Numerical methods}
-\label{section_methods}
-\input{section_methods}
+We will now use (\ref{eq_Kolmo}) together with straightforward geometrical and statistical arguments to construct a model for velocity and displacement structure functions of any order above a certain minimum.
+The model has some similarities with the one developed by \cite{BouchaudMezardParisi1995} for Burgers equation. The main difference is the that the mean dissipation rate, $\epsilon $, enters into the estimate of the shock amplitude and the final expressions of the structure functions in our model, but is absent in the model of \cite{BouchaudMezardParisi1995}.
+We consider a domain with total area  $ {\mA} $ occupied by shocks which we 
+consider as smooth lines. We denote the total length of all shocks by $ L_s $.  The mean distance between the shocks within the domain can be estimated as
+\begin{equation}
+d \simeq \frac{\mA} {L_s} .
+\end{equation} 
+A structure function of a flow variable is defined as the area average of increments  between two points separated by a distance $ r $.
+Assuming that the contribution from increments where the two points are not separated by a shock is negligible for higher order structure functions we obtain
+\begin{eqnarray}
+\meane{|\delta h|^p} 
+=  \frac{1}{\mA} \int_{\mA}  d^2\xx |\delta h(\xx)|^p 
+ \simeq  \frac{r}{\mA} \int_\shocks ds |\sin\theta| |\Delta h (s)|^p,
+\end{eqnarray}
+where $\theta$ is the angle between the shock line and the separation
+vector $\rr$ %
+and $\Delta h (s)$ is the shock displacement amplitude.
+%
+Assuming isotropy, the integral can be split and we get
+\begin{equation} \label{StepH}
+\meane{|\delta h|^p} 
+\simeq 
+r \frac{L_s}{\mA} \meant{|\sin\theta|} \means{|\Delta h |^p}
+\simeq  \frac{2}{\pi} \means{|\Delta h |^p} \frac{r}{d} ,
+\end{equation}
+where $\meant{}$ is the mean over $\theta$
+and $\means{}$ is the mean over all shocks.
 
-\section{Wave cascade without global rotation}
-\label{section_wave_cascade_f=0}
-\input{section_wave_cascade_f=0}
+For velocity increments, we can also use a characteristic of the
+velocity singularities.  The step in velocity is only in the component
+perpendicular to the shocks, which implies that the longitudinal and
+transverse increments can be written as  $\delta u_L = \delta u
+\sin\theta$, $\delta u_T = \delta u \cos\theta$.
+%
+Applying the same averaging method, we obtain
+\begin{equation} \label{StepL}
+\meane{|\delta u_L|^p} 
+\simeq 
+\meant{|\sin\theta|^{1+p}}
+\means{|\Delta u |^p} \frac{r}{d}
+\end{equation}
+and
+\begin{equation} \label{StepT} 
+\meane{|\delta u_T|^p} 
+\simeq 
+\meant{|\sin\theta||\cos\theta|^{p}}
+\means{|\Delta u |^p} \frac{r}{d},
+\end{equation}
+where $\Delta u $ is the shock velocity amplitude.
+%
+These assumptions completely determine the ratio between the
+longitudinal and transverse structure functions, which can be computed as
+\begin{eqnarray} \label{Ratio}
+R_p(r) \equiv \frac{\meane{|\delta u_L|^p}}{\meane{|\delta u_T|^p}} = 
+\frac{\meant{|\sin\theta|^{1+p}}}{\meant{|\sin\theta||\cos\theta|^p}},
+\end{eqnarray}
+giving the numerical values $R_2 = 2$, $R_3 = 6\pi/8$ and $R_4 = 8/3$.
+Interestingly, for an isotropic and irrotational velocity field, the longitudinal and transverse second order structure functions
+are exactly related by $\meane{(\delta u_L)^2} = \p_r( r\meane{(\delta
+u_T)^2} )$ \cite[]{Lindborg2007jas}. If we further assume than both second order structure functions follow
+the same scaling law $\meane{ (\delta u_L)^2} \propto \meane{ (\delta
+u_T)^2} \propto r^\alpha$, then we have $\meane{ (\delta u_L)^2} =
+(1+\alpha) \meane{ (\delta u_T)^2} $, which gives $ R_2 = 2 $ for 
+$  \alpha = 1$.  In the limit $ r \rightarrow 0 $ we have $ \alpha = 2 $ and $ R_2 = 3 $.
+%
 
-\section{Effects of global rotation}
-\label{section_rotation}
-\input{section_rotation}
+In order for (\ref{StepH}-\ref{StepT}) to match with the third order structure function law (\ref{eq_Kolmo})  the shock amplitudes should scale as
+\begin{equation} \label{Strength}
+ | \Delta u | \sim | c \Delta h | \sim (\epsilon d)^{1/3} \, ,
+\end{equation} 
+and the structure functions of order $ p $ will consequently scale as
+\begin{equation} \label{StrucFunc}
+\meane{|\delta u |^p}  \sim \meane{(c|\delta h |)^p} \sim  (\epsilon  d)^{p/3} \,  \frac{r}{d} \, .
+\end{equation} 
+Assuming that (\ref{StrucFunc}) is valid for second order moments and that the non-quadratic contribution to the KE spectrum is negligible the corresponding scaling law for the energy spectra reads
+\begin{equation} \label{Spectra}
+E_K(k)  \sim  E_A(k) \sim \epsilon ^{2/3} d^{-1/3} k^{-2} \, .
+\end{equation} 
+The  model  provides the following predictions for the flatness factors of velocity increments
+\begin{eqnarray} \label{FL}
+F_L &=&  \frac{\meane{|\delta u_L|^4}}{\meane{|\delta u_L|^2}^2}
+\propto 
+\frac{\meant{|\sin\theta|^5}}{\meant{|\sin\theta|^3}^2} \frac{d}{r}   = \frac{9\pi}{15}  \frac{d}{r} \\ \label{FT}
+F_T &=&  \frac{\meane{|\delta u_T|^4}}{\meane{|\delta u_T|^2}^2} 
+\propto
+\frac{\meant{|\sin\theta||\cos\theta|^4}}{\meant{|\sin\theta||\cos\theta|^2}^2} =  \frac{9\pi}{10}  \frac{d}{r} 
+\end{eqnarray}
+The ratio between the two flatness factors is equal  to
+$F_T/F_L = 3/2$ according to the model. 
+
+We now turn to the question of how the shock width, $ \delta x $, can be estimated. One suggestion would be that $ \delta x $  is equal to the Kolmogorov length scale, $ \nu^{3/4}/\epsilon^{1/4} $. However, exact solutions of Burgers equation \cite[see for example][]{Whitham}
+suggests that  $ \delta x \propto \nu $ rather than $ \delta x \propto \nu ^{3/4} $. The scaling of the energy spectra (\ref{Spectra}) also suggests that $ d $ should enter into the expression for $ \delta x$, apart from $ \nu $ and $ \epsilon $. Dimensional analysis thus gives
+\begin{equation} \label{Width}
+\delta x \sim \frac{\nu}{\; (d\epsilon)^{1/3}} \, ,
+\end{equation} 
+which is considerably smaller than the Kolmogorov length scale.
+This result can also be derived in the following way. Assuming that all dissipation takes place at the shocks, whose total area is equal to $ L_s \delta x $,  and remembering that $ \epsilon $ is defined as the mean over the domain area $ \cal  A$, we find
+\begin{equation} \label{Estimate}
+\epsilon \sim \nu \frac{ \mid \Delta u \mid ^{2} }{\delta x^2} \frac{L_s \delta x}{\cal{A}} \sim \nu \frac{\epsilon^{2/3}} {\delta x d^{1/3}} \, ,
+\end{equation} 
+again giving (\ref{Width}). 
+Applying the same averaging method we obtain the following estimates for skewness and flatness of the velocity derivative, $ \partial_x u $,
+\begin{eqnarray}
+S_{\partial_x u}  & \sim & \left ( \frac{d}{\delta x} \right )^{1/2} \sim \frac{d^{2/3} \epsilon ^{1/6}}{\nu^{1/2}} \, , \\
+\label{FD} F_{\partial_x u} & \sim &  \frac{d}{\delta x} \sim \frac{d^{4/3} \epsilon^{1/3}} {\nu} \, ,
+\end{eqnarray} 
+where the skewness is negative. For Kolmgogorov turbulence observations indicate that $ F_{\partial_x u} \propto \nu^{-1/6} $  \cite[]{VanAtta_Antonia1980}, a dependence which is well capture by the multifractal model of
+\cite{Meneveau_Streenivasan1991}.  In SW wave turbulence there is a much stronger increase of  the flatness factor with decreasing  $ \nu $, which can be explained the fact that dissipation takes place only at the shocks.
+
+Finally, we estimate the Mach number of the shocks, that is the ratio between the shock propagation velocity and $ c $. According to \cite{Baines1998} the Mach number of a SW shock can be calculated as
+\begin{equation}
+M = \sqrt{\frac{h_+}{h_-} \frac{h_+  + h_-}{2}} \, ,
+\end{equation} 
+where $ h_+ $ and $ h_- $ are the nondimensional layer thickness before and after the shock, respectively. Noting that $ h_+ - h_- =  \;  \mid \!\! \Delta h | $, expanding in small $ | \Delta h | $ and using (\ref{Strength}) the Mach number can be estimated as
+\begin{equation} \label{Mach}
+M \sim 1 + \frac{3}{4} \frac{\;\; (\epsilon d)^{1/3}}{c} \, ,
+\end{equation} 
+and is only slightly larger than unity for all relevant applications.
+
+The model we have developed is, indeed, very simple. As such, it must, of course, have limitations. First, it is obvious that  the linear scaling of the structure functions only can be valid for separations  that fulfil the condition $ \delta x \ll r \ll d $. Second, the model cannot be valid for low order moments or structure functions. The minimum order for which the model may be valid is not easily determined. 
+According to  \cite{BouchaudMezardParisi1995} structure functions of shock dominated turbulence of all orders $ p  \ge 1 $ scale linearly in $ r $. It is quite easily argued, however, that the shocks can not determine the scaling of the structure functions of order $ p=1 $. 
+To see this, consider the first order moment of the absolute value of $ \delta u_L $. 
+The longitudinal velocity increment is always negative over a shock, that is to say that the difference of the projection of the velocity on the direction over which the shock is crossed is always negative. In a domain with periodic boundary conditions the mean value of $ \delta u_L $   is zero. The negative values of $ \delta u_L $ for separations where a shock is crossed must therefore be compensated by positive values for separations where no shock is crossed. There is no reason to believe that these values are all positive,  but they are only positive on average. Thus, 
+$ \means{ |\delta u_L | } < \langle | \delta u_L | \rangle _{ns} $, where the left hand side is the mean value over all separations where a shock is crossed and the right hand side is the mean value over separations where no shock is crossed.  Therefore, the model is not valid for first order moments. It may be conjectured that it is valid for 
+second and higher order structure functions. 
+
+
+
+
+
+
+
+
+\section{Simulations}
+
+We have carried out a series of twenty forced-dissipative simulations of the SW
+equations in a quadratic domain with periodic boundary conditions using the
+standard open-source pseudo-spectral code FluidSim \cite[]{fluiddyn, fluidfft,
+fluidsim}.
+%
+The simulations were started from zero initial
+conditions and were run till a statistically stationary state was reached. The
+equations were reformulated in terms of the three eigenmodes of the linearized
+equations in Fourier space. One of these eigenmodes is zero for an irrotational
+flow. We first carried out a few test simulations in which all three eigenmodes
+were allowed to evolve in time. However, when only the two wave modes are
+forced vorticity remains very small throughout the simulations and does not
+affect the wave dynamics. Therefore, we chose to solve the equations only for
+the two wave modes. As discussed in the previous section, a linear viscous term
+in (\ref{eq_uu}) will not conserve momentum exactly and does not give a
+strictly positive definite expression for energy dissipation. We have relaxed
+the requirements of exact momentum conservation and positive definite energy
+dissipation. Instead of using the nonlinear form of the viscous term in
+(\ref{eq_uu}) we have used a higher order linear operator $ \nu_8 \nabla^{8} $
+both in (\ref{eq_uu}) and (\ref{eq_h}), where $ \nu_8 $ is a `hyperdiffusion'
+or a `hyperviscosity'. There is no strong physical motivation for this
+modification but, as discussed by \cite{FargeSadourny1989}, a molecular viscous
+operator of the form $\nu \nabla^2 $ is not necessarily a relevant model of the
+actual small-scale dissipation for SW flows, which should rather be described
+as a transition from two-dimensional to three-dimensional motions before
+reaching the scales where dissipation actually occurs.
+%
+Time advancement is carried out by a classical fourth-order Runge-Kutta scheme
+for the nonlinear term and an exact integration for the linear and dissipative
+terms. This explicit integration is especially useful at very high resolution
+and very large $c$ when the shortest waves are very fast. We use an adaptable
+time step method which maximizes the time step over a standard
+Courant-Friedrichs-Lewy condition \cite[]{Lundbladh1999,
+AugierChomazBillant2012}.
+%
+Most of the aliasing is removed by truncating 8/9 of the modes along each
+direction \cite[for a detail discussion on the issues of the non-conservation
+of the non-quadratic energy and the aliasing errors in the truncated one-layer
+shallow water model, see][]{FargeSadourny1989}. The resolution is characterized
+by the number of nodes, $n$, in each direction and has been varied from 960
+to 7680.
+%
+The wave speed $c$ has been varied over almost two orders of magnitude from 10
+to 700. The wave modes are forced in a shell in spectral space corresponding to
+relatively small wave numbers, $ 5 \delta k < |\kk| < 8 \delta k$, where $
+\delta k = 2 \pi /L $ and $ L $ is the length of the side of the quadratic
+domain. 
+The forcing is white noise in time and designed so that the energy
+injection rate is normalised to unity at each time step. When the flow has reached a stationary state dissipation should therefore be equal to unity. 
+The strength of the stratification is characterized by a
+Froude number, defined as
+\begin{equation} \label{Fr}
+F_f = \frac{\epsilon^{1/3}}{c k_f^{1/3}} \, ,
+\end{equation}
+a parameter that can be determined from the start of each simulations.
+Energy is dissipated at the smallest resolved scales by hyperviscosity. An intricate question is how the value of $ \nu_{8} $ should be chosen so that the shocks are resolved. The standard resolution requirement in turbulence simulations of this type is that the hyperviscosity analogue to the Kolmogorov scale
+\begin{equation}  \label{KolmEight}
+\eta_{8} = \left( \frac{{\nu_8}^3}{\epsilon} \right)^{\frac{1}{22}},
+\end{equation}
+should be resolved. However, our estimate (\ref{Width}) of the shock width suggests that this may not be a sufficient condition, since $ d $ is likely to enter the expression for $ \delta x $ also in the case when we use hyperviscosity.
+A similar estimate as in (\ref{Estimate}) gives
+\begin{equation} \label{EtaEight}
+\delta x \sim \eta_{8} \left ( \frac{\eta_8}{d} \right)^{1/21} \, .
+\end{equation} 
+Thus, the shock width dependence on $ d $ can be expected to be extremely weak when hyperviscosity is used. Therefore we simply use the standard resolution requirement that (\ref{KolmEight}) should be resolved. We have found that setting
+$  k_{d} \simeq \kmax/ 2.5$, where $ k_{d} = 1/\eta_8 $ and $\kmax =
+(8/9)\pi n/L $ is the maximum wave number, is  sufficient to resolve the shocks. Since the energy injection rate is normalised to unity and all simulations reach a stationary state in which dissipation is equal to the injection rate, $ \nu_8 $ can be chosen already from the start so that this condition will be fulfilled in the stationary state. 
+ The  simulation parameters are listed in table 1.
+
+
+\begin{table}
+\begin{center}
+
+\label{Table1}
+\begin{tabular}{lrrrrrrrr}
+
+\toprule
+{} &   $n$ &  $c$ &  $\nu_8$ &  $\epsilon$ &  $ k_{d}  / {k_f} $ &   $F_f$ &    $t_{\max}$ \\
+\midrule
+W1  &   960 &   10 & 1.56e-10 &        1.04 &                    28.8 &   0.111 &                49.9 \\
+W2  &  1920 &   10 & 9.68e-13 &        1.06 &                    57.7 &   0.112 &               49.8 \\
+W3  &  3840 &   10 &    6e-15 &         1.10&                     115 &   0.113 &               49.9 \\
+W4  &  7680 &   10 & 3.72e-17 &        1.18 &                     231 &   0.116 &               49.9 \\
+W5  &   960 &   20 & 1.56e-10 &           1.00 &                    28.8 &   0.055 &              49.9 \\
+W6  &  1920 &   20 & 9.69e-13 &        1.02 &                    57.7 &  0.0553 &                120 \\
+W7  &  3840 &   20 & 6.01e-15 &        1.08 &                     115 &  0.0563 &                120 \\
+W8  &  7680 &   20 & 3.72e-17 &        1.21 &                     231 &  0.0585 &                 120 \\
+W9  &   960 &   40 & 1.56e-10 &          1.00 &                    28.8 &  0.0274 &                49.8 \\
+W10 &  1920 &   40 & 9.68e-13 &       1.00 &                    57.7 &  0.0274 &               49.8 \\
+W11 &  3840 &   40 &    6e-15 &        1.06 &                     115 &   0.028 &               49.8 \\
+W12 &   960 &  100 & 1.56e-10 &       1.00 &                    28.8 &   0.011 &                49.8 \\
+W13 &  1920 &  100 & 9.69e-13 &        1.01 &                    57.7 &   0.011 &                 120 \\
+W14 &  3840 &  100 & 6.01e-15 &        1.06 &                     115 &  0.0112 &                 120 \\
+W15 &  7680 &  100 & 3.72e-17 &        1.22 &                     231 &  0.0117 &                95.8 \\
+W16 &   960 &  400 & 1.56e-10 &        1.14 &                    28.8 & 0.00287 &                 120 \\
+W17 &  1920 &  400 & 9.69e-13 &        1.15 &                    57.7 & 0.00288 &                 120 \\
+W18 &  3840 &  400 & 6.01e-15 &        1.12 &                     115 & 0.00286 &                119 \\
+W19 &   960 &  700 & 1.56e-10 &        1.27 &                    28.8 &  0.0017 &                49.8 \\
+W20 &  1920 &  700 & 9.68e-13 &        1.05 &                    57.7 &  0.0016 &                49.8 \\
+\bottomrule
+
+\end{tabular}
+\caption{Parameters for all simulations. $ n $: number of nodes in each
+direction, $ c $: wave speed, $ \nu_8 $: hyperviscosity, $ \epsilon $: time
+averaged mean energy dissipation in the stationary state, $ k_{d}/ k_f $: ratio
+between dissipation wave number and forcing wave number, $ F_f $: Froude
+number, $ t_{max} $: end time of simulation.}
+\end{center}
+\end{table}
+
+
+
+
+
+\begin{figure}
+\centerline{\includegraphics[width=5.12in]{../Pyfig/fig_Emean_time}}
+\caption{Space averaged energy, $E = E_K + E_A $, versus time for all
+simulations. }
+\label{fig_Evstime}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=5.8in]{../Pyfig/fig_energy_w}}
+\caption{Left: Mean energy in the stationary state versus $ c $ for different
+resolutions. The lines have slope $ 0.5 $, corresponding to $ E \propto c^{1/2}
+$. Right: Normalised mean energy in the stationary state versus resolution $ n
+$ for different $ c $.}
+\label{MeanE}
+\end{figure}
+
+
+
+The time evolution of mean energy is shown in figure~\ref{fig_Evstime} for all
+twenty simulations. After an initial period of growth, mean energy is leveling
+out at different values for different runs. This is not the same picture as we
+see in simulations of three-dimensional incompressible turbulence or stratified
+turbulence, where all curves would have leveled out more or less at the same
+value. We find that mean energy in the stationary state is a function of both $
+c $ (or the Froude number) and resolution $ n $ and that the functional
+dependence can be approximately written as
+\begin{equation} \label{MeanEnergy}
+E \sim \sqrt{L_f c \epsilon} \, n^{\alpha}  \, ,
+\end{equation}
+where $ L_f = \pi/k_f $ is the forcing scale. In figure~\ref{MeanE} to the
+left, we see $ E/\sqrt{\epsilon} $ as function of $ c $ for different resolutions $
+n $. For each resolution the points are approaching a power law $ C_n c^{1/2} $
+with increasing values of $ C_n $ for increasing $ n $. In the same figure to
+the right we see $ E/\sqrt{L_f c \epsilon} $ for different values of $ c $. For
+each $ c $ the points follow a power law $ n^{\alpha} $, where $ \alpha $ is
+becoming slightly larger with increasing $ c $, approaching almost the same
+value $ \alpha \approx 0.33 $ for the three highest values of $ c $. The
+relation (\ref{MeanEnergy}) can be reformulated as
+\begin{equation} \label{Dissipation}
+\frac{\epsilon} {(E^{3/2} / L_f)} \sim \frac{E^{1/2}}{c} n^{-2\alpha} \, .
+\end{equation}
+Since the simulations are well resolved the dependence on resolution should not
+be interpreted as consequence of the numerics but rather as a Reynolds number
+effect, although it is not hundred percent clear how a Reynolds number should
+be defined in our case. We may note, however, that $ n \sim L_f/\delta x $ and in the case of Navier-Stokes viscosity
+ we should have $ \delta x \propto \nu $, according to (\ref{Width}). Therefore,  $ n $ may be substituted by a Reynolds number. The normalised energy dissipation on the left hand side of
+(\ref{Dissipation}) will thus go to zero in the limit of large Reynolds number.
+This is very different from three-dimensional turbulence where there is a local
+Richardson-Kolmogorov cascade, in which energy is successively transfered from
+large to small scales of motion. That the cascade is local means that eddies of
+a particular scale are not directly influenced by eddies of widely different
+scales. As a consequence, the normalised dissipation is of the order of unity
+independent of Reynolds number \cite[]{Pope, TennekesLumley}. A review of the
+experimental evidence and theoretical implications of this fundamental law of
+Kolmogorov turbulence is given by \cite{Vassilicos2015}. Our result
+(\ref{Dissipation}) suggests that SW wave turbulence does not fit into the
+paradigm of a local Richardson-Kolmogorov cascade. Moreover, it is not only in
+the limit of large Reynolds number the normalised dissipation will go to zero
+but also in the limit of strong stratification, $ E^{1/2}/c \rightarrow 0 $.
+This is different from three-dimensional stratified turbulence where the ratio
+on the left hand side of (\ref{Dissipation}) is of the order of unity in the
+limit of strong stratification \cite[]{Lindborg2006, Brethouwer2007}.
+
+
+The `four-fifths law' for the third order structure function of Kolmogorov
+turbulence is often derived using the assumption of a local cascade
+\cite[]{Vassilicos2015} or the assumption that dissipation stays finite in the
+limit of large Reynolds number \cite[]{Frisch}. As we just discussed, these
+assumptions seem to be violated in the case of SW wave turbulence.
+Nevertheless, the analogous law (\ref{eq_Kolmo}) is satisfied with a high degree of accuracy in our simulations. In
+figure~\ref{Flux} we see the spectral energy flux from run W7 to the left and
+the third order structure function to the right. There is a broad constant flux
+range with equipartition between KE and APE flux and an almost equally broad
+range where (\ref{eq_Kolmo}) is satisfied, with equipartition between the two
+third order structure functions associated with KE and APE. The assumptions of
+a local cascade and finite dissipation do not seem to be necessary in order for
+the third order structure function law (\ref{eq_Kolmo}) to be valid.
+
+
+
+\begin{figure}
+\centerline{\includegraphics[width=5.8in]{../Pyfig/fig_flux_struct_combined}}
+\caption{Left: Time averaged normalised spectral energy fluxes versus $ k/k_f
+$. Right: Time averaged normalised third order structure functions versus $
+r/L_f $. From run W7. }
+\label{Flux}
+\end{figure}
+
+
+\begin{figure}
+\centerline{\includegraphics[width=3.15in]{../Pyfig/fig_spatiotempspectra}}
+\caption{Frequency spectra of KE and APE for different $ k = \mid {\bf k} \mid
+$, from run W7. The spectra are plotted as functions of $\omega/\omega_l$,
+where $\omega_l = c k$. From top to bottom: $ k /\delta k = 12$, 27, 62, 143,
+327, and 746. }
+\label{fig_spatiotemp_spectra}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=6.0in]{../Pyfig/fig_phys_fields_wave}}
+\caption{Left: divergence $ \bnabla \cdot {\bf u} $. Right: velocity component in the $ y $-direction: $ u_y $. Top: run W6. Bottom: run W17.  }
+\label{Physical}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=8cm]{../Pyfig/fig_shock_sep.pdf}}
+\caption{Mean distance between the shocks as function of Froude number.  }
+\label{fig_distance}
+\end{figure}
+
+
+
+
+The equipartition of KE and APE spectral fluxes suggests that the flow to
+leading order may be described as a collection of linear gravity waves with energy
+equipartition in each mode. To investigate this further we have
+collected time series of the flow variables from Fourier modes whose magnitude
+fall within certain shells, $ \mid {\bf k} \mid \in [ k -\delta k/2, \; k+
+\delta k/2] $, and computed temporal power law spectra from these time series
+and averaged over all wave numbers in each shell. In other words, we have
+computed KE and APE frequency spectra corresponding to different magnitudes of
+modes. Figure~\ref{fig_spatiotemp_spectra} presents such spectra plotted as 
+functions of the normalised frequency $\omega/\omega_l$, where $ \omega_l = kc
+$ is the linear wave frequency. The spectra are strongly dominated by peaks at
+$\omega = \omega_l$. As can be seen, there is equipartition between KE and APE
+in each shell. Although the widening of the peaks around the linear frequency
+most likely is an effect of nonlinearities, we can quite safely conclude that
+the time evolution of the flow variables in each Fourier mode to leading order
+can be described as a linear wave.
+
+Visualisations of the flow field give a completely different picture from what
+may be expected from a collection of linear gravity waves. They are totally
+dominated by the appearance of shock waves. In figure~\ref{Physical} we see
+the divergence, $ \nabla \cdot {\bf u} $, to the left and the velocity
+component in the $ y $-direction, $ u_y $, to the right. The two figures at the
+top are from run W6 while the two figures at the bottom are from run W17. The
+difference between the two runs is that $ c $ is larger by a factor of $ 20 $
+in W17 as compared to W6. To the left we see the shocks displayed as elongated
+bands of negative divergence. That the divergence is negative at the shocks can
+be understood from the fact that the velocity component perpendicular to the
+shock always has a negative jump in the direction of shock propagation.
+Apparently, the mean distance between the shocks is considerably smaller in run
+W17 with the larger value of $ c $ compared to run $ W6 $ with the smaller
+value of $ c $. 
+The shocks are also visible in the figures to right where $ u_y
+$ is displayed. It may be interesting to note that the shocks along the $ x
+$-axis appear as extra sharp in this plot, since there is a strong jump of $
+u_{y} $ over these shocks, while the shocks along the $ y $-axis are hardly
+visible, since there is no jump of $ u_{y} $ over these. In the two figures to
+the right we see a variation of the flow field over the length scale $ L_f $
+which is not seen in the two figures to the left. This variation is evidently a
+footprint of the random forcing. Although the forcing length scale $ L_f $ is
+the same in the two simulations the mean distance, $ d $, between the shocks is
+much smaller in run $ W17 $ than in run $ W6 $, which may come as a surprise. Another interesting observation is that the shocks in run W17 (lower figures) appear to have smaller curvature on average than the shocks in run W6 (upper figures). In both runs, the shocks are weak in the sense that the Mach number is close to unity and the interaction between the shocks should therefore be weak \cite[see][]{ApazidisEliasson2018}. However, as measured by the Mach number  (\ref{Mach}), the shocks are much weaker in run W17, where $ c $ is larger by a factor of 20 as compared to run W6 and $ d $ also is smaller. The shock interaction should therefore be weaker in run W17. The observation that the curvature of the shocks is smaller in run W17 than in run W6 may be explained by this fact. 
+We have calculated  the mean distance, $ d $, between the shocks by counting the number of negative spikes
+of the divergence along ten lines parallel to the $ x $-axis and ten lines
+parallel to the $ y $-axis and then divided total length of all the lines by
+the number of spikes. Generally, we found that $ d \propto c^{-1/2} $, or
+\begin{equation} \label{MeanDistance}
+d \sim L_f F_f ^{1/2} \, ,
+\end{equation}
+independent of resolution $ n $. In figure~\ref{fig_distance} we have plotted
+$ d/L_f $ versus Froude number for all twenty runs. As can be seen, the points
+follow the $ F_f^{1/2} $-curve quite well, although there seems to be a slight
+systematic deviation at the highest $ F_f $, which may be due to the fact that
+$ d $ is rather close to the length of the side of the box for the largest $
+F_f $. 
+
+\begin{figure}
+\centerline{
+\includegraphics[width=5.0in]{../Pyfig/fig_struct_order_246}}
+\caption{From top to bottom: second, fourth and sixth order compensated and
+normalised longitudinal structure functions. Left: runs with $ n=3840 $: W3,
+W7, W11 and W18. Right: runs with $ n = 7860 $: W4, W8 and W15. }
+\label{fig_StrucFunc}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=11cm]{../Pyfig/fig_ratio_strfct}}
+\caption{
+Ratio of the structure functions
+$R_p(r) = \mean{|\delta u_L|^p} / \mean{|\delta u_T|^p}$ from run W4,
+for $ p = 2, \, 3, \, 4, \, 5, \, 6. $
+The dotted straight lines indicate the values predicted by (\ref{Ratio}):
+$R_2 = 2$, $R_3 = 3\pi/4$,  $R_4 = 8/3$, $ R_5 = 15 \pi /16 $ and $ R_6 = 16/5 $.}
+\label{fig_ratio}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=12cm]{../Pyfig/fig_flatness}}
+\caption{ Top: Flatness factor of transverse velocity increments. Bottom: Ratio between transverse and longitudinal flatness factor. Left: runs with $ n=3840 $: W3,
+W7, W11 and W18. Right: runs with $ n = 7860 $: W4, W8 and W15.  The dotted straight lines indicate the value 1.5 predicted by the shock model.  }
+\label{fig_flatness}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=11cm]{../Pyfig/fig_spectra}}
+\caption{Time averaged compensated and normalised energy spectra
+from runs with $ n = 7680 $: W4, W8 and W15.}
+\label{fig_spectra_c40}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=13cm]{../Pyfig/fig_diss_spectra}}
+\caption{Time averaged normalised dissipation spectra. Left: Constant $ c = 20 $ and varying $ n $, runs  W5, W6, W7 and W8. Right: Constant $ n= 1920 $ and varying $ c $, runs W2, W6, W10, W13, W17 and W20. The vertical lines indicate the wave numbers of the maxima.}
+\label{fig_disspectra}
+\end{figure}
+
+
+
+We will now present the results for the structure functions. Substituting
+(\ref{MeanDistance}) into (\ref{StrucFunc}) we find that the structure
+functions are expected to scale as
+\begin{equation} \label{StrucFunc2}
+\meane{|\delta u |^p}  \sim \meane{(c|\delta h |)^p} \sim  (L_f F_f^{1/2})^{p/3-1}  \epsilon^{p/3}  r  \, .
+\end{equation}
+for separation distances that fulfil the condition $ \delta x \ll r \ll d $.
+The scaling (\ref{StrucFunc2}) is
+expected to become better and better fulfilled with decreasing $ c $ (or
+increasing $ F_f $). According to (\ref{MeanDistance})
+$ d $ is increasing with $ F_f $, and the scaling range is therefore becoming
+wider for decreasing $ c $, if $ \delta x $ or the resolution  is kept
+constant. The scaling
+(\ref{StrucFunc2}) is also expected to become better and better fulfilled with
+increased resolution $ n $, since $ \delta x $ is decreasing with increasing $
+n $.
+
+As expected, we have found that the displacement structure functions scale
+exactly in the same way as the velocity structure functions, why we only plot
+velocity structure functions. In figure~\ref{fig_StrucFunc} we see the
+compensated and normalised second, fourth and sixth order longitudinal
+structure functions from the five simulations with $ n = 3840 $ to the left and
+the three simulations with $ n = 7860 $ to the right. At small separation, $ r
+< \delta x $, the structure functions have the dependence $ \sim r^{p} $, which
+is characteristic of a smooth velocity field, indicating that the shocks are
+reasonably well resolved. There is a small bump around the shock width, $ r
+\approx \delta x $, and at $ r > \delta x $, there is a range where the
+compensated structure functions are flat, or almost flat. As expected, this
+range is becoming broader for smaller $ c $ (or larger $ F_f $). The range is
+also broader in the higher resolution runs to the right as compared to the
+lower resolution simulations to the left. There is clearly a better collapse of
+the curves for the sixth order structure functions compared to the second order
+structure functions. This is not surprising, since the shock contribution to
+the structure functions should become increasingly dominant with increasing
+order. Plots of the transverse structure functions are very similar to the
+plots of the longitudinal structure functions, with the difference that the
+transverse structure functions are somewhat smoother at $ r \approx \delta x $.
+In figure~\ref{fig_ratio} we see the ratio $ R_{p}(r) = \langle \mid \delta
+u_L \mid ^{p} \rangle / \langle \mid \delta u_T \mid ^{p} \rangle$ for $ p=
+2,3,4,5,6 $ from run W4, together with dotted straight lines, indicating the
+values predicted by (\ref{Ratio}). As can be seen, there is a quite good
+agreement with the predicted values in a limited range of separations, $ r >
+\delta x $. Somewhat unexpectedly, the range in which there is a good agreement
+becomes more narrow with increasing $ p $, an observation that we cannot
+explain. It may also be noted that $ R_2 \rightarrow 3 $ in the limit of small
+$ r $, which is the theoretical single point limit for an irrotational
+isotropic field. In figure~\ref{fig_flatness} we se the flatness factor, $
+F_T $, of the transverse structure functions at the top and the ratio, $
+F_T/F_L $, at the bottom. The figures to the left show the results from the
+five simulations with $ n = 3840 $ and the figures to the right show the
+results from the three simulations with $ n = 7860 $. The flatness factor shows
+increasingly large values for decreasing $ r $ with a dependence that is rather
+close to but somewhat steeper than $ r^{-1} $. At small $ r $ the curves are
+leveling out at very large values. For $ n = 7869 $ and $ c = 10 $ we see that
+$ F_{T} \approx 400 $ at small $ r $. The degree to which the flatness factor
+is increasing with decreasing scale is by some authors defined as the most
+appropriate measure of spatial intermittency \cite[see for example][]{Frisch}.
+If this measure is used, SW wave turbulence is, indeed, extremely intermittent.
+In the two figures at the bottom we see that $ F_{T}/F_{L} \approx 1.5 $ in a
+limited range of separations, $ r > \delta x $, which is becoming somewhat
+broader as $ c $ is increasing and is also somewhat broader in the higher
+resolution runs shown to the right as compared to the lower resolution runs
+shown to the left. This is in accordance with the shock model predictions
+(\ref{FL}) and (\ref{FT}).
+
+Finally, we present energy and dissipation spectra. As expected, we found that APE and KE
+spectra were almost identical, why we only plot the
+total spectra. In figure~\ref{fig_spectra_c40} we see  compensated and
+normalised energy spectra from the three highest resolution runs. The
+compensated spectra are almost flat in a broad range. In the high wave number
+end the compensated spectra show a `bottleneck', which we interpret as a
+signature of the shocks. The $ k^{-2} $-dependence and the associated scaling predicted
+by (\ref{Spectra}) are very well satisfied in a limited range of high wave
+numbers close to the bottleneck. At smaller wave numbers the spectra are
+becoming somewhat steeper than $ k^{-2} $ and the spectrum from the run with
+largest $ c $ does not collapse perfectly onto the other two spectra.  In figure \ref{fig_disspectra}
+ we see normalised dissipation spectra for fixed $ c= 20 $ and different $ n $ to the left, and fixed $ n = 1920 $
+and different $ c $ to the right. First we note that the spectra go to zero quite nicely for large $ k $, indicating that the shock width $ \delta x $ is well resolved. Second, we note that there is a slight shift of the maximum in both figures, even though we have normalised the wave number by $ k_d = 1/\eta_8 $.   These shifts may be explained by the estimate (\ref{EtaEight}) predicting that $ \delta x $ should vary slightly with $ d $. If the maximum of the dissipation spectra is associated with $ \delta x $, there should be a shift of the maximum  to the right with increasing $ n $ and to the left with increasing $ c $, since $ d \propto c^{-1/2} $.
+ The ratio between the maximum and the minimum $ n $ in the left figure is equal to 8 and  according to (\ref{EtaEight}) the corresponding ratio between the wave numbers at which the maxima are observed should be $ 8^{1/21} \approx 1.1 $, which is exactly the value we observe. The ratio between the maximum and minimum $ c $ in the right figure is equal to $ 70 $. Assuming that $ d \propto c^{-1/2} $ the ratio between the wave numbers at which the maxima are observed should be $ 70^{1/42} \approx 1.1 $, while the observed ratio is equal to $ 1.16 $. 
+
+
+
+
 
 
 \section{Conclusions}
 
-We have numerically investigated one-layer shallow-water flows forced
-with medium-scale waves and dissipated at small scales.
-%
-First, we have focused on the non-rotating case and varied the
-resolution and the wave speed over a wide range.
-%
-The spectral energy budget for the full non-quadratic energy has been
-derived and has allowed us to show that the KE and the APE fluxes are
-constant and equal over a wide range of wave numbers.
-%
-The KE and APE spatio-temporal spectra present equal and very strong
-peaks at the linear wave frequency.
-%
-These two results show that there is a downscale energy cascade of
-non-dispersive waves, explaining the generation of statistically
-stationary flows.
-%
-We have derived an exact Kolmogorov law for the one-layer
-shallow-water flow based on the assumption that there is a constant
-energy flux due to a purely divergent flow and verified that the
-numerical results are in agreement with this theoretical law.
+We have carried out a theoretical and numerical investigation of SW wave
+turbulence. First, we derived the SW analogue (\ref{eq_Kolmo}) of the
+`four-fifths' law of Kolmogorov turbulence. Using this relation and
+straightforward statistical and geometrical arguments we developed a simple
+shock model predicting that the shock amplitude scales as $ (\epsilon d)^{1/3}
+$, where $ d $ is the mean distance between the shocks, and that the $ p $:th
+order structure function above a certain minimum will scale as $ (\epsilon
+d)^{p/3} r/d $. Then, we carried out a series of twenty forced dissipative
+simulations, varying the Froude number and the resolution. In all simulations,
+a statistically stationary state was reached and in all simulations we
+observed shocks. The flow variables in each Fourier mode were found to evolve
+in accordance with linear wave dynamics, with equipartition between APE and KE
+over a period. The third order structure function relation was fulfilled with a
+high degree of accuracy. From the simulations we made two interesting
+observations that fall outside the predictive scope of the model. The first
+observation was that mean energy in the stationary state approximately scales
+as (\ref{MeanEnergy}), suggesting that the normalised dissipation
+(\ref{Dissipation}) will go to zero both in the limit of small viscosity and
+large wave speed. This is different from three-dimensional Kolmogorov
+turbulence as well as strongly stratified turbulence, where, in both cases,
+dissipation is finite in the limit of small viscosity, and in the latter case
+also is independent of the degree of stratification. This observation suggests
+that SW wave turbulence does not fit into the paradigm of a local
+Richardson-Kolmogorov cascade. The second observation we made was that the mean
+distance between the shocks scales as $ c^{-1/2} $, if the other parameters are
+held constant. As we increased $ c $, the shocks were thus becoming denser.
+Using this observation we tested the shock model by plotting the normalised and
+compensated structure functions of different orders. Generally we found that
+there was a quite good agreement between the simulation results and the model
+predictions, becoming better with decreasing wave speed and increasing
+resolution.
+
+Combining the model and the observations we can get a quite good picture of the
+dynamics in the limit of weak nonlinearities, $ F_{f} \rightarrow 0 $. The
+picture may become more vivid if we say `wave breaking' were we previously have
+talked about shock formation, and also say `wave lengths' were we previously
+have talked about length scales. We identify the longest wave length, $
+\lambda_l $, with the forcing scale $ L_f $ and the breaking wave length, $
+\lambda_b $, with the mean distance, $ d $, between the shocks. There are two
+dynamically different regimes, the short wave regime, $ [\delta x, \;
+\lambda_b] $, and the long wave regime, $ [\lambda_b, \, \lambda_l] $. We first
+consider the latter, whose width scales $ \lambda_{l} /\lambda_b \sim
+F_f^{-1/2} $. Identifying the amplitude of the breaking waves with the shock
+amplitude, $ (\epsilon d)^{1/3} $, we find that the ratio between the amplitude of
+the longest waves and the breaking waves scales as $ E^{1/2}/(\epsilon d)^{1/3}
+\sim F_{f}^{-5/12} n^{\alpha/2} $, where we may substitute $ n $ with a
+Reynolds number. Thus, for small $ F_f $ and large Reynolds
+number the longest waves are not directly influenced by wave breaking. The
+Reynolds number dependence of the amplitude ratio makes it unlikely that a
+general similarity theory can be easily formulated for this range. Therefore,
+predictions from weak turbulence theory \cite[for
+example][]{ZakharovSagdeev1970} are not likely to hold for this range, although
+it is not directly influenced by wave breaking. The exact values of the power
+law exponents in the argument leading to this conclusion are, of course, not
+important. As for the short wave regime, the width scales as $ \lambda_b
+/\delta x \sim F_f^{1/2} $ for fixed $ \delta x $ or fixed Reynolds number. As
+$ F_{f} \rightarrow 0 $ the range will eventually become so narrow so that
+breaking will disappear. Clearly, a necessary condition for wave breaking is 
+\begin{equation} \label{Condition} 
+\frac{\lambda_b}{\delta x} \gg 1 \, .
+\end{equation} 
+It is interesting to note that this condition means that the flatness factor of velocity derivatives (\ref{FD}) should be much larger than unity and that this flatness factor is equal to the longitudinal flatness factor (\ref{FL}) in the limit $ r \rightarrow 0 $.
+Substituting (\ref{Width}) into (\ref{Condition})  and assuming that (\ref{MeanDistance}) is valid also in the case when Navier-Stokes viscosity is used we can formulate
+the condition as
+\begin{equation} 
+Re F_f^{2/3} \gg 1 \, ,
+\end{equation} 
+where we have defined the Reynolds number as $ Re  \equiv \epsilon^{1/3} L_{f}^{4/3} / \nu $. It may be conjectured  that such a condition is sufficient for wave breaking. If this is true, 
+wave breaking will appear for any small $ F_f $ provided that the Reynolds number is sufficiently large.
+ 
+ 
+The question that originally motivated this study was if SW wave turbulence can
+be used as a model for energy dissipation in the atmosphere and the oceans.
+Undoubtedly, the answer to this question is negative and the reason for this is
+not primarily the appearance of shocks and the associated $ k^{-2} $-spectrum
+which is not consistent with the observed $ k^{-5/3} $-spectrum. The main
+reason is that SW wave turbulence is a far too inefficient agent of
+dissipation. Since the Reynolds number of geophysical flows is extremely large
+and the stratification is strong, the relation (\ref{Dissipation}) implies that
+dissipation would be absent in the interior of the atmosphere and the oceans
+with SW turbulence as the responsible agent. This not what we observe. In a companion paper \cite[]{LindborgMohanan}
+we develop a toy model of geophysical turbulence which is similar to the SW equations in the mathematical structure, but is absent of shocks. 
+In this model energy is dissipated through a local cascade involving both vortical and wave modes.
+
+
+Although the answer to the question that originally motivated this study is
+negative, it may lead us or some other investigators to pursue another
+interesting research direction. As pointed out in the introduction, the
+acoustic equations are to the lowest order expansion in density perturbations
+identical to the SW equations. This study may therefore give important clues to
+the long standing problem of acoustic turbulence, in two and three dimensions.
+A similar shock model as we developed in two dimensions may easily be
+formulated in three dimensions, where the third order structure function law
+will be similar to (\ref{eq_Kolmo}), with the only difference that the constant
+$ 4 $ on the right hand side should be replaced by $ 8/3 $. In three dimensions
+we find
+\begin{equation}
+\meane{ |\delta \uu|^2 \delta J_L }
++ c^2\meane{ (\delta h)^2 \delta u_L } = - \frac{8}{3} \epsilon r. \label{eq_Kolmo3}
+\end{equation}
+In the case of acoustic turbulence $ \delta h $ should be interpreted as a
+normalised density increment rather than a displacement increment. If shocks in
+three dimensions are assumed to form as smooth surfaces rather than smooth
+lines, then the mean distance between the shocks will appear in the
+model as $ d \sim {\cal{V}}/A_s $, where $ A_{s} $ is the total shock area and
+$ \cal{V} $ is the volume of the domain. The shock amplitude will thus scale as
+$ (\epsilon d)^{1/3} $ and the structure functions will scale as $ (\epsilon
+d)^{p/3} r/d $ also in three dimensions, provided, of course, that shocks will
+form in a similar way as in two dimensions. Generally, shock waves have similar 
+stability properties in two and three dimensions \cite[]{ApazidisEliasson2018, LivertsApazidis2016} and 
+it can therefore be expected that the three-dimensional case should be similar to the two-dimensional case. 
+If it is, the most interesting
+questions are if the mean energy and the mean distance between the shocks scale
+in a similar way in three dimensions as in two dimensions. Simulations or
+experiments of acoustic turbulence may provide answers to these questions --
+answers that will lead to further clues to a theoretical understanding of
+acoustic turbulence. We hope that the present study will stimulate research in
+this direction.
 
 
 
-The time- and spaced-averaged energy scales like $E = C_n \sqrt{\eps
-L_f c}$ and increases with the resolution at least up to $n = 5760$.
-The spectra scale like the Zakharov-Sagdeev spectrum $k^{-3/2}
-\sqrt{\eps c}$ at relatively small wave numbers $k \lesssim 2 k_f$ and
-like $k^{-2} c^{1/3} \eps^{5/9} k_f^{4/9}$ over the inertial range.
-We stress that we lack any convincing theoretical explanations for
-these scaling laws and we hope our results will motivate theoretical
-investigations on these challenging issues.
+%\appendix
 
-Nevertheless, the $k^{-2}$ scaling can be explained by the presence of
-discontinuities \cite[]{Kuznetsov2004}.  The snapshots indeed show
-very sharp hydraulic jumps, which are the equivalent of shocks in
-compressible flows.
-%
-Following \cite{BouchaudMezardParisi1995} and
-\cite{WeinanKhaninMazelSinai1997}, we have built a simple model based
-on the assumption that the structure functions are determined only by
-shocks.
-%
-Using only this hypothesis, we explain the extreme intermittent
-characteristics of the flows, i.e.\ the $r^1$-scaling of the structure
-functions of order larger than 2 and the $r^{-1}$-scaling of the
-flatness.
-%
-Adding a simple hypothesis on the structure of the velocity field
-across the shocks, namely $\delta u_L = \delta u \sin\theta$ and
-$\delta u_T = \delta u \cos\theta$, where $\theta$ is the angle
-between the shock line and the separation vector, we have predicted
-the values of ratios of structure functions $R_p(r) \equiv
-\mean{|\delta u_L|^p}/\mean{|\delta u_T|^p}$ and of the flatness
-factors $F_T/F_L = 1.5$.
-%
-% Very interestingly, the flatness factors computed from atmospheric
-% data \cite[]{Lindborg1999} are also very large with a slope close to
-% $-1$ and a ratio $F_T/F_L$ equal to $1.5 \pm 0.1$.
-%
-Finally, we have shown that as long as $k_f>k_d$, the dispersion added
-by the rotation does not prevent the production of the regime studied
-in the non-rotating case and only weakly modify the results on the
-wave cascade.
+%\section{Kinetic energy dissipation and forcing rates}
+%\label{app_comp}
+%\input{appendix_dissip_forcing}
 
 
-% In order to draw conclusions on the interpretation of turbulent
-% measurements in geophysical flows, we first have to stress that the
-% one-layer shallow-water model can only give insights on some
-% mechanisms important for geophysical fluids but is not suitable for
-% simulate the oceans and atmosphere.
-% %
-% Most of the simulations of theses systems are performed solving the
-% so-called primitive equations, which are (or in the atmospheric case
-% are very similar to) the Navier-Stokes equations under the Boussinesq
-% and the hydrostatic approximations.
-% %
-% We focus on the non-rotating case since it is a reasonable
-% approximation for the medium scales for which an energy cascade seems
-% to strongly influence the dynamics of geophysical flows, namely the
-% mesoscales in the atmosphere and the sub-mesoscales in the oceans.
-% %
-% The dominant balance for the primitive equations in the strongly
-% stratified and high Reynolds number limits corresponds to flows
-% structured in thin layers \cite[]{BillantChomaz2001}.
-% %
-% This layering, which has been widely observed in nature, is of course
-% inconsistent with the one-layer shallow-water model.
-% %
-% Another aspect of the dominant balance in the strongly stratified and
-% high Reynolds number case is that the energetic waves are not fast
-% compared to the balanced flows ($\omega_l \sim \omega_{nl}$), which is
-% very different from the case of the studied one-layer shallow-water
-% flows.
-% %
-% Moreover, the strongly stratified and high Reynolds number dominant
-% balance would corresponds in terms of the shallow-water Froude number
-% to $Fr \sim 1$.  This limit can not be correctly simulated even with a
-% multi-layer shallow-water model since when $Fr \sim 1$ the thickness
-% of the layers tends to reach the value 0 for which the shallow-water
-% models cease to be well defined.
-% %
-% Therefore, the shallow-water models are not suitable for simulating
-% the geophysical medium scales where the cascade is important.
-
-
-Our results on the dynamics of the wave energy cascade in the
-one-layer shallow-water model can yet give interesting informations on
-the interpretation of turbulent measurements in geophysical fluids.
-%
-Since we have shown in this case that many statistical results are
-dominated by the effects of the discontinuities due to shocks, we can
-conjecture that the discontinuities or front in the atmosphere can
-significantly influence the cascade processes and the statistical
-results.
-%
-It would be interesting in the future to quantity the effects of the
-processes of frontogenesis in terms of downscale energy cascade in
-geophysical flows.
-
-\section*{Acknowledgements}
-
-The authors thank Gregory Falkovich and Sergey Nazarenko for valuable
-comments and suggestions regarding the interpretation of the
-simulations.
-
-\appendix
-
-\section{Kinetic energy dissipation and forcing rates}
-\label{app_comp}
-\input{appendix_dissip_forcing}
 
 \bibliographystyle{jfm}
 \bibliography{biblio}
 
 \end{document}
-

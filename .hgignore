@@ -10,11 +10,10 @@ syntax: glob
 
 \#*\#
 
-Latex/article.pdf
-Latex/article.synctex.gz
+*.synctex.gz
 Latex/*.pdf
+Old_latex/*.pdf
 **/.ipynb_checkpoints
-Latex/ArticleNew.synctex.gz
 
 Python/output*.png
 Python/try_*

@@ -5,7 +5,10 @@ path := $(dir)/$(name)
 
 latex := cd $(dir) && pdflatex -synctex=1 $(name).tex
 
-latex_files :=
+latex_files := $(dir)/section_basic_theory.tex \
+  $(dir)/section_advanced_theory.tex $(dir)/section_methods.tex \
+  $(dir)/section_wave_cascade_f=0.tex $(dir)/section_rotation.tex \
+  $(dir)/appendix_dissip_forcing.tex
 
 figures := $(wildcard Pyfig/fig*.*)
 
