@@ -21,6 +21,7 @@ DPI = 300
 
 def get_font(size=10):
     _font = {'family': 'serif',
+             'serif': ['DejaVu Sans', 'Liberations Sans'],
              'weight': 'normal',
              'size': size,
              }
@@ -31,8 +32,8 @@ def matplotlib_rc(
         fontsize=7, dpi=DPI, tex=True, interactive=False, pad=2):
 
     # pl.rc('text', usetex=tex)
-    # _font = get_font(fontsize)
-    # pl.rc('font', **_font)
+    _font = get_font(fontsize)
+    pl.rc('font', **_font)
 
     rcparams.set_rcparams(fontsize)
     pl.rc('figure', dpi=dpi)

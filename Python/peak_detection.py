@@ -2,6 +2,8 @@ import os
 from peakutils import indexes
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
+from fluiddyn.io import stdout_redirected
 import fluidsim as fls
 from paths import paths_sim, paths_sim_old
 
@@ -20,7 +22,7 @@ def detect_shocks(sim, i0=None, i1=None, debug=False, **kwargs):
     # filter
     # height = (div1d.min(), np.median(div1d))
     # peaks, _ = find_peaks(div1d, height=height, **kwargs)
-    peaks = indexes(-div1d, thres=0.5, min_dist=3)
+    peaks = indexes(-div1d, thres=0.3, min_dist=3)
     if debug:
         # print("Height =", height)
         print(f"Detected {len(peaks)} peaks")
@@ -59,29 +61,35 @@ def avg_shock_seperation_from_shortname(
     short_name, save_as="dataframes/shock_sep.csv", dict_paths=paths_sim
 ):
     path = dict_paths[short_name]
-    sim = fls.load_state_phys_file(path, merge_missing_params=True)
+    with stdout_redirected():
+        sim = fls.load_state_phys_file(path, merge_missing_params=True)
     mean, std = avg_shock_seperation(sim)
     if not os.path.exists(save_as):
         with open(save_as, "a") as f:
-            result = "# short_name,\t path,\t mean,\t std\n"
+            result = "# short_name,path,mean,std\n"
             f.write(result)
 
     with open(save_as, "a") as f:
-        result = f"{short_name},\t {path},\t {mean}, \t {std}\n"
+        result = f"{short_name},{path},{mean},{std}\n"
         f.write(result)
     return mean, std
 
 
-def run(nh_min, nh_max=10_000):
-    df_all = load_df()
-    df = df[df["$n$" > nh_min] and df["$n$" < nh_max]]
+def run(nh_min, nh_max=10_000, df=None, save_as="dataframes/shock_sep.csv", dict_paths=paths_sim):
+    if df is None:
+        df = load_df()
+    df = df[(df["$n$"] > nh_min) & (df["$n$"] < nh_max)]
     for i in range(len(df)):
         short = df.iloc[i]["short name"]
-        print(paths_sim[short])
+        print(dict_paths[short])
 
     return (
         df["short name"]
-        .apply(avg_shock_seperation_from_shortname)
+        .apply(
+            avg_shock_seperation_from_shortname,
+            dict_paths=dict_paths,
+            save_as=save_as
+        )
         .apply(pd.Series)
     )
 

@@ -1,0 +1,4 @@
+# short_name,path,mean,std
+SW1Lwaves_noise_c=10_Bu=inf_beta=0.0_960x960_S50x50_2018-11-06_16-36-21,/scratch/avmo/data/laplacian/SW1Lwaves_noise_c=10_Bu=inf_beta=0.0_960x960_S50x50_2018-11-06_16-36-21,9.333434673538834,0.3160555825890471
+SW1Lwaves_noise_c=40_Bu=inf_beta=0.0_960x960_S50x50_2018-11-06_16-36-21,/scratch/avmo/data/laplacian/SW1Lwaves_noise_c=40_Bu=inf_beta=0.0_960x960_S50x50_2018-11-06_16-36-21,5.52458973445047,0.16310069880436145
+SW1Lwaves_noise_c=100_Bu=inf_beta=0.0_960x960_S50x50_2018-11-06_16-36-21,/scratch/avmo/data/laplacian/SW1Lwaves_noise_c=100_Bu=inf_beta=0.0_960x960_S50x50_2018-11-06_16-36-21,2.7166689249942353,0.04832554186154875

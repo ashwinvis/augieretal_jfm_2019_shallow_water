@@ -18,20 +18,20 @@ from make_fig_spectra import _mean_spectra
 # style = linestyles()
 
 
-def _label():
-    numerator = r'2 \nu_8 k^{8} k_d E(k) / \epsilon'
+def _label(o):
+    numerator = r'2 \nu_{0} k^{0} k_d E(k) / \epsilon'.format(o)
     return f"${numerator}$"
 
 
-def fig7_spectra(path, fig, ax, Fr, c, t_start, run_nb):
+def fig7_spectra(path, fig, ax, t_start, run_nb, nu_order=8):
     sim = fls.load_sim_for_plot(path, merge_missing_params=True)
     kh, E_tot, EK, EA = _mean_spectra(sim, t_start)
     eps = _eps(sim, t_start)
     k_d = _k_diss(sim.params)
 
 
-    o = 2
-    norm = (k_d * sim.params.nu_8 * kh**8)
+    nu = getattr(sim.params, f"nu_{nu_order}")
+    norm = (k_d * nu * kh**nu_order)
     color_list = sns.color_palette()
 
     kh_f = kh / k_d
@@ -44,7 +44,7 @@ def fig7_spectra(path, fig, ax, Fr, c, t_start, run_nb):
         kh_f, 2 * E_tot * norm / eps, # (2 * integral),
         c=color_list[run_nb],
         linewidth=1, 
-        # label=f'$c = {c}, n= {sim.params.oper.nx}$'
+        # label=f'$c = {sim.params.c2**0.5}, n= {sim.params.oper.nx}$'
         label=f'{kdiss_max}'
         # label=f'int={integral}'
     )
@@ -60,7 +60,7 @@ def fig7_spectra(path, fig, ax, Fr, c, t_start, run_nb):
     ax.set_xlim(0.6, 2.5) #2
 
     ax.set_xlabel('$k/k_d$')
-    ax.set_ylabel(_label())
+    ax.set_ylabel(_label(nu_order))
     # ax.legend()
     # rev_legend(ax, loc=1, fontsize=8)
 
@@ -69,9 +69,7 @@ def plot_df(df, fig, ax):
     for run_nb, (idx, row) in enumerate(df.iterrows()):
         short_name = row["short name"]
         tmin = row["$t_{stat}$"]
-        Fr = row["$F_f$"]
-        c = row["$c$"]
-        fig7_spectra(paths_sim[short_name], fig, ax, Fr, c, 
+        fig7_spectra(paths_sim[short_name], fig, ax, c, 
                      t_start=tmin,
                      run_nb=run_nb)
 
