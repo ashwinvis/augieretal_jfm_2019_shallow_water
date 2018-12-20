@@ -28,12 +28,11 @@ def detect_shocks(sim, i0=None, i1=None, debug=False, **kwargs):
         print(f"Detected {len(peaks)} peaks")
         plt.figure(dpi=150)
         x = sim.oper.x_seq
-        plt.plot(x, div1d_orig, "k", label="original div")
+        ax = plt if "ax" not in kwargs else kwargs["ax"]
+        ax.plot(x, div1d_orig, "k", label=f"c={int(sim.params.c2**0.5)}, n={int(sim.params.oper.nx)}")
         # plt.plot(div1d, 'g--', label="preprocessed div")
-        plt.plot(x[peaks], div1d[peaks], "x")
-        plt.xlabel("$x$")
-        plt.ylabel(r"$\nabla.\bf u$")
-        plt.legend()
+        ax.plot(x[peaks], div1d[peaks], "x")
+        ax.legend()
     else:
         return peaks
 

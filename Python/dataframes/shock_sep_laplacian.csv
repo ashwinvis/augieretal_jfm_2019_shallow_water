@@ -1,4 +1,11 @@
 # short_name,path,mean,std
-SW1Lwaves_noise_c=10_Bu=inf_beta=0.0_960x960_S50x50_2018-11-06_16-36-21,/scratch/avmo/data/laplacian/SW1Lwaves_noise_c=10_Bu=inf_beta=0.0_960x960_S50x50_2018-11-06_16-36-21,9.333434673538834,0.3160555825890471
-SW1Lwaves_noise_c=40_Bu=inf_beta=0.0_960x960_S50x50_2018-11-06_16-36-21,/scratch/avmo/data/laplacian/SW1Lwaves_noise_c=40_Bu=inf_beta=0.0_960x960_S50x50_2018-11-06_16-36-21,5.52458973445047,0.16310069880436145
-SW1Lwaves_noise_c=100_Bu=inf_beta=0.0_960x960_S50x50_2018-11-06_16-36-21,/scratch/avmo/data/laplacian/SW1Lwaves_noise_c=100_Bu=inf_beta=0.0_960x960_S50x50_2018-11-06_16-36-21,2.7166689249942353,0.04832554186154875
+SW1Lwaves_noise_c=10_Bu=inf_beta=0.0_960x960_S50x50_2018-11-06_16-36-21,/media/avmo/lacie/13KTH/noise_laplacian/SW1Lwaves_noise_c=10_Bu=inf_beta=0.0_960x960_S50x50_2018-11-06_16-36-21,9.333434673538834,0.3160555825890471
+SW1Lwaves_noise_c=40_Bu=inf_beta=0.0_960x960_S50x50_2018-11-06_16-36-21,/media/avmo/lacie/13KTH/noise_laplacian/SW1Lwaves_noise_c=40_Bu=inf_beta=0.0_960x960_S50x50_2018-11-06_16-36-21,5.52458973445047,0.16310069880436145
+SW1Lwaves_noise_c=100_Bu=inf_beta=0.0_960x960_S50x50_2018-11-06_16-36-21,/media/avmo/lacie/13KTH/noise_laplacian/SW1Lwaves_noise_c=100_Bu=inf_beta=0.0_960x960_S50x50_2018-11-06_16-36-21,2.7166689249942353,0.04832554186154875
+SW1Lwaves_noise_c=10_Bu=inf_beta=0.0_2880x2880_S50x50_2018-11-10_16-22-29,/media/avmo/lacie/13KTH/noise_laplacian/SW1Lwaves_noise_c=10_Bu=inf_beta=0.0_2880x2880_S50x50_2018-11-10_16-22-29,7.684006272717395,0.14843161877575345
+SW1Lwaves_noise_c=20_Bu=inf_beta=0.0_2880x2880_S50x50_2018-11-13_05-58-08,/media/avmo/lacie/13KTH/noise_laplacian/SW1Lwaves_noise_c=20_Bu=inf_beta=0.0_2880x2880_S50x50_2018-11-13_05-58-08,5.479425271375641,0.13179228685721192
+SW1Lwaves_noise_c=40_Bu=inf_beta=0.0_2880x2880_S50x50_2018-11-10_16-22-29,/media/avmo/lacie/13KTH/noise_laplacian/SW1Lwaves_noise_c=40_Bu=inf_beta=0.0_2880x2880_S50x50_2018-11-10_16-22-29,5.60500384741984,0.13281629995930455
+SW1Lwaves_noise_c=100_Bu=inf_beta=0.0_2880x2880_S50x50_2018-11-10_16-22-29,/media/avmo/lacie/13KTH/noise_laplacian/SW1Lwaves_noise_c=100_Bu=inf_beta=0.0_2880x2880_S50x50_2018-11-10_16-22-29,3.7252134964823447,0.12139346599845784
+SW1Lwaves_noise_c=200_Bu=inf_beta=0.0_2880x2880_S50x50_2018-11-13_05-58-08,/media/avmo/lacie/13KTH/noise_laplacian/SW1Lwaves_noise_c=200_Bu=inf_beta=0.0_2880x2880_S50x50_2018-11-13_05-58-08,1.9273983207896583,0.03377346044989045
+SW1Lwaves_noise_c=400_Bu=inf_beta=0.0_2880x2880_S50x50_2018-11-17_04-50-19,/media/avmo/lacie/13KTH/noise_laplacian/SW1Lwaves_noise_c=400_Bu=inf_beta=0.0_2880x2880_S50x50_2018-11-17_04-50-19,1.2319902809664875,0.011949722090571005
+SW1Lwaves_noise_c=700_Bu=inf_beta=0.0_2880x2880_S50x50_2018-11-17_04-50-19,/media/avmo/lacie/13KTH/noise_laplacian/SW1Lwaves_noise_c=700_Bu=inf_beta=0.0_2880x2880_S50x50_2018-11-17_04-50-19,1.1299715526124172,0.01210482856515196
