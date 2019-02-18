@@ -57,7 +57,7 @@ def keyparams_from_path(p):
 
 EFR = r'$\frac{<\bf \Omega_0 >}{{(P k_f^2)}^{2/3}}$'
 pd_columns = [
-    r'$n$', r'$c$', r'$\nu_8$', r'$f$', r'$\epsilon$', r'$\frac{k_{diss}}{k_f}$', 
+    r'$n$', r'$c$', r'$\nu_8$', r'$\nu_2$', r'$f$', r'$\epsilon$', r'$\frac{k_{diss}}{k_f}$', 
     r'$F_f$', r'$Ro_f$', r'$Bu$',
     # '$\min h$', r'$\frac{\max |\bf u|}{c}$',
     EFR, r'$E$',
@@ -87,7 +87,7 @@ def pandas_from_path(p, key, as_df=False):
     maxuc = 0
     # del sim
     gc.collect()
-    data = [nh, c, params.nu_8, params.f, eps, kd_kf,
+    data = [nh, c, params.nu_8, params.nu_2, params.f, eps, kd_kf,
          Fr, Ro, Bu,
          # minh, maxuc,
          efr, E,
@@ -131,6 +131,7 @@ def specific_paths_dict(patterns=('/noise/SW1L*NOISE2*', '/vortex_grid/SW1L*VG*'
 paths_sim = specific_paths_dict()
 paths_sim_old = specific_paths_dict(['/noise/SW1L*NOISE_*'])
 path_pyfig = os.path.join(os.path.dirname(__file__), '../Pyfig/')
+paths_lap = specific_paths_dict(['/laplacian_nupt1/*'])
 if not os.path.exists(path_pyfig):
     os.mkdir(path_pyfig)
 

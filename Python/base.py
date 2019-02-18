@@ -1,8 +1,13 @@
 from __future__ import print_function, division
 from warnings import warn
 import itertools
+import os
+
 import pylab as pl
 import numpy as np
+import pandas as pd
+import xarray as xr
+
 import seaborn as sns
 from scipy.optimize import curve_fit
 from scipy.signal import medfilt
@@ -15,9 +20,27 @@ from fluidsim.solvers.sw1l.output.spatial_means import SpatialMeansSW1L
 
 #from _try_dask_strfunc import strfunc_from_pdf3 as strfunc_from_pdf
 from fluidsim.base.output.increments import strfunc_from_pdf
+import fluidsim as fls
 
 DPI = 300
 
+
+def load_spatial_means(path, sim=None):
+    if sim is None and path:
+        if os.path.isdir(path):
+            path_txt = os.path.join(path, "spatial_means.txt")
+            path_json = os.path.join(path, "spatial_means.json")
+        try:
+            try:
+                return SpatialMeansSW1L._load(path_txt)
+            except AttributeError:
+                from fluidsim.solvers.sw1l.output.spatial_means import _old_load_txt
+                return _old_load_txt(path_txt)
+        except FileNotFoundError:
+            df = pd.read_json(path_json, orient="records", lines=True)
+            return xr.Dataset.from_dataframe(df)
+    else:
+        dico = sim.output.spatial_means.load()
 
 def get_font(size=10):
     _font = {'family': 'serif',
@@ -100,10 +123,7 @@ def _k_diss(params):
     return k_max / C / pl.pi  # FIXME: Not sure why the pi is needed
 
 def _eps(sim=None, t_start=0, path=None):
-    if sim is None and path is not None:
-        dico = SpatialMeansSW1L._load(path)
-    else:
-        dico = sim.output.spatial_means.load()
+    dico = load_spatial_means(path, sim)
     t = dico['t']
     ind = _index_where(t, t_start)
     eps = dico['epsK_tot'] + dico['epsA_tot']
@@ -112,10 +132,7 @@ def _eps(sim=None, t_start=0, path=None):
 
 def _t_stationary(sim=None, eps_percent=15, path=None):
     # Old function! Use epststmax instead
-    if sim is None and path is not None:
-        dico = SpatialMeansSW1L._load(path)
-    else:
-        dico = sim.output.spatial_means.load()
+    dico = load_spatial_means(path, sim)
     time = dico['t']
     epsilon = dico['epsK_tot'] + dico['epsA_tot']
     eps_end = epsilon[-1]
@@ -129,7 +146,7 @@ def _t_stationary(sim=None, eps_percent=15, path=None):
 
 
 def epsetstmax(path):
-    dico = SpatialMeansSW1L._load(path)
+    dico = load_spatial_means(path)
     time = dico['t']
     eps = dico['epsK_tot'] + dico['epsA_tot']
     E = dico['EK'] + dico['EA']
@@ -177,6 +194,11 @@ def epsetstmax(path):
 
 def locate_knee(time, eps_fit, eps_stat):
     from kneed import KneeLocator
+    
+    # cast as numpy arrays due to some bug with xarrays/pandas indexing
+    time = np.array(time)
+    eps_fit = np.array(eps_fit)
+    eps_stat = np.array(eps_stat)
 
     while not np.array_equal(time, np.sort(time)):
         idx_del = np.where(np.diff(time) < 0)[0] + 1
@@ -233,7 +255,7 @@ def step_info(t, yout, thresh_rise=10, thresh_settling=30):
     return result
 
 def epststmax_stepinfo(path):
-    dico = SpatialMeansSW1L._load(path)
+    dico = load_spatial_means(path)
     time = dico['t']
     eps = dico['epsK_tot'] + dico['epsA_tot']
     

@@ -63,10 +63,11 @@ def avg_shock_seperation_from_shortname(
     with stdout_redirected():
         sim = fls.load_state_phys_file(path, merge_missing_params=True)
     mean, std = avg_shock_seperation(sim)
+    
     if not os.path.exists(save_as):
         with open(save_as, "a") as f:
-            result = "# short_name,path,mean,std\n"
-            f.write(result)
+            heading = "# short_name,path,mean,std\n"
+            f.write(heading)
 
     with open(save_as, "a") as f:
         result = f"{short_name},{path},{mean},{std}\n"
@@ -74,7 +75,7 @@ def avg_shock_seperation_from_shortname(
     return mean, std
 
 
-def run(nh_min, nh_max=10_000, df=None, save_as="dataframes/shock_sep.csv", dict_paths=paths_sim):
+def run(nh_min, nh_max=10_000, df=None, save_as="dataframes/shock_sep.csv", dict_paths=paths_sim, overwrite=False):
     if df is None:
         df = load_df()
     df = df[(df["$n$"] > nh_min) & (df["$n$"] < nh_max)]
@@ -82,6 +83,9 @@ def run(nh_min, nh_max=10_000, df=None, save_as="dataframes/shock_sep.csv", dict
         short = df.iloc[i]["short name"]
         print(dict_paths[short])
 
+    if os.path.exists(save_as) and overwrite:
+        os.remove(save_as)
+        
     return (
         df["short name"]
         .apply(
