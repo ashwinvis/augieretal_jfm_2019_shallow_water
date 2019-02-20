@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 from fluiddyn.io import stdout_redirected
 import fluidsim as fls
-from paths import paths_sim, paths_sim_old, load_df
+from paths import paths_sim, paths_sim_old, paths_lap, load_df
 
 
 def detect_shocks(sim, i0=None, i1=None, debug=False, thres=0.3, **kwargs):
@@ -83,7 +83,7 @@ def avg_shock_seperation_from_shortname(
 
     if not os.path.exists(save_as):
         with open(save_as, "a") as f:
-            heading = "# short_name,path,mean,std\n"
+            heading = "short_name,path,mean,std\n"
             f.write(heading)
 
     with open(save_as, "a") as f:
@@ -124,11 +124,9 @@ if __name__ == "__main__":
             print(f"Skipping {short}")
             continue
 
-        # if short in paths_sim_old:
-        #     dict_paths = paths_sim_old
-        if short in paths_sim:
-            dict_paths = paths_sim
-        else:
+        # dict_paths = paths_sim_old
+        dict_paths = paths_sim
+        if short not in dict_paths:
             print(f"Cannot find {short}")
             continue
 
