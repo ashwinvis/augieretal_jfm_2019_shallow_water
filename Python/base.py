@@ -75,9 +75,9 @@ def set_figsize(*size):
     pl.rcParams['figure.figsize'] = tuple(size)
 
 def load_params(path):
-    if not path.endswith('.xml'):
-            path = os.path.join(path, 'params_simul.xml')
-    return ParamContainer(path_file=params_xml_path)
+    if os.path.isdir(path):
+        path = os.path.join(path, 'params_simul.xml')
+    return ParamContainer(path_file=path)
 
 def _index_where(arr, value, reverse=False):
     if not reverse:
@@ -106,8 +106,7 @@ def _delta_x(params):
 def _k_d(params):
     return params.f / params.c2 ** 0.5
 
-def _k_f(params=None):
-
+def _k_f(params):
     Lh = min(params.oper.Lx, params.oper.Ly)
     return 2 * pl.pi / Lh * ((params.forcing.nkmax_forcing +
                               params.forcing.nkmin_forcing) // 2)
