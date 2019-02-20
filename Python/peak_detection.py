@@ -9,7 +9,7 @@ import fluidsim as fls
 from paths import paths_sim, paths_sim_old, load_df
 
 
-def detect_shocks(sim, i0=None, i1=None, debug=False, thres=0.5, **kwargs):
+def detect_shocks(sim, i0=None, i1=None, debug=False, thres=0.3, **kwargs):
     div = sim.state.get_var("div")
     if i0 is not None:
         div1d = div[i0, :]
