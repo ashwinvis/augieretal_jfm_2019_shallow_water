@@ -55,6 +55,14 @@ def keyparams_from_path(p):
     else:
         return init_field, c, nh, Bu, params.preprocess.init_field_const
 
+def shortname_from_path(path):
+    init_field, c, nh, Bu, efr = keyparams_from_path(path)
+    if efr is None:
+        key = '{}_c{}nh{}Bu{}'.format(init_field, c, nh, Bu)
+    else:
+        key = '{}_c{}nh{}Bu{}efr{:.2e}'.format(init_field, c, nh, Bu, efr)
+    return key
+    
 EFR = r'$\frac{<\bf \Omega_0 >}{{(P k_f^2)}^{2/3}}$'
 pd_columns = [
     r'$n$', r'$c$', r'$\nu_8$', r'$\nu_2$', r'$f$', r'$\epsilon$', r'$\frac{k_{diss}}{k_f}$', 
@@ -107,12 +115,7 @@ def make_paths_dict(glob_pattern='SW1L*'):
     paths = glob(glob_pattern)
     paths_dict = OrderedDict()
     for p in sorted(paths):
-        init_field, c, nh, Bu, efr = keyparams_from_path(p)
-        if efr is None:
-            key = '{}_c{}nh{}Bu{}'.format(init_field, c, nh, Bu)
-        else:
-            key = '{}_c{}nh{}Bu{}efr{:.2e}'.format(init_field, c, nh, Bu, efr)
-
+        key = shortname_from_path(p)
         paths_dict[key] = p
 
     return paths_dict
