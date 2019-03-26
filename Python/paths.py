@@ -71,7 +71,7 @@ def shortname_from_path(path):
 EFR = r'$\frac{<\bf \Omega_0 >}{{(P k_f^2)}^{2/3}}$'
 pd_columns = [
     r'$n$', r'$c$', r'$\nu_8$', r'$\nu_2$', r'$f$', r'$\epsilon$', r'$\frac{k_{diss}}{k_f}$', 
-    r'$F_f$', r'$Ro_f$', r'$Bu$',
+    r'$F_f$', r'$Ro_f$', '$Re$', '$ReF_f^{2/3}$', r'$Bu$',
     # '$\min h$', r'$\frac{\max |\bf u|}{c}$',
     EFR, r'$E$',
     '$t_{stat}$', r'$t_{\max}$', 'short name'
@@ -86,14 +86,20 @@ def pandas_from_path(p, key, as_df=False):
     
     c = int(c)
     kf = _k_f(params)
+    Lf = np.pi / kf
     kd_kf = _k_diss(params) / kf
     # ts = _t_stationary(path=p)
     # eps = _eps(t_start=ts, path=p)
     eps, E, ts, tmax = epsetstmax(p)
     efr = params.preprocess.init_field_const
-    Fr = (eps / kf) ** (1./3) / c
+    if params.nu_2 > 0:
+        Re = eps * (1/3) * Lf ** (4/3) / params.nu_2
+    else:
+        Re = np.nan  # defined differently
+
+    Fr = (eps * Lf) ** (1./3) / c
     try:
-        Ro = (eps * kf**2) ** (1./3) / params.f
+        Ro = (eps / Lf**2) ** (1./3) / params.f
     except ZeroDivisionError:
         Ro = np.inf
     minh = 0
@@ -101,7 +107,7 @@ def pandas_from_path(p, key, as_df=False):
     # del sim
     gc.collect()
     data = [nh, c, params.nu_8, params.nu_2, params.f, eps, kd_kf,
-         Fr, Ro, Bu,
+         Fr, Ro, Re, Re * Fr**(2/3), Bu,
          # minh, maxuc,
          efr, E,
          ts, tmax, key
