@@ -8,7 +8,8 @@ from base import _k_f, set_figsize, matplotlib_rc, set_figsize, _index_where
 from paths import paths_sim, exit_if_figure_exists
 
 
-def fig_phys_subplot(sim, fig, ax, key_field, x_slice=None, y_slice=None, cmap='inferno'):
+def fig_phys_subplot(sim, fig, ax, key_field, x_slice=None, y_slice=None, cmap='inferno',
+                     vmin=None, vmax=None):
     kf = _k_f(sim.params)
     Lf = np.pi / kf
     X = sim.oper.x_seq / Lf
@@ -38,7 +39,6 @@ def fig_phys_subplot(sim, fig, ax, key_field, x_slice=None, y_slice=None, cmap='
     ax.set_xlabel('$x/L_f$')
     ax.set_ylabel('$y/L_f$')
     ax.set_rasterization_zorder(1)
-    vmin = vmax = None
     norm = None
     contours = ax.pcolormesh(
         X, Y, field, norm=norm, vmin=vmin, vmax=vmax, cmap=cmap, zorder=0)

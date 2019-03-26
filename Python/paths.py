@@ -39,6 +39,12 @@ def get_pathbase():
     return pathbase
 
 
+def params_from_path(p):
+    params_xml_path = os.path.join(p, 'params_simul.xml')
+    params = ParamContainer(path_file=params_xml_path)
+    return params
+
+
 def keyparams_from_path(p):
     c = re.search('(?<=c=)[0-9]*', p, re.X).group(0)
     nh = re.search('(?<=_)[0-9]*(?=x)', p).group(0)
@@ -47,8 +53,7 @@ def keyparams_from_path(p):
     except AttributeError:
         Bu = 'inf'
 
-    params_xml_path = os.path.join(p, 'params_simul.xml')
-    params = ParamContainer(path_file=params_xml_path)
+    params = params_from_path(p)
     init_field = params.init_fields.type
     if init_field == 'noise':
         return init_field, c, nh, Bu, None

@@ -23,7 +23,9 @@ if __name__ == '__main__':
     sim1 = fls.load_state_phys_file(paths_sim[short_names[1]], merge_missing_params=True)
     keys = ['div', 'uy', 'div', 'uy']
     for ax, sim, key_field in zip(axes.ravel(), [sim0, sim0, sim1, sim1], keys):
-        fig_phys_subplot(sim, fig, ax, key_field, x_slice=[0,3], y_slice=[0,3])
+        vmax = 10 if key_field == "div" else 3.5
+        vmin = -50 if key_field == "div" else -3.5
+        fig_phys_subplot(sim, fig, ax, key_field, x_slice=[0,3], y_slice=[0,3], vmax=vmax, vmin=vmin)
 
     label ={
         'h': 'h',
