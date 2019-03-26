@@ -155,21 +155,26 @@ def epsetstmax(path):
         def f(x, amptan, ttan):
             return amptan * pl.tanh(2 * (x / ttan)**4)
 
-        guesses = [pl.median(eps), time[eps==eps.max()]]
+        guesses = np.array([pl.median(eps), time[eps==eps.max()][0]])
     else:
         # def f(x, amptan, ttan, amplog, sigma):
         def f(x, amptan, ttan, amplog, tlog, sigma):
             return (amptan * pl.tanh(2 * (x/ttan)**4) +
                     amplog * stats.lognorm.pdf(x, scale=pl.exp(tlog), s=sigma))
 
-        guesses = {
-            'amptan': pl.median(eps),
-            'ttan': time[eps==eps.max()],
-            'amplog': eps.max(),
-            'tlog': time[eps==eps.max()],
-            'sigma': eps.std()
-        }
-        guesses = pl.array(list(guesses.values()), dtype=float)
+        guesses = np.array((
+            # amptan'
+            pl.median(eps),
+            # ttan'
+            time[eps==eps.max()],
+            # amplog
+            eps.max(),
+            # tlog
+            time[eps==eps.max()],
+            # sigma
+            eps.std()
+        ), dtype=float)
+        # guesses = pl.array(list(guessesd.values()), dtype=float)
 
     try:
         popt, pcov = curve_fit(f, time, eps, guesses, maxfev=3000)
