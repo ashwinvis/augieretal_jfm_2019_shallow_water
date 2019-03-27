@@ -93,7 +93,7 @@ def pandas_from_path(p, key, as_df=False):
     eps, E, ts, tmax = epsetstmax(p)
     efr = params.preprocess.init_field_const
     if params.nu_2 > 0:
-        Re = eps * (1/3) * Lf ** (4/3) / params.nu_2
+        Re = eps ** (1/3) * Lf ** (4/3) / params.nu_2
     else:
         Re = np.nan  # defined differently
 
