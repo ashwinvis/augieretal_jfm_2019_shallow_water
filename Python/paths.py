@@ -29,6 +29,8 @@ def get_pathbase():
             pathbase = '/scratch/avmo/13KTH/'
     elif os.getenv("SNIC_RESOURCE") == 'beskow':
         pathbase = '$SNIC_NOBACKUP/data/'
+    elif os.getenv("SNIC_RESOURCE") == 'tetralith':
+        pathbase = "/proj/kthmech/users/$USER/data/"
     else:
         raise ValueError('Unknown hostname')
 
@@ -137,7 +139,7 @@ def specific_paths_dict(patterns=('/noise/SW1L*NOISE2*', '/vortex_grid/SW1L*VG*'
     pathbase = get_pathbase()
 
     for pattern in patterns:
-        paths_dict.update(make_paths_dict(pathbase + pattern))
+        paths_dict.update(make_paths_dict(os.path.join(pathbase, pattern)))
 
     return paths_dict
 
@@ -145,7 +147,7 @@ def specific_paths_dict(patterns=('/noise/SW1L*NOISE2*', '/vortex_grid/SW1L*VG*'
 paths_sim = specific_paths_dict()
 paths_sim_old = specific_paths_dict(['/noise/SW1L*NOISE_*'])
 path_pyfig = os.path.join(os.path.dirname(__file__), '../Pyfig/')
-paths_lap = specific_paths_dict(['/laplacian_nupt1/*'])
+paths_lap = specific_paths_dict(['laplacian_nupt1/*'])
 if not os.path.exists(path_pyfig):
     os.mkdir(path_pyfig)
 

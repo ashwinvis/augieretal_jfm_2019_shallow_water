@@ -68,6 +68,7 @@ def avg_shock_seperation_from_shortname(
     t_approx=None,
 ):
     path = dict_paths[short_name]
+    print("Processing:", path)
     with stdout_redirected():
         # Need to load so because type_fft maybe set to use an MPI class
         params, Simul = fls.load_for_restart(path, t_approx, merge_missing_params=True)
