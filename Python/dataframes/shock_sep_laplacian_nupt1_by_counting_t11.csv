@@ -12,3 +12,9 @@ noise_c100nh960Buinf,/run/media/avmo/lacie/13KTH/laplacian_nupt1/SW1Lwaves_noise
 noise_c100nh2880Buinf,/run/media/avmo/lacie/13KTH/laplacian_nupt1/SW1Lwaves_noise_c=100_Bu=inf_beta=0.0_2880x2880_S50x50_2019-02-01_16-46-56,8.57242593238101,0.5645072503836709
 noise_c200nh960Buinf,/run/media/avmo/lacie/13KTH/laplacian_nupt1/SW1Lwaves_noise_c=200_Bu=inf_beta=0.0_960x960_S50x50_2019-02-01_16-44-55,2.0243686766958153,0.03213888900978758
 noise_c200nh2880Buinf,/run/media/avmo/lacie/13KTH/laplacian_nupt1/SW1Lwaves_noise_c=200_Bu=inf_beta=0.0_2880x2880_S50x50_2019-02-01_16-46-57,2.3683077645306936,0.10888290504419176
+noise_c20nh3840Buinf,/proj/kthmech/users/x_ashmo/data/laplacian_nupt1/SW1Lwaves_noise_c=20_Bu=inf_beta=0.0_3840x3840_S50x50_2019-03-30_06-40-06,13.151507397830928,0.49351468073335025
+noise_c20nh7680Buinf,/proj/kthmech/users/x_ashmo/data/laplacian_nupt1/SW1Lwaves_noise_c=20_Bu=inf_beta=0.0_7680x7680_S50x50_2019-03-29_05-49-36,13.59921894625842,0.5427459664623966
+noise_c40nh3840Buinf,/proj/kthmech/users/x_ashmo/data/laplacian_nupt1/SW1Lwaves_noise_c=40_Bu=inf_beta=0.0_3840x3840_S50x50_2019-03-29_05-41-12,11.306372442000896,0.5173785903151172
+noise_c40nh7680Buinf,/proj/kthmech/users/x_ashmo/data/laplacian_nupt1/SW1Lwaves_noise_c=40_Bu=inf_beta=0.0_7680x7680_S50x50_2019-03-29_05-55-36,11.24906591162106,0.4755529389931287
+noise_c100nh3840Buinf,/proj/kthmech/users/x_ashmo/data/laplacian_nupt1/SW1Lwaves_noise_c=100_Bu=inf_beta=0.0_3840x3840_S50x50_2019-03-29_05-42-55,6.454796795640322,0.4238856855652159
+noise_c200nh3840Buinf,/proj/kthmech/users/x_ashmo/data/laplacian_nupt1/SW1Lwaves_noise_c=200_Bu=inf_beta=0.0_3840x3840_S50x50_2019-03-29_05-43-35,3.427286497543256,0.26220954359856946

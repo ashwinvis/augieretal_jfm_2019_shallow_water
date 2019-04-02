@@ -4,9 +4,15 @@ from paths import paths_lap, load_df
 
 
 df = load_df("df_lap")
-df = df[np.logical_not((df["$n$"] == 960) | (df["$n$"] == 2880))]
+df = df[
+    np.logical_and(
+        df["$c$"] > 10,
+        np.logical_not((df["$n$"] == 960) | (df["$n$"] == 2880))
+    )
+]
 print(df)
-for t in range(24,26):
+# FIXME: t=12,21
+for t in range(22,26):
     print("Time:", t)
     run(
         nh_min=0,
