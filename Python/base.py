@@ -25,6 +25,28 @@ import fluidsim as fls
 DPI = 300
 
 
+def load_sim(path, coarse=True):
+    path = str(path)
+    params, Simul = fls.load_for_restart(path, merge_missing_params=True)
+    params.oper.type_fft = "default"  # Enforce
+    params.output.HAS_TO_SAVE = False
+    params.output.ONLINE_PLOT_OK = False
+    
+    params.ONLY_COARSE_OPER = coarse 
+    if coarse:
+        params.path_run = path
+        params.init_fields.type = "constant"
+        params.init_fields.modif_after_init = False
+        params.NEW_DIR_RESULTS = False
+
+    try:
+        params.preprocess.enable = False
+    except AttributeError:
+        pass
+
+    return Simul(params)
+
+
 def load_spatial_means(path, sim=None):
     if sim is None and path:
         if os.path.isdir(path):

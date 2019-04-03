@@ -4,29 +4,23 @@ import h5py
 import numpy as np
 import matplotlib.pyplot as plt
 import fluidsim as fls
-from base import _k_f, set_figsize, matplotlib_rc, set_figsize, _index_where
+from base import (
+    _k_f, set_figsize, matplotlib_rc, set_figsize, _index_where,
+    load_sim as load_sim_from_path
+)
 from paths import paths_lap as paths_sim, exit_if_figure_exists
 from make_fig_phys_fields_wave import fig_phys_subplot
 
 
-def load_sim(short_name):
-    params, Simul = fls.load_for_restart(
-        paths_sim[short_name], merge_missing_params=True)
-    params.oper.type_fft = "default"  # Enforce
-    params.output.HAS_TO_SAVE = False
-    params.output.ONLINE_PLOT_OK = False
-    params.ONLY_COARSE_OPER = False
-    return Simul(params)
+load_sim = lambda short_name: load_sim_from_path(paths_sim.get(short_name), coarse=False)
 
-# load_sim = lambda short_name: fls.load_state_phys_file(
-#     paths_sim.get(short_name), merge_missing_params=True)
- 
+
 if __name__ == '__main__':
     matplotlib_rc(fontsize=10)
     path_fig = exit_if_figure_exists(__file__, extension='.pdf')
     set_figsize(6.65, 5.8)
     fig, axes = plt.subplots(2, 2)
-    
+
     short_names = [
           'noise_c10nh960Buinf',   # WL1
           'noise_c10nh3840Buinf',  # WL5
