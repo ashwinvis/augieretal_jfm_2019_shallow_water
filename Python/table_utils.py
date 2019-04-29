@@ -37,10 +37,10 @@ def sort_reindex(df, prefix=None):
 
 from IPython import display
 
-def to_latex(df, strip_cols, filename=None):
+def to_latex(df, strip_cols, filename=None, **kwargs):
     df = df.drop(strip_cols, axis=1)
-            
-    output = df.to_latex(escape=False)
+
+    output = df.to_latex(escape=False, **kwargs)
 
     if filename == '':
         print(output)

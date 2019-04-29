@@ -63,6 +63,8 @@ def load_spatial_means(path, sim=None):
             return xr.Dataset.from_dataframe(df)
     else:
         dico = sim.output.spatial_means.load()
+        return dico
+
 
 def get_font(size=10):
     _font = {'family': 'serif',

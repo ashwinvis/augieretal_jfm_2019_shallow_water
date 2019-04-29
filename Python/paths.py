@@ -34,7 +34,7 @@ def get_pathbase():
     else:
         raise ValueError('Unknown hostname')
 
-    pathbase = os.path.abspath(os.path.expandvars(pathbase))
+    pathbase = os.path.abspath(os.path.expandvars(pathbase)).rstrip(os.path.sep)
     if not os.path.exists(pathbase):
         raise ValueError('Path not found ' + pathbase)
 
@@ -134,25 +134,26 @@ def make_paths_dict(glob_pattern='SW1L*'):
     return paths_dict
 
 
-def specific_paths_dict(patterns=('/noise/SW1L*NOISE2*', '/vortex_grid/SW1L*VG*')):
+def specific_paths_dict(patterns=('noise/SW1L*NOISE2*', 'vortex_grid/SW1L*VG*')):
     paths_dict = {}
     pathbase = get_pathbase()
 
     for pattern in patterns:
-        paths_dict.update(make_paths_dict(os.path.join(pathbase, pattern)))
+        glob_pattern = os.path.join(pathbase, pattern)
+        paths_dict.update(make_paths_dict(glob_pattern))
 
     return paths_dict
 
 
 paths_sim = specific_paths_dict()
-paths_sim_old = specific_paths_dict(['/noise/SW1L*NOISE_*'])
-path_pyfig = os.path.join(os.path.dirname(__file__), '../Pyfig/')
+paths_sim_old = specific_paths_dict(['noise/SW1L*NOISE_*'])
+path_pyfig = os.path.join(os.path.dirname(__file__), '../Pyfig_final/')
 paths_lap = specific_paths_dict(['laplacian_nupt1/*'])
 if not os.path.exists(path_pyfig):
     os.mkdir(path_pyfig)
 
 
-def exit_if_figure_exists(scriptname, extension='.png', override_exit=False):
+def exit_if_figure_exists(scriptname, extension='.eps', override_exit=False):
     scriptname = os.path.basename(scriptname)
     figname = os.path.splitext(scriptname)[0].lstrip('make_') + extension
     figpath = os.path.join(path_pyfig, figname)
