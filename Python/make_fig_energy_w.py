@@ -4,7 +4,7 @@ from paths import load_df, exit_if_figure_exists
 from base_fig_energy import plot_energy
 
 matplotlib_rc(fontsize=10)
-path_fig = exit_if_figure_exists(__file__, '.png')
+path_fig = exit_if_figure_exists(__file__)
 df_w = load_df("df_w")
 fig, ax = plt.subplots(1, 2, figsize=(6.5,3))
 plot_energy(df_w, fig, ax)

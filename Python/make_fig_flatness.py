@@ -27,8 +27,9 @@ def _ax_inset(fig, xlabel, left, bottom=0.6, width=0.35 / 2, height=0.45 / 4):
     return ax_inset
 
 
-def fig12_flatness(path, fig, ax, tmin=0, tmax=1000, delta_t=0.5, 
-                   key_var=('uy', 'ux'), run_nb=0, ax_inset=None, cache=False):
+def fig12_flatness(path, fig, ax, tmin=0, tmax=1000, delta_t=0.5,
+                   key_var=('uy', 'ux'), run_nb=0, ax_inset=None, cache=False,
+                   n_colors=10):
     sim = fls.load_sim_for_plot(path, merge_missing_params=True)
     order = [2, 4]
 
@@ -46,7 +47,7 @@ def fig12_flatness(path, fig, ax, tmin=0, tmax=1000, delta_t=0.5,
     _label = {'ux': 'F_L', 'uy': 'F_T'}
     L_f = pl.pi / _k_f(sim.params)
     # color_list = ['r', 'b', 'g', 'c', 'm', 'r', 'b']
-    color_list = sns.color_palette()
+    color_list = sns.color_palette(n_colors=n_colors)
     def get_F(key):
         So_4 = So_var_dict['{0}_{1:.0f}'.format(key, 4)]
         So_2 = So_var_dict['{0}_{1:.0f}'.format(key, 2)]
@@ -91,11 +92,12 @@ def plot_df(df, fig, ax, ax_inset):
         tmin = row["$t_{stat}$"]
         fig12_flatness(
             paths_sim[short_name], fig, ax_a, tmin=tmin, run_nb=run_nb,
-            key_var=('uy',), cache=test_mode
+            key_var=('uy',), cache=test_mode, n_colors=len(df)
         )
         fig12_flatness(
             paths_sim[short_name], fig, ax_b, tmin=tmin, run_nb=run_nb,
-            key_var=('uy', 'ux',), cache=test_mode, ax_inset=ax_inset
+            key_var=('uy', 'ux',), cache=test_mode, ax_inset=ax_inset,
+            n_colors=len(df)
         )
         if test_mode:
             break

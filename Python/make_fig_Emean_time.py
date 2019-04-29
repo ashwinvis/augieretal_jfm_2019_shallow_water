@@ -109,7 +109,7 @@ def get_legend_and_paths(c_list, nh_list):
 
 if __name__ == "__main__":
     matplotlib_rc(fontsize)
-    path_fig = exit_if_figure_exists(__file__, ".png", override_exit=False)
+    path_fig = exit_if_figure_exists(__file__, override_exit=False)
     set_figsize(5.12, 3.0)
     fig1_plot_all(paths_sim)
     pl.savefig(path_fig)

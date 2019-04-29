@@ -60,7 +60,7 @@ def _mean_spectra(sim, tmin=0, tmax=1000):
     return kh, E_tot, EK, EA
 
 
-def fig7_spectra(path, fig, ax, Fr, c, t_start, run_nb):
+def fig7_spectra(path, fig, ax, Fr, c, t_start, run_nb, n_colors=10):
     sim = fls.load_sim_for_plot(path, merge_missing_params=True)
     kh, E_tot, EK, EA = _mean_spectra(sim, t_start)
     eps = _eps(sim, t_start)
@@ -73,7 +73,7 @@ def fig7_spectra(path, fig, ax, Fr, c, t_start, run_nb):
     o = 2
     L_f = pl.pi / k_f
     norm = (L_f * Fr**0.5)**(o / 3 - 1) * eps**(o/3) * kh**-2
-    color_list = sns.color_palette()
+    color_list = sns.color_palette(n_colors=n_colors)
 
     kh_f = kh / k_f
     ax.plot(
@@ -113,7 +113,9 @@ def plot_df(df, fig, ax):
         c = row["$c$"]
         fig7_spectra(paths_sim[short_name], fig, ax, Fr, c, 
                      t_start=tmin,
-                     run_nb=run_nb)
+                     run_nb=run_nb,
+                     n_colors=len(df)
+                     )
 
 
 if __name__ == '__main__':

@@ -34,25 +34,26 @@ def _label(key='ux', odr=5):
 def fig_struct_order(
     path, fig, ax, eps, Fr, order=[2, 4, 6], tmin=10, tmax=1000,
     delta_t=0.5, key="ux",
-    run_nb = 0, label_func=None, coeff=1, ylabel=True, test=False
+    run_nb = 0, label_func=None, coeff=1, ylabel=True, test=False,
+    n_colors=10,
 ):
     sim = fls.load_sim_for_plot(path, merge_missing_params=True)
     rxs, So_var_dict, deltax = _rxs_str_func(
         sim, order, tmin, tmax, delta_t, [key],
         cache=test
     )
-    
+
     for ax1 in ax:
         ax1.set_xlabel('$r/L_f$')
         ax1.set_xscale('log')
         ax1.set_yscale('log')
     if label_func is None:
         label_func = _label
-    
+
     L_f = np.pi / _k_f(sim.params)
 
-    #color_list = ['r', 'b', 'g', 'c', 'm', 'y', 'k']
-    color_list = sns.color_palette()
+    #  color_list = ['r', 'b', 'g', 'c', 'm', 'y', 'k']
+    color_list = sns.color_palette(n_colors=n_colors)
     if coeff == "1/c":
        coeff = 1 / sim.params.c2 ** 0.5
     elif coeff == "c":
@@ -72,6 +73,7 @@ def fig_struct_order(
             ax1.set_ylim([1e-1, 8])
         ax1.set_xlim([1e-3, 2])
 
+
 def plot_df(df, fig, ax, **kwargs):
     for run_nb, (idx, values) in enumerate(df.iterrows()):
         run = values["short name"]
@@ -79,7 +81,8 @@ def plot_df(df, fig, ax, **kwargs):
         Fr = values["$F_f$"]
         tmin = values["$t_{stat}$"]
         fig_struct_order(
-            paths_sim[run], fig, ax, eps, Fr, tmin=tmin, run_nb=run_nb, **kwargs)
+            paths_sim[run], fig, ax, eps, Fr, tmin=tmin, run_nb=run_nb,
+            n_colors=len(df), **kwargs)
         if "test" in kwargs and kwargs["test"] and run_nb == 1:
             break
 
@@ -87,7 +90,7 @@ def plot_df(df, fig, ax, **kwargs):
 if __name__ == '__main__':
     matplotlib_rc(fontsize=9)
 
-    path_fig = exit_if_figure_exists(__file__, '.png')
+    path_fig = exit_if_figure_exists(__file__)
     fig, ax = plt.subplots(3, 2, figsize=(5, 6),
                            sharex=True, sharey=False)
     # ax[0,0].set_title('$n=3840$')

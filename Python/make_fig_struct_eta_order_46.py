@@ -30,7 +30,7 @@ def _label(key='eta', odr=5):
 if __name__ == '__main__':
     matplotlib_rc(fontsize=9)
 
-    path_fig = exit_if_figure_exists(__file__, '.png')
+    path_fig = exit_if_figure_exists(__file__)
     fig, ax = plt.subplots(2, 2, figsize=(5, 4.2),
                            sharex=True, sharey=False)
 

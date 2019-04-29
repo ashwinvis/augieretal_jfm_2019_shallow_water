@@ -17,15 +17,15 @@ load_sim = lambda short_name: load_sim_from_path(paths_sim.get(short_name), coar
 
 if __name__ == '__main__':
     matplotlib_rc(fontsize=10)
-    path_fig = exit_if_figure_exists(__file__, extension='.pdf')
+    path_fig = exit_if_figure_exists(__file__)
     set_figsize(6.65, 5.8)
     fig, axes = plt.subplots(2, 2)
 
     short_names = [
           'noise_c10nh960Buinf',   # WL1
-          'noise_c10nh3840Buinf',  # WL5
-          'noise_c200nh960Buinf',   # WL12
-          'noise_c200nh2880Buinf',  # WL13
+          'noise_c10nh2880Buinf',  # WL3
+          'noise_c200nh960Buinf',   # WL17
+          'noise_c200nh2880Buinf',  # WL18
     ]
 #         'noise_c20nh2880Buinf',  # WL7
 #         'noise_c200nh2880Buinf'  # WL13
@@ -40,9 +40,11 @@ if __name__ == '__main__':
         vmax = 10 if key_field == "div" else 3.5
         vmin = -50 if key_field == "div" else -3.5
         fig_phys_subplot(
-            sim, fig, ax, key_field, x_slice=[0,3], y_slice=[0,3], vmax=vmax, vmin=vmin
+            sim, fig, ax, key_field, x_slice=[0,3.01], y_slice=[0,3.01], vmax=vmax, vmin=vmin
         )
         sim.output.close_files()
+        ax.set_xticks(np.arange(0, 4.))
+        ax.set_yticks(np.arange(0, 4.))
 
     label ={
         'h': 'h',

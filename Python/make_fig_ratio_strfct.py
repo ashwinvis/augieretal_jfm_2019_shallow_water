@@ -52,7 +52,7 @@ def fig11_ratio_struct(path, fig, ax1, order=[2, 3, 4, 5], tmin=0, tmax=1000,
 if __name__ == '__main__':
     sns.set_palette("cubehelix", 5)
     matplotlib_rc(11)
-    path_fig = exit_if_figure_exists(__file__, '.png')
+    path_fig = exit_if_figure_exists(__file__)
     set_figsize(5, 3)
     fig, ax = pl.subplots()
     fig11_ratio_struct(

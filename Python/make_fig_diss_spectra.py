@@ -69,7 +69,7 @@ def plot_df(df, fig, ax):
     for run_nb, (idx, row) in enumerate(df.iterrows()):
         short_name = row["short name"]
         tmin = row["$t_{stat}$"]
-        fig7_spectra(paths_sim[short_name], fig, ax, c, 
+        fig7_spectra(paths_sim[short_name], fig, ax,
                      t_start=tmin,
                      run_nb=run_nb)
 

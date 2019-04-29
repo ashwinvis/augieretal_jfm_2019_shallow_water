@@ -31,7 +31,7 @@ def _label(key='ux', odr=5):
 
 if __name__ == '__main__':
     matplotlib_rc(fontsize=9)
-    path_fig = exit_if_figure_exists(__file__, '.png')
+    path_fig = exit_if_figure_exists(__file__)
     fig, ax = plt.subplots(1, 2, figsize=(5, 2.2), sharey=True)
 
     df_w = load_df("df_w")
