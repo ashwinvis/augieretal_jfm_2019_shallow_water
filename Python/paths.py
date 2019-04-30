@@ -9,6 +9,7 @@ import pandas as pd
 import numpy as np
 
 from fluiddyn.util.paramcontainer import ParamContainer
+from fluiddyn.util import modification_date
 from fluiddyn.io.redirect_stdout import stdout_redirected
 
 import fluidsim as fls
@@ -37,6 +38,8 @@ def get_pathbase():
     pathbase = os.path.abspath(os.path.expandvars(pathbase)).rstrip(os.path.sep)
     if not os.path.exists(pathbase):
         raise ValueError('Path not found ' + pathbase)
+    elif not len(os.listdir(pathbase)):
+        raise IOError("Path seems to be empty" + pathbase)
 
     return pathbase
 
@@ -149,6 +152,9 @@ paths_sim = specific_paths_dict()
 paths_sim_old = specific_paths_dict(['noise/SW1L*NOISE_*'])
 path_pyfig = os.path.join(os.path.dirname(__file__), '../Pyfig_final/')
 paths_lap = specific_paths_dict(['laplacian_nupt1/*'])
+if 'noise_c40nh7680Buinf' in paths_sim:
+    del paths_sim['noise_c40nh7680Buinf']  # dissipation != 1
+
 if not os.path.exists(path_pyfig):
     os.mkdir(path_pyfig)
 
@@ -162,12 +168,16 @@ def exit_if_figure_exists(scriptname, extension='.eps', override_exit=False):
         os.remove(figpath)
 
     if os.path.exists(figpath) and not override_exit:
-        print('Figure {} already made. {} exiting...'.format(figname, scriptname))
-        sys.exit(0)
-    else:
-        print('Making Figure {}.. '.format(figname))
-        return figpath
+        if (
+            # figure is outdated
+            modification_date(scriptname) < modification_date(figpath)
+        ):
+            print('Figure {} already made. {} exiting...'.format(figname, scriptname))
+            sys.exit(0)
+
+    print('Making Figure {}.. '.format(figname))
+    return figpath
 
 
 def load_df(name="df_w"):
-    return pd.read_csv(f"dataframes/{name}.csv", index_col=0)
+    return pd.read_csv(f"dataframes/{name}.csv", index_col=0, comment="#")

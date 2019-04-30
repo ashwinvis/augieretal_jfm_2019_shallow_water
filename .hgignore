@@ -18,6 +18,7 @@ Old_latex/*.pdf
 
 Python/output*.png
 Python/try_*
+Pyfig_final/*
 
 *.log
 *.aux
