@@ -73,11 +73,6 @@ for df, paths_dict in ((df_w, paths_sim), (df_lap, paths_lap)):
 
 
 
-# Make zip files
-output_dir = (Path.cwd() / "zenodo").absolute()
-os.makedirs(output_dir, exist_ok=True)
-
-
 def zip_dir(in_dir, out_file, files):
     with zipfile.ZipFile(out_file, 'w', zipfile.ZIP_DEFLATED) as zipf:
         for f in files:
@@ -87,7 +82,7 @@ def zip_dir(in_dir, out_file, files):
     print("Done!")
 
 
-def zip_from_df(run, short_name, paths_dict):
+def zip_from_df(run, short_name, paths_dict, output_dir):
     # print("Making zip file for", short_name)
     state_files = ls(short_name, paths_dict, only_state_file)
     light_files = ls(short_name, paths_dict, not_state_file)
@@ -103,6 +98,17 @@ def zip_from_df(run, short_name, paths_dict):
     # sys.exit(0)
 
 
-for df, paths_dict in ((df_w, paths_sim), (df_lap, paths_lap)):
-    df.apply(lambda row: zip_from_df(row.name, row["short name"], paths_dict),
-             axis=1)
+
+if __name__ == "__main__":
+    # Make zip files
+    output_dir = (Path.cwd() / "zenodo").absolute()
+    os.makedirs(output_dir, exist_ok=True)
+
+
+    for df, paths_dict in ((df_w, paths_sim), (df_lap, paths_lap)):
+        df.apply(
+            lambda row: zip_from_df(
+                row.name, row["short name"], paths_dict, output_dir
+            ),
+            axis=1
+        )
