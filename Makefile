@@ -55,3 +55,6 @@ listfig:
 		pandoc -f latex -t rst | \
 	       	awk 'BEGIN{RS="\n\n"; print "List of Figures\n===============\n"} /\.\. figure/{print $1; print "\n";}' | \
        		sed '/\.\.\ figure/ s/$$/.png/' > ../Pyfig/README.rst
+
+test:
+	FLUID_COMPILE_CACHEDJIT=1 TRANSONIC_COMPILE_JIT=1 TRANSONIC_DEBUG=1 fluidsim-test -m solvers.sw1l.onlywaves
