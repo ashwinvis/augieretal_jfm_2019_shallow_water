@@ -4,7 +4,7 @@ import zipfile
 from pprint import pprint
 from pathlib import Path
 from paths import paths_sim, paths_lap
-from table_utils import load_df
+from table_utils import load_df, sort_reindex
 
 
 # Conditions on pathlib.Path objects
@@ -38,8 +38,11 @@ def get_num_files(short_name, paths_dict):
     return len(ls(short_name, paths_dict, condition=lambda f:True))
 
 
-df_w = load_df("df_w")
-df_lap = load_df("df_lap")
+def load(csv, prefix):
+    return sort_reindex(load_df(csv), prefix, zerofill=True)
+
+df_w = load("df_w", "W")
+df_lap = load("df_lap", "WL")
 
 for df, paths_dict in ((df_w, paths_sim), (df_lap, paths_lap)):
     print(df)
@@ -74,6 +77,9 @@ for df, paths_dict in ((df_w, paths_sim), (df_lap, paths_lap)):
 
 
 def zip_dir(in_dir, out_file, files):
+    if os.path.exists(out_file):
+        print("File exists")
+        return
     with zipfile.ZipFile(out_file, 'w', zipfile.ZIP_DEFLATED) as zipf:
         for f in files:
             # arc = f.name
@@ -105,7 +111,10 @@ if __name__ == "__main__":
     os.makedirs(output_dir, exist_ok=True)
 
 
-    for df, paths_dict in ((df_w, paths_sim), (df_lap, paths_lap)):
+    for df, paths_dict in (
+            (df_w, paths_sim),
+            (df_lap, paths_lap),
+    ):
         df.apply(
             lambda row: zip_from_df(
                 row.name, row["short name"], paths_dict, output_dir

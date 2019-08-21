@@ -25,10 +25,13 @@ def clean_up(df):
     df = df[df["$t_{stat}$"] < 0.8 * df["$t_{\max}$"]]
     return df
 
-def sort_reindex(df, prefix=None):
+def sort_reindex(df, prefix=None, zerofill=False):
     df = df.sort_values(by=[r'$c$', r'$n$', r'$Bu$', EFR])
     if prefix is not None:
-        df.index = ['{}{}'.format(prefix, i) for i in range(1,len(df) + 1)]
+        if zerofill:
+            df.index = ['{}{}'.format(prefix, str(i).zfill(2)) for i in range(1,len(df) + 1)]
+        else:
+            df.index = ['{}{}'.format(prefix, i) for i in range(1,len(df) + 1)]
     else:
         df.index = range(1,len(df) + 1)
     # df = df.reindex(range(1,len(df) + 1))
