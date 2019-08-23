@@ -4,6 +4,7 @@ import os
 import itertools
 from pathlib import Path
 from zipfile import ZipFile
+from concurrent.futures import ThreadPoolExecutor as Pool
 import hashlib
 
 
@@ -27,14 +28,22 @@ def md5(filename):
     return md5.hexdigest()
 
 
+def info(filename):
+    with ZipFile(filename) as zipf:
+        return (
+            os.path.basename(zipf.filename),  # Zip file
+            os.path.split(zipf.namelist()[0])[0],  # First and only directory
+            # md5(filename)  # Checksum slow
+        )
+        # Uncomment to see all contents
+        # zipf.printdir()
+
+
 for prefix in ("W", "WL"):
-    for filename in all_files(prefix):
-        with ZipFile(filename) as zipf:
-            print(
-                os.path.basename(zipf.filename),  # Zip file
-                os.path.split(zipf.namelist()[0])[0],  # First and only directory
-                md5(filename)  # Checksum slow
-            )
-            # Uncomment to see all contents
-            # zipf.printdir()
+    with Pool() as pool:
+        files = all_files(prefix)
+        results = pool.map(info, files)
+
+    results = (' '.join(r) for r in results)
+    print('\n'.join(sorted(results)))
     print()
