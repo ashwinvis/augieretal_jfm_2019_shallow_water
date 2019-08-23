@@ -39,11 +39,12 @@ def info(filename):
         # zipf.printdir()
 
 
-for prefix in ("W", "WL"):
-    with Pool() as pool:
-        files = all_files(prefix)
-        results = pool.map(info, files)
+if __name__ == "__main__":
+    for prefix in ("W", "WL"):
+        with Pool() as pool:
+            files = all_files(prefix)
+            results = pool.map(info, files)
 
-    results = (' '.join(r) for r in results)
-    print('\n'.join(sorted(results)))
-    print()
+        results = (' '.join(r) for r in results)
+        print('\n'.join(sorted(results)))
+        print()

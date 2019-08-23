@@ -3,8 +3,10 @@ import sys
 import re
 import gc
 from glob import glob
+from pathlib import Path
 from socket import gethostname
 from collections import OrderedDict
+
 import pandas as pd
 import numpy as np
 
@@ -33,7 +35,7 @@ def get_pathbase():
     elif os.getenv("SNIC_RESOURCE") == 'tetralith':
         pathbase = "/proj/kthmech/users/$USER/data/"
     else:
-        raise ValueError('Unknown hostname')
+        pathbase = Path(__file__).parent / "dataset"
 
     pathbase = os.path.abspath(os.path.expandvars(pathbase)).rstrip(os.path.sep)
     if not os.path.exists(pathbase):
