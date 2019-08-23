@@ -27,3 +27,11 @@ Produce figure with Python.
 - make help
 
 Display the README.rst file.
+
+|license| This work is licensed under a
+`Creative Commons Attribution 4.0 International License
+<http://creativecommons.org/licenses/by/4.0/>`_.
+
+.. |license| image:: https://i.creativecommons.org/l/by/4.0/80x15.png
+   :target: http://creativecommons.org/licenses/by/4.0/
+   :alt: CC-BY-4.0
