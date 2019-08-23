@@ -29,7 +29,7 @@ async def run(path):
     if BLOCK:
         stdout, stderr = await proc.communicate()
         if stdout or stderr:
-            print(f'[{path!r} exited with {proc.returncode}]')
+            print(f"[{path!r} exited with {proc.returncode}]")
         else:
             await asyncio.sleep(1)
 
@@ -38,7 +38,10 @@ async def copy(pyfig, figname, fig_num):
     output = (pyfig / (figname + ".eps")).absolute()
     dest = pyfig / f"fig{fig_num}.eps"
     if output.exists():
-        if not dest.exists() or (dest.exists() and (modification_date(output) < modification_date(dest))):
+        if not dest.exists() or (
+            dest.exists()
+            and (modification_date(output) < modification_date(dest))
+        ):
             return shutil.copyfile(output, dest)
 
     await asyncio.sleep(1)

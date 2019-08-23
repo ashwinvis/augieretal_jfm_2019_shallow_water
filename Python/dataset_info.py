@@ -13,18 +13,21 @@ ls = lambda pattern: sorted(cwd.glob(pattern))
 
 
 def all_files(prefix="W"):
-    return itertools.chain(ls(f"{prefix}[0-9].zip"), ls(f"{prefix}[0-9][0-9].zip"))
+    return itertools.chain(
+        ls(f"{prefix}[0-9].zip"), ls(f"{prefix}[0-9][0-9].zip")
+    )
 
 
 def md5(filename):
     md5 = hashlib.md5()
+
     def update(chunk):
         md5.update(chunk)
 
-    with open(filename,'rb') as f:
-        chunks = iter(lambda: f.read(8192), b'')
+    with open(filename, "rb") as f:
+        chunks = iter(lambda: f.read(8192), b"")
         for chunk in chunks:
-             update(chunk)
+            update(chunk)
     return md5.hexdigest()
 
 
@@ -45,6 +48,6 @@ if __name__ == "__main__":
             files = all_files(prefix)
             results = pool.map(info, files)
 
-        results = (' '.join(r) for r in results)
-        print('\n'.join(sorted(results)))
+        results = (" ".join(r) for r in results)
+        print("\n".join(sorted(results)))
         print()

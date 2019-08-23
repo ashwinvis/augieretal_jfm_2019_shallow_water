@@ -32,7 +32,7 @@ def fig1_plot_all(paths):
 
         def count_matches_nh(it):
             print(len(count_nh))
-            
+
             count_nh.pop()
             return len(count_nh) > len(nh_list)
 
@@ -47,13 +47,28 @@ def fig1_plot_all(paths):
 
             legend, paths = get_legend_and_paths([c], [nh])
             fig1_energy(
-                paths, fig, ax, legend=legend, t_start=30., linestyle=style, normalized=normalized)
-            
+                paths,
+                fig,
+                ax,
+                legend=legend,
+                t_start=30.0,
+                linestyle=style,
+                normalized=normalized,
+            )
+
     ax_settings(ax, normalized)
-    fig.tight_layout() # pad=2.3)
+    fig.tight_layout()  # pad=2.3)
 
 
-def fig1_energy(paths, fig=None, ax=None, t_start=0., legend=None, linestyle=None, normalized=False):
+def fig1_energy(
+    paths,
+    fig=None,
+    ax=None,
+    t_start=0.0,
+    legend=None,
+    linestyle=None,
+    normalized=False,
+):
     # fig.subplots_adjust(right=0.78)
 
     if legend is None:
@@ -70,22 +85,26 @@ def fig1_energy(paths, fig=None, ax=None, t_start=0., legend=None, linestyle=Non
         E = dico["E"]
         t = dico["t"]
         if normalized:
-            E_f = (P0 * L_f) ** (2. / 3)
-            T_f = (P0 / L_f ** 2) ** (-1. / 3)
+            E_f = (P0 * L_f) ** (2.0 / 3)
+            T_f = (P0 / L_f ** 2) ** (-1.0 / 3)
             E = E / E_f
             t = t / T_f
-            print("{}\teps={}\tk_f={}\tE_f={}\tT_f={}".format(label, P0, k_f, E_f, T_f))
+            print(
+                "{}\teps={}\tk_f={}\tE_f={}\tT_f={}".format(
+                    label, P0, k_f, E_f, T_f
+                )
+            )
 
         label = legend[i]
 
-        ax.plot(t, E, linestyle, linewidth=1., label=label)
+        ax.plot(t, E, linestyle, linewidth=1.0, label=label)
 
     # ax.text(t.max(), E.max(), label)
 
 
 def ax_settings(ax, normalized):
-    ax.set_xlim([0., None])
-    ax.set_ylim([0., None])
+    ax.set_xlim([0.0, None])
+    ax.set_ylim([0.0, None])
     if normalized:
         ax.set_xlabel("$t (\epsilon/L_f^2)^{1/3}$")
         # ax.set_ylabel("$E/E_f$")

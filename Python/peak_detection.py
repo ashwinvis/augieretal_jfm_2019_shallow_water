@@ -31,8 +31,10 @@ def detect_shocks(sim, i0=None, i1=None, debug=False, thres=0.3, **kwargs):
         x = sim.oper.x_seq
         ax = plt if "ax" not in kwargs else kwargs["ax"]
         ax.plot(
-            x, div1d_orig, "k",
-            label=f"c={int(sim.params.c2**0.5)}, n={int(sim.params.oper.nx)}"
+            x,
+            div1d_orig,
+            "k",
+            label=f"c={int(sim.params.c2**0.5)}, n={int(sim.params.oper.nx)}",
         )
         # plt.plot(div1d, 'g--', label="preprocessed div")
         ax.plot(x[peaks], div1d[peaks], "x")
@@ -51,6 +53,7 @@ def avg_shock_seperation_1d(sim, i0=None, i1=None):
     # dx_peaks = np.diff(x_peaks)
     # return dx_peaks.mean()
 
+
 def avg_shock_seperation(sim, num_samples=200, averaged=True, ci=0.95):
     ds = []
     for i in np.linspace(0, sim.oper.nx_seq - 1, num_samples, dtype=int):
@@ -64,14 +67,18 @@ def avg_shock_seperation(sim, num_samples=200, averaged=True, ci=0.95):
 
 
 def avg_shock_seperation_from_shortname(
-    short_name, save_as="dataframes/shock_sep.csv", dict_paths=paths_sim,
+    short_name,
+    save_as="dataframes/shock_sep.csv",
+    dict_paths=paths_sim,
     t_approx=None,
 ):
     path = dict_paths[short_name]
     print("Processing:", path)
     with stdout_redirected():
         # Need to load so because type_fft maybe set to use an MPI class
-        params, Simul = fls.load_for_restart(path, t_approx, merge_missing_params=True)
+        params, Simul = fls.load_for_restart(
+            path, t_approx, merge_missing_params=True
+        )
         params.output.HAS_TO_SAVE = False
         params.output.ONLINE_PLOT_OK = False
         params.ONLY_COARSE_OPER = False
@@ -93,8 +100,15 @@ def avg_shock_seperation_from_shortname(
     return mean, std
 
 
-def run(nh_min, nh_max=10_000, df=None, save_as="dataframes/shock_sep.csv",
-        dict_paths=paths_sim, t_approx=None, overwrite=False):
+def run(
+    nh_min,
+    nh_max=10_000,
+    df=None,
+    save_as="dataframes/shock_sep.csv",
+    dict_paths=paths_sim,
+    t_approx=None,
+    overwrite=False,
+):
     if df is None:
         df = load_df()
     df = df[(df["$n$"] > nh_min) & (df["$n$"] < nh_max)]
@@ -132,7 +146,6 @@ if __name__ == "__main__":
             continue
 
         mean, std = avg_shock_seperation_from_shortname(
-            short, dict_paths=dict_paths,
-            save_as="dataframes/shock_sep_new.csv"
+            short, dict_paths=dict_paths, save_as="dataframes/shock_sep_new.csv"
         )
         print(f"mean = {mean}, std = {std}")

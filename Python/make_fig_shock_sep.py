@@ -1,4 +1,3 @@
-
 # Load cached data
 
 import pandas as pd
@@ -18,7 +17,9 @@ df_shock_sep.set_index("short_name", inplace=True)
 df.head()
 
 
-sim = fs.load_sim_for_plot(paths_sim[df_shock_sep.iloc[0].name], merge_missing_params=True)
+sim = fs.load_sim_for_plot(
+    paths_sim[df_shock_sep.iloc[0].name], merge_missing_params=True
+)
 Lf = np.pi / _k_f(sim.params)
 
 df["shock separation"] = df_shock_sep["mean"] / Lf
@@ -29,14 +30,17 @@ fig, ax = plt.subplots(figsize=(5, 3))
 mark = markers()
 for n, grp in df.groupby("$n$"):
     ax.scatter(
-        r'$F_f$', 'shock separation',
+        r"$F_f$",
+        "shock separation",
         marker=next(mark),
         # kind="scatter", loglog=True, ax=ax
-        data=grp, label=f"$n={n}$")
+        data=grp,
+        label=f"$n={n}$",
+    )
 
 
-uniq_F_f = np.array(sorted(set(df[r'$F_f$'])))
-ax.loglog(uniq_F_f, 1.5 * np.pi * uniq_F_f ** 0.5, 'k:', label="")
+uniq_F_f = np.array(sorted(set(df[r"$F_f$"])))
+ax.loglog(uniq_F_f, 1.5 * np.pi * uniq_F_f ** 0.5, "k:", label="")
 
 # import seaborn as sns
 # sns.regplot(
@@ -47,7 +51,7 @@ ax.loglog(uniq_F_f, 1.5 * np.pi * uniq_F_f ** 0.5, 'k:', label="")
 ax.text(1e-2, 0.6, r"$F_f ^ {1/2}$")
 ax.set_xscale("log")
 ax.set_yscale("log")
-ax.set_xlabel('$F_f$')
+ax.set_xlabel("$F_f$")
 ax.set_ylabel("$d / L_f$")
 ax.legend(fontsize=9)
 fig.tight_layout()

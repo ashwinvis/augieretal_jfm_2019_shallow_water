@@ -8,18 +8,26 @@ import fluidsim as fls
 import h5py
 
 from base import (
-    _k_max, _k_diss, _eps, set_figsize, matplotlib_rc, _index_where, linestyles, rev_legend)
+    _k_max,
+    _k_diss,
+    _eps,
+    set_figsize,
+    matplotlib_rc,
+    _index_where,
+    linestyles,
+    rev_legend,
+)
 from paths import paths_sim, exit_if_figure_exists, load_df
 from make_fig_spectra import _mean_spectra
 
-#color_list = \
+# color_list = \
 #    iter(['r', 'b', 'g', 'c', 'm', 'y', 'k'])
-    # iter(plt.cm.jet(pl.linspace(0,1,3)))
+# iter(plt.cm.jet(pl.linspace(0,1,3)))
 # style = linestyles()
 
 
 def _label(o):
-    numerator = r'2 \nu_{0} k^{0} k_d E(k) / \epsilon'.format(o)
+    numerator = r"2 \nu_{0} k^{0} k_d E(k) / \epsilon".format(o)
     return f"${numerator}$"
 
 
@@ -29,27 +37,24 @@ def fig7_spectra(path, fig, ax, t_start, run_nb, nu_order=8):
     eps = _eps(sim, t_start)
     k_d = _k_diss(sim.params)
 
-
     nu = getattr(sim.params, f"nu_{nu_order}")
-    norm = (k_d * nu * kh**nu_order)
+    norm = k_d * nu * kh ** nu_order
     color_list = sns.color_palette()
 
     kh_f = kh / k_d
-    integral = np.trapz(2 * E_tot*norm, kh_f, dx=kh_f[1] - kh_f[0])
+    integral = np.trapz(2 * E_tot * norm, kh_f, dx=kh_f[1] - kh_f[0])
 
-    kdiss_max = kh_f[np.where(
-        (E_tot * norm) == (E_tot * norm).max())
-    ]
+    kdiss_max = kh_f[np.where((E_tot * norm) == (E_tot * norm).max())]
     ax.plot(
-        kh_f, 2 * E_tot * norm / eps, # (2 * integral),
+        kh_f,
+        2 * E_tot * norm / eps,  # (2 * integral),
         c=color_list[run_nb],
-        linewidth=1, 
+        linewidth=1,
         # label=f'$c = {sim.params.c2**0.5}, n= {sim.params.oper.nx}$'
-        label=f'{kdiss_max}'
+        label=f"{kdiss_max}"
         # label=f'int={integral}'
     )
-    
-    
+
     ax.vlines(kdiss_max, 0, 2.2, colors=color_list[run_nb], linewidth=0.5)
 
     # more minor ticks
@@ -57,30 +62,28 @@ def fig7_spectra(path, fig, ax, t_start, run_nb, nu_order=8):
     ax.xaxis.set_minor_locator(minor_locator)
 
     ax.set_ylim(0, 2.2)
-    ax.set_xlim(0.6, 2.5) #2
+    ax.set_xlim(0.6, 2.5)  # 2
 
-    ax.set_xlabel('$k/k_d$')
+    ax.set_xlabel("$k/k_d$")
     ax.set_ylabel(_label(nu_order))
     # ax.legend()
     # rev_legend(ax, loc=1, fontsize=8)
 
 
-def plot_df(df, fig, ax):     
+def plot_df(df, fig, ax):
     for run_nb, (idx, row) in enumerate(df.iterrows()):
         short_name = row["short name"]
         tmin = row["$t_{stat}$"]
-        fig7_spectra(paths_sim[short_name], fig, ax,
-                     t_start=tmin,
-                     run_nb=run_nb)
+        fig7_spectra(paths_sim[short_name], fig, ax, t_start=tmin, run_nb=run_nb)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sns.set_palette("cubehelix", 3)
     matplotlib_rc(11)
     path_fig = exit_if_figure_exists(__file__)
     set_figsize(7, 3)
     fig, ax = plt.subplots(1, 2, sharex=True, sharey=True)
-    
+
     df_w = load_df("df_w")
     df_c20 = df_w[df_w["$c$"] == 20]
     df_n1920 = df_w[df_w["$n$"] == 1920]
@@ -89,10 +92,9 @@ if __name__ == '__main__':
     plot_df(df_c20, fig, ax[0])
     sns.set_palette("cubehelix", 6)
     plot_df(df_n1920, fig, ax[1])
-    
+
     ax[1].set_ylabel(None)
-    arrowkwargs = dict(
-        xycoords="data", arrowprops={"arrowstyle": "simple"})
+    arrowkwargs = dict(xycoords="data", arrowprops={"arrowstyle": "simple"})
     ax[0].annotate("increasing $n$", (1.5, 2.05), (0.65, 2), **arrowkwargs)
     ax[1].annotate("increasing $c$", (1, 2.05), (1.32, 2), **arrowkwargs)
 

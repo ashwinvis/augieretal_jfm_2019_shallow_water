@@ -10,8 +10,10 @@ from dataset_info import md5
 
 
 def get_dataset_json(zenodo_id, verbose=False):
-    req = Request(f"https://zenodo.org/api/records/{zenodo_id}",
-                    headers={'Accept' : 'application/json'})
+    req = Request(
+        f"https://zenodo.org/api/records/{zenodo_id}",
+        headers={"Accept": "application/json"},
+    )
     txt = urlopen(req).read().decode("utf-8")
     data = json.loads(txt)
     if verbose:
@@ -20,15 +22,17 @@ def get_dataset_json(zenodo_id, verbose=False):
 
 
 def download(f, dest, prompt=True):
-    filename, filesize, link, csum = (
+    filename, filesize, link = (
         f["filename"],
         f["filesize"],
         f["links"]["download"],
-        f["checksum"]
     )
     ans = (
-        query_yes_no(f"Download {filename} ({filesize / 1024**3:.2f} GiB) to {dest}?")
-        if prompt else True
+        query_yes_no(
+            f"Download {filename} ({filesize / 1024**3:.2f} GiB) to {dest}?"
+        )
+        if prompt
+        else True
     )
     if ans:
         os.makedirs(dest, exist_ok=True)
@@ -39,7 +43,7 @@ def download(f, dest, prompt=True):
             urlretrieve(link, zipf)
 
 
-def verify(filename, dest, prompt=True):
+def verify(filename, dest, csum, prompt=True):
     zipf = dest / filename
     ans = query_yes_no("Verify file integrity?", "no") if prompt else False
     if ans:
@@ -53,10 +57,7 @@ def unzip(filename, dest, prompt=True):
     zipf = dest / filename
     with ZipFile(zipf) as zipf:
         zipf.printdir()
-        ans = (
-            query_yes_no(f"Extract {filename} to {dest}")
-            if prompt else True
-        )
+        ans = query_yes_no(f"Extract {filename} to {dest}") if prompt else True
         if ans:
             zipf.extractall(dest)
 
@@ -68,5 +69,5 @@ if __name__ == "__main__":
     for f in files:
         download(f, dest)
         filename = f["filename"]
-        verify(filename, dest)
+        verify(filename, dest, f["checksum"])
         unzip(filename, dest)

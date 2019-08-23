@@ -40,7 +40,7 @@ lacie = Path("/run/media/avmo/lacie/13KTH")
 paths = []
 # paths.extend(sorted((data/ "laplacian").glob("*")))
 # paths.extend(sorted((lacie/ "noise_laplacian").glob("*")))
-paths.extend(sorted((lacie/ "laplacian_nupt1").glob("*")))
+paths.extend(sorted((lacie / "laplacian_nupt1").glob("*")))
 # paths
 
 # +
@@ -58,7 +58,7 @@ def init_df(path):
     kmax = dico["kh"].max()
 
     dealias = sim.params.oper.coef_dealiasing
-    ratio = sim.params.preprocess.viscosity_const*np.pi
+    ratio = sim.params.preprocess.viscosity_const * np.pi
     kdiss = kmax / ratio
     #  last_file = sorted(path.glob("state_phys*"))[-1].name
 
@@ -67,7 +67,7 @@ def init_df(path):
     eps, E, ts, tmax = epsetstmax(path)
     c = sim.params.c2 ** 0.5
     # Fr = (eps / kf) ** (1./3) / c
-    Fr = (eps * Lf) ** (1./3) / c
+    Fr = (eps * Lf) ** (1.0 / 3) / c
     return {
         "short name": os.path.basename(path),
         "kmax": kmax,
@@ -127,21 +127,37 @@ diss = []
 for path, color in zip(df.path, colors):
     sim = load_sim(path)
     dset = sim.output.spatial_means.load_dataset()
-    idx = int(abs(dset.t  - 10).argmin())
+    idx = int(abs(dset.t - 10).argmin())
 
-    dset["eps"] = (dset.epsK_tot + dset.epsA_tot)
+    dset["eps"] = dset.epsK_tot + dset.epsA_tot
     eps = dset.eps
-    eps.plot(ax=ax[0], c=color, label=f"c={int(sim.params.c2**0.5)}, n={int(sim.params.oper.nx)}")
-    ax[0].hlines(eps[idx:].mean(), xmin=dset.t.min(), xmax=dset.t.max(),color=color, label="", linestyle='--')
-
+    eps.plot(
+        ax=ax[0],
+        c=color,
+        label=f"c={int(sim.params.c2**0.5)}, n={int(sim.params.oper.nx)}",
+    )
+    ax[0].hlines(
+        eps[idx:].mean(),
+        xmin=dset.t.min(),
+        xmax=dset.t.max(),
+        color=color,
+        label="",
+        linestyle="--",
+    )
 
     dset.kurt_div.plot(ax=ax[1], c=color, label="")
     kurt_mean = dset.kurt_div[idx:].mean()
     E_mean = dset.E[idx:].mean()
     eps_mean = dset.eps[idx:].mean()
 
-    ax[1].hlines(kurt_mean, xmin=dset.t.min(), xmax=dset.t.max(), color=color, linestyle="--",
-                 label=f'mean={float(kurt_mean):.2f}')
+    ax[1].hlines(
+        kurt_mean,
+        xmin=dset.t.min(),
+        xmax=dset.t.max(),
+        color=color,
+        linestyle="--",
+        label=f"mean={float(kurt_mean):.2f}",
+    )
 
     kurt_div.append(float(kurt_mean))
     energy.append(float(E_mean))
@@ -151,7 +167,7 @@ df["kurt_div"] = kurt_div
 df["E"] = energy
 df["$\epsilon$"] = diss
 
-    
+
 ax[0].legend()
 ax[1].legend()
 ax[1].set_yscale("log")
@@ -175,7 +191,7 @@ from base import markers, matplotlib_rc
 mark = markers()
 # yscale =df["$n$"]
 matplotlib_rc(11)
-fig, ax = plt.subplots(figsize=(5,3))
+fig, ax = plt.subplots(figsize=(5, 3))
 # plt.loglog("c", "kurt_div", 'x', data=df)
 # sns.scatterplot(df.c, df.kurt_div / yscale, hue=df["$n$"], markers=markers(), legend="full")
 
@@ -184,16 +200,17 @@ fig, ax = plt.subplots(figsize=(5,3))
 _df = df
 
 for n, grp in _df.groupby("$n$"):
-    # yscale = grp["$F_f$"] ** (2/3) * grp["$\epsilon$"]**(1/3) / ( grp["k_d"] ** (4/3) * grp["nu"]) 
-    # yscale = grp["d"] ** (4/3) * grp["$\epsilon$"]**(1/3) / (grp["nu"]) 
+    # yscale = grp["$F_f$"] ** (2/3) * grp["$\epsilon$"]**(1/3) / ( grp["k_d"] ** (4/3) * grp["nu"])
+    # yscale = grp["d"] ** (4/3) * grp["$\epsilon$"]**(1/3) / (grp["nu"])
     yscale = 1 / grp["nu"]
     # yscale = 1
     ax.scatter(
-        grp['$F_f$'], grp['kurt_div'] / yscale,
+        grp["$F_f$"],
+        grp["kurt_div"] / yscale,
         marker=next(mark),
         # kind="scatter", loglog=True, ax=ax
         # data=grp,
-        label=f"$n={int(n)}$"
+        label=f"$n={int(n)}$",
     )
 ax.set_xscale("log")
 ax.set_yscale("log")
@@ -201,7 +218,7 @@ ax.set_yscale("log")
 
 ax.legend(loc=4, fontsize=9)
 
-ax.loglog(df["$F_f$"],  35 * df["$F_f$"] ** (2/3), "k--", linewidth=0.5)
+ax.loglog(df["$F_f$"], 35 * df["$F_f$"] ** (2 / 3), "k--", linewidth=0.5)
 ax.text(0.01, 2, "$F_f^{2/3}$")
 
 ax.set_xlabel("$F_f$")
@@ -211,11 +228,10 @@ ax.set_ylabel(r"$F_{\delta_x u} \nu $")
 
 # ax.set_ylim(1e-3, 0.3)
 # low = (df.kurt_div / yscale).min()
-#ax.hlines(50, df["$F_f$"].min(), df["$F_f$"].max(), linestyles="dashed")
-#ax.text(30, low, f"{low:.2e}")
+# ax.hlines(50, df["$F_f$"].min(), df["$F_f$"].max(), linestyles="dashed")
+# ax.text(30, low, f"{low:.2e}")
 # low
 fig.tight_layout()
 # -
 
 fig.savefig(path_fig)
-

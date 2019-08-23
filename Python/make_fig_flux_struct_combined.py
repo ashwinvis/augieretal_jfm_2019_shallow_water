@@ -10,11 +10,11 @@ from make_fig_spect_energy_budg import fig2_seb
 from make_fig_Kolmo import fig3_struct
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     matplotlib_rc(fontsize=9)
     path_fig = exit_if_figure_exists(__file__)
     fig, ax = pl.subplots(1, 2, figsize=(7, 3))
-    run = 'noise_c20nh3840Buinf'
+    run = "noise_c20nh3840Buinf"
     fig2_seb(paths_sim[run], fig, ax[0], t_start=20)
     fig3_struct(paths_sim[run], fig, ax[1], tmin=20, tmax=75)
     fig.tight_layout()
